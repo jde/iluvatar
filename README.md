@@ -14,6 +14,9 @@ a system already exists, and we let its themes be heard.
 
 - Form: idea. Created 2026-09-16 by Dave Erwin.
 - Nothing runs yet. The founding words are in [VISION-verbatim.md](VISION-verbatim.md).
+- First data source: **Datadog**. The breakdown — ingestion paths, metric-to-music mapping, the
+  rules that keep it musical, and the first three-voice piece — is in
+  [docs/01-datadog-to-music.md](docs/01-datadog-to-music.md) (2026-09-16).
 
 ## What it will do (first sketch, to be revised)
 
