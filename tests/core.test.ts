@@ -38,12 +38,16 @@ describe('timeline', () => {
     expect(tl.slope('traffic', 60, 60)).toBeCloseTo(60, 6);
     expect(tl.value('traffic_slope')).toBeCloseTo(60, 6);
   });
-  it('slope is NaN with one point and 0 when flat', () => {
+  it('slope is NaN until the points span half the window, then 0 when flat', () => {
     const tl = new Timeline(inputs);
     tl.push('traffic', 0, 5);
     expect(Number.isNaN(tl.slope('traffic', 60, 0))).toBe(true);
-    tl.push('traffic', 10, 5); tl.push('traffic', 20, 5);
-    expect(tl.slope('traffic', 60, 20)).toBe(0);
+    tl.push('traffic', 1, 5); // two points one second apart: never a slope
+    expect(Number.isNaN(tl.slope('traffic', 60, 1))).toBe(true);
+    tl.push('traffic', 10, 5); tl.push('traffic', 20, 5); tl.push('traffic', 30, 5);
+    expect(Number.isNaN(tl.slope('traffic', 60, 30))).toBe(false);
+    tl.push('traffic', 40, 5);
+    expect(tl.slope('traffic', 60, 40)).toBeCloseTo(0, 6);
   });
   it('clear forgets every input', () => {
     const tl = new Timeline(inputs);
@@ -119,11 +123,11 @@ describe('rules', () => {
   it('slope trigger fires once per crossing and respects cooldown', () => {
     const s = mk(), tl = new Timeline(s.inputs), re = new RuleEngine();
     const fire = (t: number, v: number) => { tl.push('traffic', t, v); tl.push('errors', t, 0); return re.evaluate(s, tl, t).filter((f) => f.kind === 'trigger'); };
-    fire(0, 40); fire(10, 40);
-    expect(fire(20, 100).length).toBe(1);       // slope > 40/min → trigger
-    expect(fire(30, 160).length).toBe(0);       // still holding, no re-fire
-    fire(40, 160); fire(50, 160); fire(60, 160); fire(70, 160); fire(80, 160); // slope decays to 0 → condition released
-    expect(fire(85, 400).length).toBe(1);       // 65 s since last fire ≥ 60 s cooldown → fires again
+    fire(0, 40); fire(10, 40); fire(20, 40);
+    expect(fire(30, 100).length).toBe(1);       // 108/min over the last 30 s > 40/min → trigger
+    expect(fire(40, 160).length).toBe(0);       // still holding, no re-fire
+    fire(50, 160); fire(60, 160); fire(70, 160); fire(80, 160); fire(90, 160); fire(100, 160); // slope decays → released
+    expect(fire(105, 400).length).toBe(1);      // 75 s since last fire ≥ 60 s cooldown → fires again
     expect(re.log.filter((l) => l.text === 'trigger surge').length).toBe(2);
   });
 });

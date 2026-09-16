@@ -49,10 +49,13 @@ export class Timeline {
     return arr.filter((s) => s.t >= t - seconds);
   }
 
-  /** Least-squares slope over the window, expressed per minute. NaN with fewer than 2 points. */
+  /**
+   * Least-squares slope over the window, expressed per minute. NaN until the points span at least
+   * half the window — two samples a second apart would turn jitter into a "surge".
+   */
   slope(id: InputId, windowSeconds: number, now?: number): number {
     const pts = this.recent(id, windowSeconds, now);
-    if (pts.length < 2) return NaN;
+    if (pts.length < 2 || pts[pts.length - 1].t - pts[0].t < windowSeconds / 2) return NaN;
     const n = pts.length;
     let st = 0, sv = 0;
     for (const p of pts) { st += p.t; sv += p.v; }
