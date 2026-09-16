@@ -17,6 +17,9 @@ a system already exists, and we let its themes be heard.
 - First data source: **Datadog**. The breakdown — ingestion paths, metric-to-music mapping, the
   rules that keep it musical, and the first three-voice piece — is in
   [docs/01-datadog-to-music.md](docs/01-datadog-to-music.md) (2026-09-16).
+- **Composer mode** — scoring everything a system can do: the score file, the rule language for
+  bounds and slopes, the composer screen, scenarios and coverage — is in
+  [docs/02-composer-mode.md](docs/02-composer-mode.md) (2026-09-16).
 
 ## What it will do (first sketch, to be revised)
 

@@ -25,4 +25,16 @@ metric kinds) and the transfer table between them, the rules that keep many sign
 and a first three-voice piece. Beyond his words: the fixed playback delay, the Conductor stage,
 the TypeScript core + browser Tone.js recommendation, and the three open questions at the end.*
 
+## Prompt 3 — composer mode (2026-09-16, live session)
+
+> Once we have this in, I'd like to start fleshing out a composer mode. In this mode, we will have the various inputs that are configured, as well as a way of creating the sound or connecting the sounds to them. So for example, we may be measuring traffic in visits per second. If we choose that, we can then choose either the MIDI instrument we want to play, perhaps the musical concept that we want to put at certain bounds. If traffic drops below a certain amount, maybe we want to introduce something else, such as a minor chord. If there is an increase in traffic beyond a certain bound or beyond a certain slope, maybe we want to trigger a certain melody. Etc., etc. A full implementation of this composer mode will allow someone to score the entirety of the possibility of things that could happen with their systems in a way that gives real musical depth to them.
+
+*Interpretation: written up as [docs/02-composer-mode.md](docs/02-composer-mode.md) — a score
+file (inputs, sounds, rules, coverage) with a rule language for thresholds, durations, slopes and
+state changes; sounds as MIDI instruments, samples, synths, motifs, patterns and concepts; a
+four-panel composer screen that always plays; and tools for "the entirety of the possibility":
+a coverage map, a state grid, a scenario library, a silence audit. Beyond his words: YAML as the
+score format, derived inputs as the way slopes are expressed, the scenario engine, and the build
+order.*
+
 *(More prompts appended below as Dave continues.)*
