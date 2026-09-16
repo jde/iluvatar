@@ -1,0 +1,109 @@
+name: Storefront, ambient
+clock:
+  bpm: 66
+  key: D
+  mode: ionian
+inputs:
+  - id: traffic
+    label: Traffic
+    unit: visits/s
+    feed: traffic
+    range:
+      - 0
+      - 200
+  - id: errors
+    label: Errors
+    unit: ratio
+    feed: errors
+    range:
+      - 0
+      - 0.5
+  - id: traffic_slope
+    label: Traffic slope (60 s)
+    unit: visits/s per min
+    derive:
+      of: traffic
+      slope_over: 60
+    range:
+      - -100
+      - 100
+sounds:
+  - id: bass
+    label: Bass loop
+    kind: loop
+    instrument: acoustic_bass
+    notes: c2 . c2 g2 . e2 . c2 | c2 . bb2 g2 . e2 . c2
+    volume: 0.7
+  - id: pad
+    label: Pad
+    kind: drone
+    instrument: pad_2_warm
+    degrees:
+      - 1
+      - 5
+      - 8
+      - 10
+    volume: 0.5
+  - id: surge
+    label: Surge motif
+    kind: motif
+    instrument: flute
+    notes: c5 e5 g5 c6 | b5:2 g5:2
+    volume: 0.8
+rules:
+  - id: r1
+    input: traffic
+    when:
+      kind: always
+    do:
+      kind: set
+      sound: bass
+      property: density
+      range:
+        - 0
+        - 200
+      curve: log
+      smooth: 2
+    enabled: true
+  - id: r2
+    input: errors
+    when:
+      kind: always
+    do:
+      kind: set
+      sound: pad
+      property: tension
+      range:
+        - 0
+        - 0.3
+      curve: exp
+      smooth: 0.3
+    enabled: true
+  - id: r3
+    input: traffic
+    when:
+      kind: below
+      value: 12
+      for: 20
+    do:
+      kind: introduce
+      concept: minor
+      sound: pad
+      fade: 4
+    until:
+      kind: above
+      value: 16
+      for: 5
+    enabled: true
+  - id: r4
+    input: traffic_slope
+    when:
+      kind: above
+      value: 40
+      for: 0
+    do:
+      kind: trigger
+      sound: surge
+      quantize: bar
+      cooldown: 60
+    enabled: true

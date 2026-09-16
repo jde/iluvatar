@@ -37,4 +37,34 @@ a coverage map, a state grid, a scenario library, a silence audit. Beyond his wo
 score format, derived inputs as the way slopes are expressed, the scenario engine, and the build
 order.*
 
+## Prompt 4 — answers: mock two feeds, ambient, build the composer (2026-09-16, live session)
+
+> 1 let's mock up two feeds: traffic and errors. These archetypes will set us explore the musical concepts
+>
+> 2 ambient
+>
+> 3 let's get the composer ui cooking and allow users to pick midi instruments, compose motifs and set ways in which the quantity and slope of the metrics informs the sound.
+
+*Interpretation: no Datadog yet — a scenario engine produces two synthetic feeds, traffic
+(visits/s) and errors (ratio), and those two archetypes are the material for exploring the
+musical concepts. The piece is ambient. The first build is the composer screen: pick a General
+MIDI instrument per sound, write motifs, and write rules where a metric's quantity and its slope
+drive sound properties or trigger motifs. Beyond his words: the stack (TypeScript, Vite, React,
+Tone.js for the clock, smplr for General MIDI SoundFont instruments), YAML score export, and
+the decision to verify the screen with a headless browser while the sound itself is checked by ear.*
+
+## Prompt 5 — composer-mode answers (2026-09-16, live session)
+
+> 1 - both. An engineer and musician will collaborate
+>
+> 2 - not sure.
+>
+> 3 - yes, let's share from day 1
+
+*Interpretation: the composer screen serves two people working together — the engineer binds
+inputs and sets bounds against the data, the musician picks instruments and writes motifs — so
+both vocabularies stay visible on one screen. Sounds: General MIDI first (uniform for everyone,
+nothing to build), samples and synths later; Dave has not decided. Scores are shared from day one:
+a `scores/` directory in this repo, one folder per score with its YAML and a README.*
+
 *(More prompts appended below as Dave continues.)*

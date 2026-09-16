@@ -12,8 +12,24 @@ a system already exists, and we let its themes be heard.
 
 ## State of the project
 
-- Form: idea. Created 2026-09-16 by Dave Erwin.
-- Nothing runs yet. The founding words are in [VISION-verbatim.md](VISION-verbatim.md).
+- Form: **composer prototype, mock feeds**. Created 2026-09-16 by Dave Erwin.
+- Runs in the browser: two mock feeds (traffic, errors) with scenarios, a rule engine, and General
+  MIDI instruments. No Datadog yet. The founding words are in [VISION-verbatim.md](VISION-verbatim.md).
+
+## Run it
+
+```
+pnpm install
+pnpm dev          # http://localhost:5173 — press "Start audio", pick a scenario
+pnpm test         # core unit tests (vitest)
+pnpm test:ui      # drives the composer in headless Chromium (playwright)
+```
+
+The composer screen: **Inputs** (scenario, live values, sparklines) · **Score** (rules: when an
+input is always / below / above a bound for N seconds → drive a property, introduce a concept, or
+trigger a motif) · **Sounds** (General MIDI instrument, loop / motif / drone, notes in a mini
+notation, audition) · **Timeline** (what fired). Scores export and import as YAML; the shared ones
+live in [scores/](scores/).
 - First data source: **Datadog**. The breakdown — ingestion paths, metric-to-music mapping, the
   rules that keep it musical, and the first three-voice piece — is in
   [docs/01-datadog-to-music.md](docs/01-datadog-to-music.md) (2026-09-16).
