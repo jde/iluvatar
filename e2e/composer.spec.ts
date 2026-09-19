@@ -61,3 +61,17 @@ test('audio starts and instruments load from the soundfont CDN', async ({ page }
   const state = await page.evaluate(() => (window as any).Tone?.getContext?.().state ?? 'unknown');
   expect(['running', 'unknown']).toContain(state);
 });
+
+test('outage loops: errors reach 100 %, fall back, and the cycle counter advances; the length slider sets the pace', async ({ page }) => {
+  test.slow();
+  await page.getByTestId('scenario').selectOption('outage');
+  await page.getByTestId('scenario-duration').fill('30');
+  await expect(page.getByTestId('scenario-duration-value')).toHaveText('30 s');
+  await expect(page.getByTestId('value-errors')).toHaveText('100.0 %', { timeout: 20_000 });
+  await expect(page.getByTestId('value-traffic')).toHaveText(/^[0-4]\.\d$/);
+  // (At 30 s per cycle the outage is too short for the 20 s 'traffic below 12' hold — that is the nuance the slider exposes.)
+  await expect(page.getByTestId('scenario-phase')).toContainText('cycle 2', { timeout: 30_000 });
+  const errors = parseFloat((await page.getByTestId('value-errors').textContent())!);
+  expect(errors).toBeLessThan(10);
+  await expect(page.getByTestId('value-errors')).toHaveText('100.0 %', { timeout: 20_000 }); // second time round
+});

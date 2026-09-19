@@ -14,8 +14,8 @@ a system already exists, and we let its themes be heard.
 
 - Form: **composer prototype, mock feeds**. Created 2026-09-16 by Dave Erwin.
 - **Live: https://iluvatar.vercel.app** (Vercel, jde's team; every push to `main` deploys).
-- Runs in the browser: two mock feeds (traffic, errors) with scenarios, a rule engine, and General
-  MIDI instruments. No Datadog yet. The founding words are in [VISION-verbatim.md](VISION-verbatim.md).
+- Runs in the browser: two mock feeds (traffic, errors) with scenarios that loop forever over a
+  length you set (20 s to 10 min), a rule engine, and General MIDI instruments. No Datadog yet. The founding words are in [VISION-verbatim.md](VISION-verbatim.md).
 
 ## Run it
 

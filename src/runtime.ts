@@ -33,6 +33,7 @@ export class Runtime {
   getScore() { return this.score; }
 
   setScenario(id: ScenarioId) { this.feeds.setScenario(id, this.now); this.timeline.clear(); this.rules.reset(); this.emit(); }
+  setScenarioDuration(seconds: number) { this.feeds.setDuration(seconds, this.now); this.emit(); }
 
   async startAudio() { await this.audio.start(); this.audio.syncSounds(this.score.sounds); this.audio.play(); this.emit(); }
   togglePlay() { if (this.audio.playing) this.audio.pause(); else this.audio.play(); this.emit(); }

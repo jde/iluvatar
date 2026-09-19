@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { normalize, smoothStep } from '../src/core/curves';
 import { Timeline } from '../src/core/timeline';
-import { scenarioAt, FeedEngine } from '../src/core/feeds';
+import { scenarioAt, shapeAt, FeedEngine } from '../src/core/feeds';
 import { parseMotif, noteToMidi, degreeToMidi, midiToNote } from '../src/core/motif';
 import { RuleEngine } from '../src/core/rules';
 import { defaultScore, scoreFromYaml, scoreToYaml } from '../src/core/score';
@@ -64,11 +64,37 @@ describe('timeline', () => {
 });
 
 describe('feeds', () => {
-  it('surge triples traffic after 50 s and outage recovers', () => {
+  it('surge jumps sevenfold and falls back; every shape loops seamlessly', () => {
     expect(scenarioAt('surge', 0).traffic).toBeLessThan(50);
-    expect(scenarioAt('surge', 60).traffic).toBeGreaterThan(110);
-    expect(scenarioAt('outage', 100).errors).toBeGreaterThan(0.5);
-    expect(scenarioAt('outage', 200).errors).toBeLessThan(0.05);
+    expect(scenarioAt('surge', 60).traffic).toBeGreaterThan(200);
+    expect(scenarioAt('surge', 179).traffic).toBeLessThan(50);
+    for (const id of ['quiet', 'lunch_peak', 'surge', 'slow_bleed', 'outage'] as const) {
+      expect(shapeAt(id, 0.999)).toMatchObject({ traffic: expect.closeTo(shapeAt(id, 0).traffic, 0), errors: expect.closeTo(shapeAt(id, 0).errors, 1) });
+      expect(shapeAt(id, 1.25)).toEqual(shapeAt(id, 0.25)); // phase wraps
+    }
+  });
+  it('outage: errors climb to 100 %, traffic collapses, then errors slowly return to 0', () => {
+    expect(shapeAt('outage', 0.1).errors).toBeLessThan(0.02);
+    expect(shapeAt('outage', 0.3).errors).toBe(1);
+    expect(shapeAt('outage', 0.3).traffic).toBeLessThan(5);
+    expect(scenarioAt('outage', 0.35 * 180).errors).toBe(1); // jitter never pushes past 100 %
+    const mid = shapeAt('outage', 0.7).errors, late = shapeAt('outage', 0.9).errors;
+    expect(mid).toBeGreaterThan(late);
+    expect(late).toBeGreaterThan(0.01);
+    expect(shapeAt('outage', 0.995).errors).toBeLessThan(0.02);
+  });
+  it('the duration slider stretches the cycle and keeps the phase when changed', () => {
+    expect(scenarioAt('outage', 30, undefined, 100).errors).toBe(1); // u = 0.3 at 100 s per cycle
+    expect(scenarioAt('outage', 30, undefined, 600).errors).toBeLessThan(0.02); // u = 0.05 at 600 s per cycle
+    const e = new FeedEngine();
+    e.setScenario('outage', 0);
+    e.tick(0); e.tick(90); // half way through a 180 s cycle
+    expect(e.phase(90)).toEqual({ u: 0.5, cycle: 1 });
+    e.setDuration(40, 90);
+    expect(e.phase(90).u).toBeCloseTo(0.5);
+    expect(e.phase(110)).toEqual({ u: 0, cycle: 2 }); // loops
+    e.setDuration(1, 110); // clamped to the minimum
+    expect(e.duration).toBe(20);
   });
   it('engine emits once per second and manual values pass through', () => {
     const e = new FeedEngine();

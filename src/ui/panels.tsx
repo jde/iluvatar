@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { INSTRUMENT_NAMES } from '../audio/engine';
-import { SCENARIOS, type ScenarioId } from '../core/feeds';
+import { MAX_DURATION, MIN_DURATION, SCENARIOS, type ScenarioId } from '../core/feeds';
 import { parseMotif } from '../core/motif';
 import { CONCEPTS, PROPERTIES, type Action, type Condition, type Input, type Rule, type Score, type Sound } from '../core/types';
 import type { Runtime } from '../runtime';
@@ -20,6 +20,13 @@ export function InputsPanel({ rt, score }: { rt: Runtime; score: Score }) {
         </select>
       </label>
       <p className="hint">{SCENARIOS.find((s) => s.id === rt.feeds.scenario)?.blurb}</p>
+      {!manual && (
+        <label className="row">Scenario length
+          <input type="range" min={MIN_DURATION} max={MAX_DURATION} step={5} value={rt.feeds.duration} onChange={(e) => rt.setScenarioDuration(+e.target.value)} data-testid="scenario-duration" />
+          <span className="value" data-testid="scenario-duration-value">{rt.feeds.duration} s</span>
+          <span className="hint" data-testid="scenario-phase">loops forever · cycle {rt.feeds.phase(rt.now).cycle} · {Math.round(rt.feeds.phase(rt.now).u * 100)} %</span>
+        </label>
+      )}
       {manual && (
         <div className="manual">
           <label>Traffic {rt.feeds.manual.traffic.toFixed(0)} visits/s
