@@ -40,6 +40,11 @@ export class AudioEngine {
   public masterVolume = 0.8;
   /** Last (sound, property) values the renderer applied — the UI reads these. */
   public readonly live = new Map<SoundId, Params>();
+  /** Instruments loaded for previews (the library page and the preset picker), by name. */
+  private previewInstruments = new Map<string, Promise<Soundfont>>();
+  private previewStops: ((time?: number) => void)[] = [];
+  /** What is being previewed right now, for the UI: a preset id or a sound id. */
+  public previewing: string | null = null;
 
   async start() {
     if (this.started) return;
@@ -131,6 +136,40 @@ export class AudioEngine {
     for (const n of v.motif.notes) {
       v.inst.start({ note: n.midi + shift + reg, time: at + n.step * stepDur, duration: n.steps * stepDur * 0.95, velocity: 40 + 80 * v.current.volume * v.sound.volume, lpfCutoffHz: this.cutoff(v), detune: this.detune(v) });
     }
+  }
+
+  /**
+   * Play any material once with any instrument, outside the score — the ▶ in the library and the
+   * picker. Notes are "written in C" and played in the current key, like a motif. Resolves when the
+   * instrument has loaded and the notes are scheduled.
+   */
+  async preview(tag: string, instrument: string, notes: string, volume = 0.8): Promise<void> {
+    if (!this.started) return;
+    this.stopPreview();
+    this.previewing = tag;
+    const inst = await this.loadPreviewInstrument(instrument);
+    if (this.previewing !== tag) return; // another preview started while loading
+    const stepDur = Tone.Time('8n').toSeconds();
+    const shift = KEY_ROOTS[this.clock.key] ?? 0;
+    const motif = parseMotif(notes).motif;
+    const at = Tone.now() + 0.05;
+    for (const n of motif.notes) this.previewStops.push(inst.start({ note: n.midi + shift, time: at + n.step * stepDur, duration: n.steps * stepDur * 0.95, velocity: 40 + 80 * volume }));
+    const total = motif.length * stepDur;
+    window.setTimeout(() => { if (this.previewing === tag) this.previewing = null; }, total * 1000 + 300);
+  }
+
+  stopPreview() { for (const s of this.previewStops) s(); this.previewStops = []; this.previewing = null; }
+
+  private loadPreviewInstrument(name: string): Promise<Soundfont> {
+    let p = this.previewInstruments.get(name);
+    if (!p) {
+      const ctx = Tone.getContext().rawContext as AudioContext;
+      const inst = new Soundfont(ctx, { instrument: name, kit: 'FluidR3_GM', storage: this.storage, destination: this.master!.input as AudioNode, loadLoopData: true });
+      p = inst.load.then(() => inst);
+      p.catch(() => this.previewInstruments.delete(name));
+      this.previewInstruments.set(name, p);
+    }
+    return p;
   }
 
   private cutoff(v: Voice) { return 250 + 9000 * Math.pow(v.current.brightness, 2); }

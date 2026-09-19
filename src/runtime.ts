@@ -6,6 +6,7 @@ import { AudioEngine } from './audio/engine';
 import { FeedEngine, type FeedMode, type FeedValues, type ScenarioId } from './core/feeds';
 import { RuleEngine } from './core/rules';
 import { Timeline } from './core/timeline';
+import { presetNotesInC, type Preset } from './core/presets';
 import type { Score } from './core/types';
 
 export class Runtime {
@@ -41,6 +42,9 @@ export class Runtime {
     for (const i of this.score.inputs) if (i.feed === feed) this.timeline.push(i.id, this.now, values[feed]);
     this.emit();
   }
+
+  /** Preview a preset (or given notes, already in C) with its instrument, in the piece's key. */
+  async preview(p: Preset, notes?: string) { this.emit(); await this.audio.preview(p.id, p.instrument, notes ?? presetNotesInC(p), p.volume); this.emit(); }
 
   async startAudio() { await this.audio.start(); this.audio.syncSounds(this.score.sounds); this.audio.play(); this.emit(); }
   togglePlay() { if (this.audio.playing) this.audio.pause(); else this.audio.play(); this.emit(); }

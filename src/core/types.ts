@@ -31,6 +31,8 @@ export interface Sound {
   degrees?: number[];
   /** Base level 0..1 before rules act. */
   volume: number;
+  /** Library preset this sound was made from (see core/presets.ts), for the credit line. */
+  preset?: string;
 }
 
 /** Continuous properties a rule can drive. */

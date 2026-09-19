@@ -2,6 +2,7 @@ import { useEffect, useMemo, useReducer, useState } from 'react';
 import { defaultScore, scoreFromYaml, scoreToYaml } from '../core/score';
 import type { Score } from '../core/types';
 import { Runtime } from '../runtime';
+import { LibraryPage } from './library';
 import { InputsPanel, RulesPanel, SoundsPanel, TimelinePanel } from './panels';
 
 const STORAGE_KEY = 'iluvatar.score.v1';
@@ -16,6 +17,9 @@ export default function App() {
   const rt = useMemo(() => new Runtime(score), []);
   const [, bump] = useReducer((x: number) => x + 1, 0);
   const [err, setErr] = useState<string | null>(null);
+  const [route, setRoute] = useState(() => location.hash);
+  useEffect(() => { const on = () => setRoute(location.hash); window.addEventListener('hashchange', on); return () => window.removeEventListener('hashchange', on); }, []);
+  const onLibrary = route.startsWith('#/library');
 
   useEffect(() => { rt.run(); return rt.subscribe(bump); }, [rt]);
 
@@ -36,8 +40,12 @@ export default function App() {
   return (
     <div className="app">
       <header>
-        <h1>Ilúvatar <span className="hint">composer · {score.name}</span></h1>
-        <div className="transport">
+        <h1>Ilúvatar <span className="hint">{onLibrary ? 'library' : `composer · ${score.name}`}</span></h1>
+        <nav className="nav">
+          <a href="#/" className={onLibrary ? '' : 'here'} data-testid="nav-composer">Composer</a>
+          <a href="#/library" className={onLibrary ? 'here' : ''} data-testid="nav-library">Library</a>
+        </nav>
+        {onLibrary ? null : <div className="transport">
           {!rt.audio.started
             ? <button className="primary" onClick={() => rt.startAudio()} data-testid="start-audio">Start audio</button>
             : <button onClick={() => rt.togglePlay()} data-testid="play-pause">{rt.audio.playing ? '❚❚ pause' : '▶ play'}</button>}
@@ -56,18 +64,18 @@ export default function App() {
           <button onClick={exportYaml}>export score</button>
           <label className="file">import <input type="file" accept=".yaml,.yml" onChange={(e) => importYaml(e.target.files?.[0])} /></label>
           <button className="ghost" onClick={() => { if (confirm('Replace the current score with the starter score?')) update(defaultScore()); }}>reset</button>
-        </div>
+        </div>}
         {err && <p className="err">{err}</p>}
-        <p className="hint">t = {rt.now.toFixed(0)} s · {rt.audio.started ? (rt.audio.playing ? 'playing' : 'paused') : 'press Start audio (browsers need a click before sound)'}</p>
+        {!onLibrary && <p className="hint">t = {rt.now.toFixed(0)} s · {rt.audio.started ? (rt.audio.playing ? 'playing' : 'paused') : 'press Start audio (browsers need a click before sound)'}</p>}
       </header>
-      <main>
+      {onLibrary ? <LibraryPage rt={rt} /> : <main>
         <div className="col">
           <InputsPanel rt={rt} score={score} />
           <TimelinePanel rt={rt} score={score} />
         </div>
         <RulesPanel rt={rt} score={score} update={update} />
         <SoundsPanel rt={rt} score={score} update={update} />
-      </main>
+      </main>}
     </div>
   );
 }

@@ -67,4 +67,47 @@ both vocabularies stay visible on one screen. Sounds: General MIDI first (unifor
 nothing to build), samples and synths later; Dave has not decided. Scores are shared from day one:
 a `scores/` directory in this repo, one folder per score with its YAML and a README.*
 
+## Prompt 6 — dramatic, looping scenarios with a length slider (2026-09-19, live session)
+
+> Please update the scenarios to be more dramatic. An outage/recover should see error climb up to 100%, then slowly return to 0.
+>
+> Scenarios should loop forever.
+>
+> Please add a scenario duration slider that lets us control how long each scenario runs for so we can play with the nuance
+
+*Interpretation: every scenario became a shape over one cycle (phase 0 to 1) so the same drama
+plays at any length; a "scenario length" slider (20 s to 10 min) sets the cycle and keeps the
+phase when moved. Beyond his words: the surge, lunch peak and slow bleed were made steeper too,
+and every shape returns to its start so the loop wraps without a jump.*
+
+## Prompt 7 — free form mode (2026-09-19, live session)
+
+> Please add an option to turn off scenarios and go into a free form mode that lets the user manipulate each of the dials for the things being tracked.
+
+*Interpretation: a Scenarios / Free form switch on the Inputs panel; in free form each feed-backed
+input carries its own dial on its row, and derived inputs (the slope) follow the dial. Beyond his
+words: switching to free form starts the dials at the current values so nothing jumps; the old
+Manual scenario was folded into this.*
+
+## Prompt 8 — a library of melodies (2026-09-19, live session)
+
+> Please look up and integrate a whole bunch of classical melodies into a dropdown that we can choose when creating a sound. If possible, bring in many things from classical, popular, traditional, and other things as you can find that don't violate copyright law.
+
+## Prompt 9 — a page to browse, preview, create and save (2026-09-19, live session)
+
+> Please create a new page that lets us browse and preview these and create new ones and save them. If we don't have the infrastructure to save yet, you can save to local storage. When choosing a melody from the actual work screen, please pop up a modal so the melodies can be previewed before as they are chosen.
+
+## Prompt 10 — ready-made sounds, not just melodies (2026-09-19, live session)
+
+> In fact, instead of creating the melody at just that one notes level, have an option to choose preformed melodies along with instruments already put together instead of having the mode that we have now where you can choose the instrument, create the melody, all that stuff. So the user should be able to choose from a fully put together choice for that sound or use the current interface to make their own.
+
+*Interpretation of 8–10, written up as [docs/03-sound-library.md](docs/03-sound-library.md): the
+library is a set of "ready-made sounds" (presets) — a melody with its instrument, kind and level —
+rather than melodies alone. 67 public domain tunes ship, each with a fitting General MIDI
+instrument. On the composer, a "ready-made…" button per sound and "+ add a ready-made sound" open a
+picker modal with previews; the build-your-own interface stays. A Library page browses, previews,
+and edits; your own are saved in the browser. Beyond his words: the strict copyright rule (composer
+dead before 1956 and published before 1929, or traditional), transposing each tune to C so the score
+plays it in the piece's key, and the credit line under a sound's notes.*
+
 *(More prompts appended below as Dave continues.)*

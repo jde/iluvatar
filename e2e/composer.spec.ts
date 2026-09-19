@@ -86,3 +86,73 @@ test('outage loops: errors reach 100 %, fall back, and the cycle counter advance
   expect(errors).toBeLessThan(10);
   await expect(page.getByTestId('value-errors')).toHaveText('100.0 %', { timeout: 20_000 }); // second time round
 });
+
+test('picker modal: choose a ready-made sound for an existing sound, and add one', async ({ page }) => {
+  await page.getByTestId('pick-preset-surge').click();
+  await expect(page.getByTestId('preset-picker')).toBeVisible();
+  await expect(page.getByTestId('preview-ode-to-joy')).toBeDisabled(); // audio not started: previews wait
+  await page.getByTestId('browser-search').fill('elise');
+  await expect(page.getByTestId('preset-fur-elise')).toBeVisible();
+  await expect(page.getByTestId('preset-ode-to-joy')).toHaveCount(0);
+  await page.getByTestId('use-fur-elise').click();
+  await expect(page.getByTestId('preset-picker')).toHaveCount(0);
+  await expect(page.getByTestId('instrument-surge')).toHaveValue('acoustic_grand_piano');
+  await expect(page.getByTestId('notes-surge')).toHaveValue(/^g5 f#5 g5 f#5 g5 d5 f5 d#5 | c5:3/); // A minor, brought to C
+  await expect(page.getByTestId('credit-surge')).toHaveText('from Für Elise — Ludwig van Beethoven, 1810');
+  await page.getByTestId('notes-surge').fill('c5 e5');
+  await expect(page.getByTestId('credit-surge')).toContainText('edited from Für Elise');
+
+  const sounds = page.locator('[data-testid^="sound-"]');
+  const before = await sounds.count();
+  await page.getByTestId('add-sound-library').click();
+  await page.getByTestId('browser-category').selectOption('carols');
+  await page.getByTestId('use-silent-night').click();
+  await expect(sounds).toHaveCount(before + 1);
+  await expect(sounds.last()).toContainText('from Silent Night');
+  await expect(sounds.last().locator('input.label')).toHaveValue('Silent Night');
+  await page.reload();
+  await expect(page.locator('[data-testid^="sound-"]')).toHaveCount(before + 1); // saved with the score
+});
+
+test('library page: browse, make a new sound, save it, reload, use it from the composer', async ({ page }) => {
+  await page.getByTestId('nav-library').click();
+  await expect(page.locator('[data-page="library"]')).toBeVisible();
+  await expect(page.getByTestId('preset-browser')).toContainText('Ode to Joy');
+  await page.getByTestId('preset-greensleeves').click();
+  await expect(page.getByTestId('preset-detail')).toContainText('Greensleeves');
+  await expect(page.getByTestId('preset-detail')).toContainText('written in A, shown here in C');
+
+  await page.getByTestId('new-preset').click();
+  await page.getByTestId('editor-title').fill('Night riff');
+  await page.getByTestId('editor-instrument').selectOption('vibraphone');
+  await page.getByTestId('editor-kind').selectOption('loop');
+  await page.getByTestId('editor-notes').fill('c5 xx');
+  await expect(page.getByTestId('preset-editor')).toContainText('unknown token "xx"');
+  await expect(page.getByTestId('editor-save')).toBeDisabled();
+  await page.getByTestId('editor-notes').fill('c5 . eb5 . g5 . bb5 .');
+  await page.getByTestId('editor-save').click();
+  await expect(page.getByTestId('preset-detail')).toContainText('Night riff');
+  await expect(page.getByTestId('preset-detail')).toContainText('vibraphone · loop');
+  await page.reload();
+  await page.getByTestId('browser-category').selectOption('mine');
+  await expect(page.getByTestId('preset-browser')).toContainText('Night riff'); // saved in the browser
+
+  await page.getByTestId('nav-composer').click();
+  await page.getByTestId('pick-preset-pad').click();
+  await page.getByTestId('browser-category').selectOption('mine');
+  const mineId = (await page.locator('[data-testid^="use-mine-"]').first().getAttribute('data-testid'))!.replace('use-', '');
+  await page.getByTestId(`use-${mineId}`).click();
+  await expect(page.getByTestId('sound-pad')).toContainText('loop (repeats)');
+  await expect(page.getByTestId('instrument-pad')).toHaveValue('vibraphone');
+  await expect(page.getByTestId('notes-pad')).toHaveValue('c5 . eb5 . g5 . bb5 .');
+});
+
+test('previews play once audio is started', async ({ page }) => {
+  test.slow();
+  await page.getByTestId('nav-library').click();
+  await page.getByTestId('start-audio').click();
+  await expect(page.getByTestId('start-audio')).toHaveCount(0, { timeout: 20_000 });
+  await page.getByTestId('preview-twinkle').click();
+  await expect(page.getByTestId('preview-twinkle')).toHaveText('■', { timeout: 60_000 }); // instrument loaded, notes scheduled
+  await expect(page.getByTestId('preview-twinkle')).toHaveText('▶', { timeout: 30_000 }); // and finished
+});

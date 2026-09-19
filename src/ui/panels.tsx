@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { INSTRUMENT_NAMES } from '../audio/engine';
 import { MAX_DURATION, MIN_DURATION, SCENARIOS, type ScenarioId } from '../core/feeds';
+import { applyPreset, presetNotesInC, type Preset } from '../core/presets';
+import { presetById } from '../core/presetStore';
 import { parseMotif } from '../core/motif';
 import { CONCEPTS, PROPERTIES, type Action, type Condition, type Input, type Rule, type Score, type Sound } from '../core/types';
 import type { Runtime } from '../runtime';
+import { PresetPicker } from './presets';
 
 const fmt = (v: number, unit: string) => (Number.isFinite(v) ? (unit === 'ratio' ? `${(v * 100).toFixed(1)} %` : v.toFixed(1)) : '—');
 const uid = (p: string) => `${p}${Math.random().toString(36).slice(2, 7)}`;
@@ -81,11 +84,20 @@ function Sparkline({ rt, id, range }: { rt: Runtime; id: string; range: [number,
 // ---------- Sounds ----------
 export function SoundsPanel({ rt, score, update }: { rt: Runtime; score: Score; update: (s: Score) => void }) {
   const setSound = (id: string, patch: Partial<Sound>) => update({ ...score, sounds: score.sounds.map((s) => (s.id === id ? { ...s, ...patch } : s)) });
-  const add = () => update({ ...score, sounds: [...score.sounds, { id: uid('s'), label: 'New sound', kind: 'motif', instrument: 'marimba', notes: 'c5 e5 g5 c6', volume: 0.7 }] });
+  const fresh = (): Sound => ({ id: uid('s'), label: 'New sound', kind: 'motif', instrument: 'marimba', notes: 'c5 e5 g5 c6', volume: 0.7 });
+  const add = () => update({ ...score, sounds: [...score.sounds, fresh()] });
   const remove = (id: string) => update({ ...score, sounds: score.sounds.filter((s) => s.id !== id), rules: score.rules.filter((r) => r.do.sound !== id) });
+  /** Which sound the picker modal is choosing for: an existing sound's id, or 'new'. */
+  const [picking, setPicking] = useState<string | null>(null);
+  const choose = (p: Preset) => {
+    if (picking === 'new') update({ ...score, sounds: [...score.sounds, applyPreset(fresh(), p)] });
+    else if (picking) update({ ...score, sounds: score.sounds.map((s) => (s.id === picking ? applyPreset(s, p) : s)) });
+    setPicking(null);
+  };
   return (
     <section className="panel" data-panel="sounds">
       <h2>Sounds <span className="hint">the musician's side: instruments, loops, motifs, drones</span></h2>
+      {picking && <PresetPicker rt={rt} title={picking === 'new' ? 'Add a ready-made sound' : `Replace "${score.sounds.find((s) => s.id === picking)?.label}" with a ready-made sound`} onChoose={choose} onClose={() => setPicking(null)} />}
       {score.sounds.map((s) => {
         const live = rt.audio.live.get(s.id);
         const parsed = s.kind === 'drone' ? null : parseMotif(s.notes ?? '');
@@ -96,6 +108,7 @@ export function SoundsPanel({ rt, score, update }: { rt: Runtime; score: Score; 
               <select value={s.kind} onChange={(e) => setSound(s.id, { kind: e.target.value as Sound['kind'] })}>
                 <option value="loop">loop (repeats)</option><option value="motif">motif (triggered)</option><option value="drone">drone (held chord)</option>
               </select>
+              <button onClick={() => setPicking(s.id)} title="Choose a ready-made sound: a melody with its instrument" data-testid={`pick-preset-${s.id}`}>ready-made…</button>
               <button onClick={() => rt.audio.audition(s.id)} disabled={!rt.audio.isLoaded(s.id)} title="Audition" data-testid={`audition-${s.id}`}>▶</button>
               <button className="ghost" onClick={() => remove(s.id)} title="Remove">✕</button>
             </div>
@@ -115,6 +128,7 @@ export function SoundsPanel({ rt, score, update }: { rt: Runtime; score: Score; 
                 <textarea value={s.notes ?? ''} rows={2} onChange={(e) => setSound(s.id, { notes: e.target.value })} data-testid={`notes-${s.id}`} />
                 {parsed && parsed.errors.length > 0 && <span className="err">{parsed.errors.join('; ')}</span>}
                 {parsed && <span className="hint">{parsed.motif.notes.length} notes over {parsed.motif.length} steps</span>}
+                {s.preset && (() => { const p = presetById(s.preset); if (!p) return null; const same = presetNotesInC(p) === s.notes && p.instrument === s.instrument; return <span className="hint" data-testid={`credit-${s.id}`}>{same ? 'from' : 'edited from'} {p.title} — {p.by}, {p.year}</span>; })()}
               </label>
             )}
             <label className="row">Level <input type="range" min={0} max={1} step={0.01} value={s.volume} onChange={(e) => setSound(s.id, { volume: +e.target.value })} /></label>
@@ -126,7 +140,10 @@ export function SoundsPanel({ rt, score, update }: { rt: Runtime; score: Score; 
           </div>
         );
       })}
-      <button onClick={add} data-testid="add-sound">+ add sound</button>
+      <div className="row">
+        <button className="primary" onClick={() => setPicking('new')} data-testid="add-sound-library">+ add a ready-made sound</button>
+        <button onClick={add} data-testid="add-sound">+ make your own</button>
+      </div>
     </section>
   );
 }
