@@ -3,7 +3,7 @@
  * The UI owns the score; the runtime is told about score changes and exposes read-only state.
  */
 import { AudioEngine } from './audio/engine';
-import { FeedEngine, type ScenarioId } from './core/feeds';
+import { FeedEngine, type FeedMode, type FeedValues, type ScenarioId } from './core/feeds';
 import { RuleEngine } from './core/rules';
 import { Timeline } from './core/timeline';
 import type { Score } from './core/types';
@@ -34,6 +34,13 @@ export class Runtime {
 
   setScenario(id: ScenarioId) { this.feeds.setScenario(id, this.now); this.timeline.clear(); this.rules.reset(); this.emit(); }
   setScenarioDuration(seconds: number) { this.feeds.setDuration(seconds, this.now); this.emit(); }
+  setMode(mode: FeedMode) { this.feeds.setMode(mode, this.now); if (mode === 'scenario') { this.timeline.clear(); this.rules.reset(); } this.emit(); }
+  /** Free form: a dial moved. The value lands on the timeline immediately, not at the next one-second tick. */
+  setDial(feed: keyof FeedValues, value: number) {
+    const values = this.feeds.setDial(feed, value);
+    for (const i of this.score.inputs) if (i.feed === feed) this.timeline.push(i.id, this.now, values[feed]);
+    this.emit();
+  }
 
   async startAudio() { await this.audio.start(); this.audio.syncSounds(this.score.sounds); this.audio.play(); this.emit(); }
   togglePlay() { if (this.audio.playing) this.audio.pause(); else this.audio.play(); this.emit(); }

@@ -15,13 +15,14 @@ a system already exists, and we let its themes be heard.
 - Form: **composer prototype, mock feeds**. Created 2026-09-16 by Dave Erwin.
 - **Live: https://iluvatar.vercel.app** (Vercel, jde's team; every push to `main` deploys).
 - Runs in the browser: two mock feeds (traffic, errors) with scenarios that loop forever over a
-  length you set (20 s to 10 min), a rule engine, and General MIDI instruments. No Datadog yet. The founding words are in [VISION-verbatim.md](VISION-verbatim.md).
+  length you set (20 s to 10 min) or a free form mode with a dial per input, a rule engine, and
+  General MIDI instruments. No Datadog yet. The founding words are in [VISION-verbatim.md](VISION-verbatim.md).
 
 ## Run it
 
 ```
 pnpm install
-pnpm dev          # http://localhost:5173 — press "Start audio", pick a scenario
+pnpm dev          # http://localhost:5173 — press "Start audio", pick a scenario or turn the dials
 pnpm test         # core unit tests (vitest)
 pnpm test:ui      # drives the composer in headless Chromium (playwright)
 ```

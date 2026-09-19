@@ -8,7 +8,7 @@ export function defaultScore(): Score {
     clock: { bpm: 66, key: 'D', mode: 'ionian' },
     inputs: [
       { id: 'traffic', label: 'Traffic', unit: 'visits/s', feed: 'traffic', range: [0, 200] },
-      { id: 'errors', label: 'Errors', unit: 'ratio', feed: 'errors', range: [0, 0.5] },
+      { id: 'errors', label: 'Errors', unit: 'ratio', feed: 'errors', range: [0, 1] },
       { id: 'traffic_slope', label: 'Traffic slope (60 s)', unit: 'visits/s per min', derive: { of: 'traffic', slope_over: 60 }, range: [-100, 100] },
     ],
     sounds: [

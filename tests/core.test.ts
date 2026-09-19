@@ -84,8 +84,8 @@ describe('feeds', () => {
     expect(shapeAt('outage', 0.995).errors).toBeLessThan(0.02);
   });
   it('the duration slider stretches the cycle and keeps the phase when changed', () => {
-    expect(scenarioAt('outage', 30, undefined, 100).errors).toBe(1); // u = 0.3 at 100 s per cycle
-    expect(scenarioAt('outage', 30, undefined, 600).errors).toBeLessThan(0.02); // u = 0.05 at 600 s per cycle
+    expect(scenarioAt('outage', 30, 100).errors).toBe(1); // u = 0.3 at 100 s per cycle
+    expect(scenarioAt('outage', 30, 600).errors).toBeLessThan(0.02); // u = 0.05 at 600 s per cycle
     const e = new FeedEngine();
     e.setScenario('outage', 0);
     e.tick(0); e.tick(90); // half way through a 180 s cycle
@@ -96,12 +96,18 @@ describe('feeds', () => {
     e.setDuration(1, 110); // clamped to the minimum
     expect(e.duration).toBe(20);
   });
-  it('engine emits once per second and manual values pass through', () => {
+  it('engine emits once per second; free form starts from the last values and dials pass through', () => {
     const e = new FeedEngine();
-    e.setScenario('manual', 0); e.manual = { traffic: 77, errors: 0.2 };
-    expect(e.tick(0)?.values.traffic).toBe(77);
+    e.setScenario('quiet', 0);
+    const q = e.tick(0)!.values;
     expect(e.tick(0.5)).toBeNull();
-    expect(e.tick(1.0)?.values.errors).toBe(0.2);
+    e.setMode('free', 0.5);
+    expect(e.free).toEqual(q); // no jump when scenarios are switched off
+    e.setDial('traffic', 77); e.setDial('errors', 0.2);
+    expect(e.tick(1.0)?.values).toEqual({ traffic: 77, errors: 0.2 });
+    expect(e.setDial('traffic', -5).traffic).toBe(0);
+    e.setMode('scenario', 2);
+    expect(e.phase(2)).toEqual({ u: 0, cycle: 1 }); // back to scenarios restarts the cycle
   });
 });
 

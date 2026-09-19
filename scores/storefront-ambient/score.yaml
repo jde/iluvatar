@@ -17,7 +17,7 @@ inputs:
     feed: errors
     range:
       - 0
-      - 0.5
+      - 1
   - id: traffic_slope
     label: Traffic slope (60 s)
     unit: visits/s per min

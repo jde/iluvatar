@@ -10,38 +10,39 @@ const uid = (p: string) => `${p}${Math.random().toString(36).slice(2, 7)}`;
 
 // ---------- Inputs ----------
 export function InputsPanel({ rt, score }: { rt: Runtime; score: Score }) {
-  const manual = rt.feeds.scenario === 'manual';
+  const free = rt.feeds.mode === 'free';
   return (
     <section className="panel" data-panel="inputs">
       <h2>Inputs <span className="hint">the engineer's side: what we listen to</span></h2>
-      <label className="row">Scenario
-        <select value={rt.feeds.scenario} onChange={(e) => rt.setScenario(e.target.value as ScenarioId)} data-testid="scenario">
-          {SCENARIOS.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
-        </select>
-      </label>
-      <p className="hint">{SCENARIOS.find((s) => s.id === rt.feeds.scenario)?.blurb}</p>
-      {!manual && (
-        <label className="row">Scenario length
-          <input type="range" min={MIN_DURATION} max={MAX_DURATION} step={5} value={rt.feeds.duration} onChange={(e) => rt.setScenarioDuration(+e.target.value)} data-testid="scenario-duration" />
-          <span className="value" data-testid="scenario-duration-value">{rt.feeds.duration} s</span>
-          <span className="hint" data-testid="scenario-phase">loops forever · cycle {rt.feeds.phase(rt.now).cycle} · {Math.round(rt.feeds.phase(rt.now).u * 100)} %</span>
-        </label>
+      <div className="row modes" role="radiogroup" aria-label="Feed mode">
+        <label><input type="radio" name="feed-mode" checked={!free} onChange={() => rt.setMode('scenario')} data-testid="mode-scenario" /> Scenarios</label>
+        <label><input type="radio" name="feed-mode" checked={free} onChange={() => rt.setMode('free')} data-testid="mode-free" /> Free form</label>
+      </div>
+      {free ? (
+        <p className="hint">Scenarios are off. Turn each input's dial by hand; derived inputs follow.</p>
+      ) : (
+        <>
+          <label className="row">Scenario
+            <select value={rt.feeds.scenario} onChange={(e) => rt.setScenario(e.target.value as ScenarioId)} data-testid="scenario">
+              {SCENARIOS.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
+            </select>
+          </label>
+          <p className="hint">{SCENARIOS.find((s) => s.id === rt.feeds.scenario)?.blurb}</p>
+          <label className="row">Scenario length
+            <input type="range" min={MIN_DURATION} max={MAX_DURATION} step={5} value={rt.feeds.duration} onChange={(e) => rt.setScenarioDuration(+e.target.value)} data-testid="scenario-duration" />
+            <span className="value" data-testid="scenario-duration-value">{rt.feeds.duration} s</span>
+            <span className="hint" data-testid="scenario-phase">loops forever · cycle {rt.feeds.phase(rt.now).cycle} · {Math.round(rt.feeds.phase(rt.now).u * 100)} %</span>
+          </label>
+        </>
       )}
-      {manual && (
-        <div className="manual">
-          <label>Traffic {rt.feeds.manual.traffic.toFixed(0)} visits/s
-            <input type="range" min={0} max={300} value={rt.feeds.manual.traffic} onChange={(e) => { rt.feeds.manual = { ...rt.feeds.manual, traffic: +e.target.value }; }} data-testid="manual-traffic" /></label>
-          <label>Errors {(rt.feeds.manual.errors * 100).toFixed(1)} %
-            <input type="range" min={0} max={100} value={rt.feeds.manual.errors * 100} onChange={(e) => { rt.feeds.manual = { ...rt.feeds.manual, errors: +e.target.value / 100 }; }} data-testid="manual-errors" /></label>
-        </div>
-      )}
-      {score.inputs.map((i) => <InputRow key={i.id} rt={rt} input={i} />)}
+      {score.inputs.map((i) => <InputRow key={i.id} rt={rt} input={i} free={free} />)}
     </section>
   );
 }
 
-function InputRow({ rt, input }: { rt: Runtime; input: Input }) {
+function InputRow({ rt, input, free }: { rt: Runtime; input: Input; free: boolean }) {
   const v = rt.timeline.value(input.id);
+  const step = input.unit === 'ratio' ? 0.005 : 1;
   return (
     <div className="input-row" data-testid={`input-${input.id}`}>
       <div className="input-head">
@@ -49,6 +50,11 @@ function InputRow({ rt, input }: { rt: Runtime; input: Input }) {
         <span className="value" data-testid={`value-${input.id}`}>{fmt(v, input.unit)}</span>
         <span className="unit">{input.unit}{input.derive ? ` · slope of ${input.derive.of} over ${input.derive.slope_over} s` : ''}</span>
       </div>
+      {free && input.feed && (
+        <input type="range" className="dial" min={input.range[0]} max={input.range[1]} step={step} value={rt.feeds.free[input.feed]}
+          onChange={(e) => rt.setDial(input.feed!, +e.target.value)} aria-label={`${input.label} dial`} data-testid={`dial-${input.id}`} />
+      )}
+      {free && input.derive && <span className="hint">follows the {input.derive.of} dial</span>}
       <Sparkline rt={rt} id={input.id} range={input.range} />
     </div>
   );

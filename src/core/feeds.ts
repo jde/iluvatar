@@ -7,7 +7,10 @@
  * Scenarios loop forever; every shape ends where it starts so the wrap is seamless.
  * Deterministic given (scenario, t, duration) apart from a small seeded jitter, so tests are stable.
  */
-export type ScenarioId = 'quiet' | 'lunch_peak' | 'surge' | 'slow_bleed' | 'outage' | 'manual';
+export type ScenarioId = 'quiet' | 'lunch_peak' | 'surge' | 'slow_bleed' | 'outage';
+
+/** Scenarios drive the feeds, or they are off and the composer turns each input's dial by hand. */
+export type FeedMode = 'scenario' | 'free';
 
 export const SCENARIOS: { id: ScenarioId; label: string; blurb: string }[] = [
   { id: 'quiet', label: 'Quiet night', blurb: 'Low steady traffic, almost no errors.' },
@@ -15,7 +18,6 @@ export const SCENARIOS: { id: ScenarioId; label: string; blurb: string }[] = [
   { id: 'surge', label: 'Surge', blurb: 'Traffic jumps sevenfold in the first fifth of the cycle, holds, then falls back to baseline.' },
   { id: 'slow_bleed', label: 'Slow bleed', blurb: 'Errors creep from 0.5 % to 60 % over four fifths of the cycle while traffic drains, then a fix snaps them back.' },
   { id: 'outage', label: 'Outage and recovery', blurb: 'Errors climb to 100 % and traffic collapses; then errors slowly return to 0 over the second half of the cycle.' },
-  { id: 'manual', label: 'Manual', blurb: 'You set traffic and errors by hand.' },
 ];
 
 export const DEFAULT_DURATION = 180;
@@ -33,8 +35,8 @@ function jitter(t: number, seed: number, amp: number) {
 /** Smooth 0→1 as x goes a→b (clamped). */
 const ramp = (x: number, a: number, b: number) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
-/** The pure shape of a scenario at phase u in [0, 1): no jitter, exactly periodic. Manual is flat. */
-export function shapeAt(id: ScenarioId, u: number, manual: FeedValues = { traffic: 40, errors: 0.01 }): FeedValues {
+/** The pure shape of a scenario at phase u in [0, 1): no jitter, exactly periodic. */
+export function shapeAt(id: ScenarioId, u: number): FeedValues {
   u = ((u % 1) + 1) % 1;
   switch (id) {
     case 'quiet':
@@ -58,14 +60,11 @@ export function shapeAt(id: ScenarioId, u: number, manual: FeedValues = { traffi
       // Traffic collapses with the errors: 60 visits/s when clean, 3 when nothing works.
       return { traffic: 60 - 57 * down, errors };
     }
-    case 'manual':
-      return { ...manual };
   }
 }
 
 /** Scenario value at time t (seconds since the scenario started), looping every `duration` seconds. */
-export function scenarioAt(id: ScenarioId, t: number, manual: FeedValues = { traffic: 40, errors: 0.01 }, duration = DEFAULT_DURATION): FeedValues {
-  if (id === 'manual') return { ...manual };
+export function scenarioAt(id: ScenarioId, t: number, duration = DEFAULT_DURATION): FeedValues {
   const s = shapeAt(id, (t / duration) % 1);
   const seed = SCENARIOS.findIndex((x) => x.id === id) * 2 + 1;
   const traffic = Math.max(0, s.traffic + jitter(t, seed, Math.max(0.5, s.traffic * 0.06)));
@@ -80,7 +79,10 @@ export class FeedEngine {
   private startedAt = 0;
   private lastTick = 0;
   public scenario: ScenarioId = 'quiet';
-  public manual: FeedValues = { traffic: 40, errors: 0.01 };
+  public mode: FeedMode = 'scenario';
+  /** Free form: the dial positions, one per feed. */
+  public free: FeedValues = { traffic: 40, errors: 0.01 };
+  private last: FeedValues | null = null;
   /** Seconds per scenario cycle. */
   public duration = DEFAULT_DURATION;
 
@@ -89,7 +91,24 @@ export class FeedEngine {
     if (!this.started) { this.started = true; this.startedAt = now; this.lastTick = now - 1; }
     if (now - this.lastTick < 1) return null;
     this.lastTick = now;
-    return { t: now, values: scenarioAt(this.scenario, now - this.startedAt, this.manual, this.duration) };
+    const values = this.mode === 'free' ? { ...this.free } : scenarioAt(this.scenario, now - this.startedAt, this.duration);
+    this.last = values;
+    return { t: now, values };
+  }
+
+  /** Switching to free form starts the dials where the feeds are now, so nothing jumps. Back to scenarios restarts the cycle. */
+  setMode(mode: FeedMode, now: number) {
+    if (mode === this.mode) return;
+    this.mode = mode;
+    if (mode === 'free') { if (this.last) this.free = { ...this.last }; }
+    else this.setScenario(this.scenario, now);
+  }
+
+  /** Turn one dial. Returns the new values so the caller can push them to the timeline at once. */
+  setDial(feed: keyof FeedValues, value: number): FeedValues {
+    this.free = { ...this.free, [feed]: Math.max(0, value) };
+    this.last = { ...this.free };
+    return this.free;
   }
 
   setScenario(id: ScenarioId, now: number) { this.scenario = id; this.started = true; this.startedAt = now; this.lastTick = now - 1; }

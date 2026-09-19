@@ -22,12 +22,23 @@ test('surge scenario fires the slope-trigger rule on the timeline', async ({ pag
   expect(parseFloat(slope!)).toBeGreaterThan(40);
 });
 
-test('manual traffic below the bound introduces the minor concept after the hold', async ({ page }) => {
-  await page.getByTestId('scenario').selectOption('manual');
-  await page.getByTestId('manual-traffic').fill('3');
+test('free form: scenarios off, each tracked input gets a dial, derived slope follows, rules still fire', async ({ page }) => {
+  await expect(page.getByTestId('value-traffic')).not.toHaveText('—', { timeout: 5000 });
+  await page.getByTestId('mode-free').check();
+  await expect(page.getByTestId('scenario')).toHaveCount(0);
+  await expect(page.getByTestId('dial-traffic')).toBeVisible();
+  await expect(page.getByTestId('dial-errors')).toBeVisible();
+  await expect(page.getByTestId('dial-traffic_slope')).toHaveCount(0); // derived: no dial
+  await expect(page.getByTestId('input-traffic_slope')).toContainText('follows the traffic dial');
+  await page.getByTestId('dial-errors').fill('0.75');
+  await expect(page.getByTestId('value-errors')).toHaveText('75.0 %'); // lands immediately
+  await page.getByTestId('dial-traffic').fill('3');
   await expect(page.getByTestId('firings')).toContainText('introduce minor on pad', { timeout: 30_000 });
-  await page.getByTestId('manual-traffic').fill('60');
+  await page.getByTestId('dial-traffic').fill('60');
   await expect(page.getByTestId('firings')).toContainText('release minor on pad', { timeout: 15_000 });
+  await page.getByTestId('mode-scenario').check();
+  await expect(page.getByTestId('scenario')).toBeVisible();
+  await expect(page.getByTestId('dial-traffic')).toHaveCount(0);
 });
 
 test('composer can add a rule, change its condition, pick an instrument and write a motif', async ({ page }) => {
