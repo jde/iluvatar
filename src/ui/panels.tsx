@@ -118,6 +118,7 @@ export function SoundsPanel({ rt, score, update }: { rt: Runtime; score: Score; 
               </select>
               <span className="hint">{rt.audio.started ? (rt.audio.isLoaded(s.id) ? 'loaded' : 'loading…') : 'audio not started'}</span>
             </label>
+            <OutputRow rt={rt} sound={s} set={(output) => setSound(s.id, { output })} />
             {s.kind === 'drone' ? (
               <label className="row">Chord degrees
                 <input value={(s.degrees ?? []).join(' ')} onChange={(e) => setSound(s.id, { degrees: e.target.value.split(/\s+/).map(Number).filter((n) => Number.isFinite(n) && n > 0) })} />
@@ -149,6 +150,27 @@ export function SoundsPanel({ rt, score, update }: { rt: Runtime; score: Score; 
 }
 
 // ---------- Rules ----------
+/** Where a sound plays: the browser, or a MIDI port and channel. Hidden until MIDI is connected or a score names a port. */
+function OutputRow({ rt, sound: s, set }: { rt: Runtime; sound: Sound; set: (o: Sound['output']) => void }) {
+  const m = rt.audio.midi;
+  if (m.status !== 'ready' && !s.output) return null;
+  const ports = m.outputs();
+  const missing = s.output && !ports.includes(s.output.port);
+  return (
+    <label className="row">Output
+      <select value={s.output?.port ?? ''} onChange={(e) => set(e.target.value ? { port: e.target.value, channel: s.output?.channel ?? 1 } : undefined)} data-testid={`output-${s.id}`}>
+        <option value="">browser</option>
+        {ports.map((p) => <option key={p} value={p}>MIDI · {p}</option>)}
+        {missing && <option value={s.output!.port}>MIDI · {s.output!.port} (not connected)</option>}
+      </select>
+      {s.output && <select value={s.output.channel} onChange={(e) => set({ ...s.output!, channel: +e.target.value })} data-testid={`channel-${s.id}`}>
+        {Array.from({ length: 16 }, (_, k) => k + 1).map((c) => <option key={c} value={c}>ch {c}</option>)}
+      </select>}
+      {missing && <span className="hint" data-testid={`output-missing-${s.id}`}>{m.status === 'ready' ? 'not connected' : 'connect MIDI'} — playing in the browser</span>}
+    </label>
+  );
+}
+
 export function RulesPanel({ rt, score, update }: { rt: Runtime; score: Score; update: (s: Score) => void }) {
   const setRule = (id: string, patch: Partial<Rule>) => update({ ...score, rules: score.rules.map((r) => (r.id === id ? { ...r, ...patch } : r)) });
   const add = () => update({ ...score, rules: [...score.rules, { id: uid('r'), input: score.inputs[0].id, when: { kind: 'always' }, do: { kind: 'set', sound: score.sounds[0].id, property: 'volume', range: [...score.inputs[0].range] as [number, number], curve: 'linear', smooth: 1 }, enabled: true }] });

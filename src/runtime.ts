@@ -20,7 +20,7 @@ export class Runtime {
   private t0 = performance.now();
   public now = 0;
 
-  constructor(score: Score) { this.score = score; this.timeline = new Timeline(score.inputs); }
+  constructor(score: Score) { this.score = score; this.timeline = new Timeline(score.inputs); this.audio.midi.onChange = () => this.emit(); }
 
   setScore(score: Score) {
     const inputsChanged = JSON.stringify(score.inputs) !== JSON.stringify(this.score.inputs);
@@ -47,6 +47,8 @@ export class Runtime {
   async preview(p: Preset, notes?: string) { this.emit(); await this.audio.preview(p.id, p.instrument, notes ?? presetNotesInC(p), p.volume); this.emit(); }
 
   async startAudio() { await this.audio.start(); this.audio.syncSounds(this.score.sounds); this.audio.play(); this.emit(); }
+  /** Ask the browser for MIDI; the Sounds panel then lists the synths and DAW ports it can play on. */
+  connectMidi() { return this.audio.midi.connect(); }
   togglePlay() { if (this.audio.playing) this.audio.pause(); else this.audio.play(); this.emit(); }
 
   run() {

@@ -17,7 +17,8 @@ a system already exists, and we let its themes be heard.
 - Runs in the browser: two mock feeds (traffic, errors) with scenarios that loop forever over a
   length you set (20 s to 10 min) or a free form mode with a dial per input, a rule engine, General
   MIDI instruments, and a library of 67 public domain tunes as ready-made sounds (with a page to
-  browse, preview, and make your own). No Datadog yet. The founding words are in [VISION-verbatim.md](VISION-verbatim.md).
+  browse, preview, and make your own). **MIDI out**: press "connect MIDI" and any sound can play on a
+  synth or music app instead of the browser (see below). No Datadog yet. The founding words are in [VISION-verbatim.md](VISION-verbatim.md).
 
 ## Run it
 
@@ -42,6 +43,26 @@ live in [scores/](scores/).
 - **Composer mode** — scoring everything a system can do: the score file, the rule language for
   bounds and slopes, the composer screen, scenarios and coverage — is in
   [docs/02-composer-mode.md](docs/02-composer-mode.md) (2026-09-16).
+
+## Play it on a synth (MIDI out)
+
+Works in Chrome, Edge and Firefox (not Safari).
+
+1. Press **connect MIDI** in the top bar and allow it.
+2. In a sound's **Output**, pick a MIDI port and a channel (1–16).
+3. That sound's notes now go to the synth. The other sounds keep playing in the browser.
+
+| What the rules drive | What the synth receives |
+|---|---|
+| Notes (loop, motif, drone) | Note on / note off |
+| Level | CC 7 (volume) |
+| Brightness | CC 74 (filter cutoff on most synths) |
+| Tension | Pitch bend, up to 18 cents sharp (assumes the usual ±2 semitone bend range) |
+
+No hardware: on a Mac, open Audio MIDI Setup → Window → Show MIDI Studio → double-click
+**IAC Driver** → tick "Device is online". "IAC Driver Bus 1" then appears as an output, and
+GarageBand or Logic can play it. If a score names a port that isn't connected, that sound plays in
+the browser and says so. Pause sends all-notes-off.
 
 ## What it will do (first sketch, to be revised)
 

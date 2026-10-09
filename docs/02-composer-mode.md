@@ -167,7 +167,7 @@ sounds like what happened. That is the bar composer mode holds people to.
 | 4 | Sounds: GM SoundFont player, samples, motif notation, name-seeded motif generator | 3 |
 | 5 | Threshold slider on the input's histogram; slope and baseline derived inputs | 3 |
 | 6 | Coverage map, state grid, scenario library, silence audit | 2, 3 |
-| 7 | Web MIDI out, headless mode | 1 |
+| 7 | Web MIDI out (**done 2026-10-09**: per-sound port and channel, CC 7 / CC 74 / pitch bend), headless mode | 1 |
 
 Step 1 and 2 are where the depth comes from: once scores are files and scenarios are repeatable,
 composing is iteration, not waiting for incidents.

@@ -33,6 +33,8 @@ export interface Sound {
   volume: number;
   /** Library preset this sound was made from (see core/presets.ts), for the credit line. */
   preset?: string;
+  /** Where it plays. Absent: in the browser. A MIDI port (by name) and channel 1–16: sent there instead. */
+  output?: { port: string; channel: number };
 }
 
 /** Continuous properties a rule can drive. */

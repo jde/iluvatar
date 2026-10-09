@@ -45,5 +45,6 @@ export function validate(s: Score): void {
     const target = r.do.kind === 'introduce' ? r.do.sound : r.do.sound;
     if (target !== 'piece' && !sounds.has(target)) throw new Error(`rule ${r.id}: unknown sound "${target}"`);
   }
+  for (const x of s.sounds) if (x.output && !(typeof x.output.port === 'string' && Number.isInteger(x.output.channel) && x.output.channel >= 1 && x.output.channel <= 16)) throw new Error(`sound ${x.id}: output needs a port name and a channel 1–16`);
   for (const i of s.inputs) if (i.derive && !inputs.has(i.derive.of)) throw new Error(`input ${i.id}: derives from unknown "${i.derive.of}"`);
 }

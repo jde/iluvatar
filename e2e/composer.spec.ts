@@ -156,3 +156,51 @@ test('previews play once audio is started', async ({ page }) => {
   await expect(page.getByTestId('preview-twinkle')).toHaveText('■', { timeout: 60_000 }); // instrument loaded, notes scheduled
   await expect(page.getByTestId('preview-twinkle')).toHaveText('▶', { timeout: 30_000 }); // and finished
 });
+
+/** A stand-in synth: a fake Web MIDI port that records every message the app sends it. */
+const fakeMidi = () => {
+  const sent: { data: number[]; at?: number }[] = [];
+  (window as any).__midiSent = sent;
+  const port = { id: 'fake', name: 'Test Synth', state: 'connected', send: (data: number[], at?: number) => { sent.push({ data: [...data], at }); } };
+  Object.defineProperty(navigator, 'requestMIDIAccess', { configurable: true, value: async () => ({ outputs: new Map([['fake', port]]), inputs: new Map(), onstatechange: null }) });
+};
+
+test('MIDI out: connect, send the bass to a synth on channel 2, hear its notes and knobs arrive, pause silences it', async ({ page }) => {
+  test.slow();
+  await page.addInitScript(fakeMidi);
+  await page.reload();
+  await expect(page.getByTestId('output-bass')).toHaveCount(0); // no output picker before MIDI is connected
+  await page.getByTestId('connect-midi').click();
+  await expect(page.getByTestId('midi-status')).toHaveText('MIDI: 1 output');
+  await page.getByTestId('output-bass').selectOption('Test Synth');
+  await page.getByTestId('channel-bass').selectOption('2');
+  await page.getByTestId('start-audio').click();
+  await expect(page.getByTestId('play-pause')).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByTestId('audition-bass')).toBeEnabled(); // a MIDI sound needs no soundfont
+  await page.getByTestId('audition-bass').click();
+  const statuses = async () => (await page.evaluate(() => (window as any).__midiSent as { data: number[] }[])).map((m) => m.data);
+  await expect.poll(async () => (await statuses()).filter((d) => d[0] === 0x91).length, { timeout: 10_000 }).toBeGreaterThan(3); // note-ons, channel 2
+  const msgs = await statuses();
+  expect(msgs.some((d) => d[0] === 0xb1 && d[1] === 74)).toBe(true); // brightness as CC 74
+  expect(msgs.some((d) => d[0] === 0xb1 && d[1] === 7)).toBe(true); // level as CC 7
+  expect(msgs.every((d) => (d[0] & 0x0f) === 1)).toBe(true); // nothing on other channels: the other sounds stay in the browser
+  await expect.poll(async () => (await statuses()).filter((d) => d[0] === 0x81).length, { timeout: 10_000 }).toBeGreaterThan(0); // note-offs follow
+  // The choice is saved with the score.
+  await page.reload();
+  await expect(page.getByTestId('output-bass')).toHaveValue('Test Synth');
+  await expect(page.getByTestId('output-missing-bass')).toContainText('connect MIDI — playing in the browser');
+  await page.getByTestId('connect-midi').click();
+  await expect(page.getByTestId('output-missing-bass')).toHaveCount(0);
+  await page.getByTestId('start-audio').click();
+  await page.getByTestId('play-pause').click(); // pause
+  await expect.poll(async () => (await statuses()).some((d) => d[0] === 0xb1 && d[1] === 123)).toBe(true); // all notes off
+  await page.getByTestId('output-bass').selectOption('');
+  await expect(page.getByTestId('channel-bass')).toHaveCount(0); // back to the browser
+});
+
+test('MIDI out: a browser without Web MIDI says so', async ({ page }) => {
+  await page.addInitScript(() => { delete (Navigator.prototype as any).requestMIDIAccess; });
+  await page.reload();
+  await expect(page.getByTestId('midi-status')).toHaveText('MIDI: not in this browser');
+  await expect(page.getByTestId('connect-midi')).toHaveCount(0);
+});

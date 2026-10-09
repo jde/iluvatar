@@ -12,6 +12,14 @@ function loadScore(): Score {
   return defaultScore();
 }
 
+/** Connect to MIDI once; after that, each sound can pick a synth or DAW port in the Sounds panel. */
+function MidiButton({ rt }: { rt: Runtime }) {
+  const m = rt.audio.midi;
+  if (m.status === 'unsupported') return <span className="hint" data-testid="midi-status" title="Web MIDI works in Chrome, Edge and Firefox">MIDI: not in this browser</span>;
+  if (m.status === 'ready') { const n = m.outputs().length; return <span className="hint" data-testid="midi-status">MIDI: {n} output{n === 1 ? '' : 's'}</span>; }
+  return <button onClick={() => rt.connectMidi()} disabled={m.status === 'asking'} data-testid="connect-midi" title="Play sounds on a synth or a music app">{m.status === 'denied' ? 'MIDI refused — retry' : m.status === 'asking' ? 'connecting…' : 'connect MIDI'}</button>;
+}
+
 export default function App() {
   const [score, setScoreState] = useState<Score>(loadScore);
   const rt = useMemo(() => new Runtime(score), []);
@@ -61,6 +69,7 @@ export default function App() {
             </select>
           </label>
           <label>volume <input type="range" min={0} max={1} step={0.01} value={rt.audio.masterVolume} onChange={(e) => { rt.audio.setMasterVolume(+e.target.value); bump(); }} /></label>
+          <MidiButton rt={rt} />
           <button onClick={exportYaml}>export score</button>
           <label className="file">import <input type="file" accept=".yaml,.yml" onChange={(e) => importYaml(e.target.files?.[0])} /></label>
           <button className="ghost" onClick={() => { if (confirm('Replace the current score with the starter score?')) update(defaultScore()); }}>reset</button>

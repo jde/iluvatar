@@ -1,6 +1,8 @@
 /**
  * The renderer: turns effects into sound. Tone.js keeps the clock (Transport, bpm, quantized
  * scheduling); smplr plays General MIDI SoundFont instruments (FluidR3_GM) on the same AudioContext.
+ * A sound with a MIDI output plays the same notes on a synth instead (audio/midi.ts): brightness is
+ * sent as CC 74, level as CC 7, tension as pitch bend.
  * docs/01 §5, docs/02 §2. Nothing in here knows about Datadog or rules — only sounds and effects.
  */
 import * as Tone from 'tone';
@@ -8,6 +10,10 @@ import { Soundfont, getSoundfontNames, CacheStorage } from 'smplr';
 import { smoothStep } from '../core/curves';
 import { degreeToMidi, KEY_ROOTS, parseMotif, type Motif } from '../core/motif';
 import type { Clock, Concept, Effect, Property, Sound, SoundId } from '../core/types';
+import { CC, MidiOut, audioTimeToMidi } from './midi';
+
+/** One note, in the shape smplr takes; MIDI voices get the same. */
+type NoteEvent = { note: number; time: number; duration: number; velocity: number; lpfCutoffHz?: number; detune?: number };
 
 export const INSTRUMENT_NAMES: string[] = getSoundfontNames();
 
@@ -45,6 +51,7 @@ export class AudioEngine {
   private previewStops: ((time?: number) => void)[] = [];
   /** What is being previewed right now, for the UI: a preset id or a sound id. */
   public previewing: string | null = null;
+  readonly midi = new MidiOut();
 
   async start() {
     if (this.started) return;
@@ -60,7 +67,7 @@ export class AudioEngine {
   }
 
   play() { if (!this.started) return; Tone.getTransport().start(); this.playing = true; }
-  pause() { Tone.getTransport().pause(); this.playing = false; for (const v of this.voices.values()) this.stopDrone(v); }
+  pause() { Tone.getTransport().pause(); this.playing = false; for (const v of this.voices.values()) this.stopDrone(v); this.midi.panic(); }
 
   setMasterVolume(v: number) { this.masterVolume = v; this.master?.gain.rampTo(v, 0.1); }
 
@@ -81,6 +88,7 @@ export class AudioEngine {
         this.voices.set(s.id, v);
       }
       const notesChanged = v.sound.notes !== s.notes, degreesChanged = JSON.stringify(v.sound.degrees) !== JSON.stringify(s.degrees);
+      if (JSON.stringify(v.sound.output) !== JSON.stringify(s.output)) { this.stopDrone(v); v.droneRetriggerAt = 0; } // moved to or from a synth
       v.sound = s;
       if (notesChanged) v.motif = parseMotif(s.notes ?? '').motif;
       if (degreesChanged) v.droneRetriggerAt = 0;
@@ -100,7 +108,21 @@ export class AudioEngine {
     }).catch((e) => { console.error('instrument load failed', name, e); v.loading = null; });
   }
 
-  isLoaded(id: SoundId) { const v = this.voices.get(id); return !!v && v.inst !== null && v.loadedInstrument === v.sound.instrument; }
+  isLoaded(id: SoundId) { const v = this.voices.get(id); return !!v && (!!this.midiOut(v) || (v.inst !== null && v.loadedInstrument === v.sound.instrument)); }
+
+  /** The MIDI output a voice plays on, if it has one and that port is connected. Otherwise it plays in the browser. */
+  private midiOut(v: Voice) { const o = v.sound.output; return o && this.midi.has(o.port) ? o : null; }
+  private canPlay(v: Voice) { return !!this.midiOut(v) || !!v.inst; }
+
+  /** Start one note on the voice's synth or its browser instrument. Returns its stop function (audio-clock time). */
+  private strike(v: Voice, e: NoteEvent): (time?: number) => void {
+    const o = this.midiOut(v);
+    if (!o) return v.inst!.start(e);
+    const ctx = Tone.getContext().rawContext as AudioContext;
+    const toMs = (t: number) => audioTimeToMidi(t, ctx.currentTime, performance.now());
+    const stop = this.midi.note(o.port, o.channel, e.note, e.velocity, toMs(e.time), e.duration * 1000);
+    return (time?: number) => stop(time === undefined ? undefined : toMs(time));
+  }
 
   /** Effects from the rule engine, once per tick. `set` updates targets; `concept` toggles; `trigger` schedules a motif. */
   applyEffects(effects: Effect[]) {
@@ -116,25 +138,25 @@ export class AudioEngine {
   /** Play a sound's material once, now — the ▶ button in the Sounds panel. */
   audition(id: SoundId) {
     const v = this.voices.get(id);
-    if (!v || !v.inst) return;
+    if (!v || !this.canPlay(v)) return;
     if (v.sound.kind === 'drone') { this.stopDrone(v); this.startDrone(v, Tone.now(), 4); v.droneRetriggerAt = Tone.now() + 4; return; }
     this.playMotif(v, Tone.now());
   }
 
   private triggerMotif(id: SoundId, quantize: 'beat' | 'bar') {
     const v = this.voices.get(id);
-    if (!v || !v.inst || !this.playing) return;
+    if (!v || !this.canPlay(v) || !this.playing) return;
     const t = Tone.getTransport().nextSubdivision(quantize === 'bar' ? '1m' : '4n');
     this.playMotif(v, t);
   }
 
   private playMotif(v: Voice, at: number) {
-    if (!v.inst) return;
+    if (!this.canPlay(v)) return;
     const stepDur = Tone.Time('8n').toSeconds();
     const shift = KEY_ROOTS[this.clock.key] ?? 0; // written in C, played in the key
     const reg = Math.round((v.current.register - 0.5) * 24);
     for (const n of v.motif.notes) {
-      v.inst.start({ note: n.midi + shift + reg, time: at + n.step * stepDur, duration: n.steps * stepDur * 0.95, velocity: 40 + 80 * v.current.volume * v.sound.volume, lpfCutoffHz: this.cutoff(v), detune: this.detune(v) });
+      this.strike(v, { note: n.midi + shift + reg, time: at + n.step * stepDur, duration: n.steps * stepDur * 0.95, velocity: 40 + 80 * v.current.volume * v.sound.volume, lpfCutoffHz: this.cutoff(v), detune: this.detune(v) });
     }
   }
 
@@ -181,8 +203,13 @@ export class AudioEngine {
       const s = (v as any)._smooth ?? 1;
       for (const p of Object.keys(v.current) as Property[]) v.current[p] = smoothStep(v.current[p], v.target[p], s, dt);
       this.live.set(v.sound.id, { ...v.current });
-      if (!v.inst) continue;
-      v.inst.output.setVolume(Math.round(100 * v.current.volume * v.sound.volume));
+      const o = this.midiOut(v);
+      if (o) {
+        this.midi.cc(o.port, o.channel, CC.volume, 127 * v.current.volume * v.sound.volume);
+        this.midi.cc(o.port, o.channel, CC.brightness, 127 * v.current.brightness);
+        this.midi.bend(o.port, o.channel, this.detune(v));
+      } else if (v.inst) v.inst.output.setVolume(Math.round(100 * v.current.volume * v.sound.volume));
+      else continue;
       if (v.sound.kind === 'loop') this.loopStep(v, time, dt);
       if (v.sound.kind === 'drone' && time >= v.droneRetriggerAt) { this.stopDrone(v, time + 0.5); this.startDrone(v, time, 8); v.droneRetriggerAt = time + Tone.Time('2m').toSeconds(); }
     }
@@ -199,7 +226,7 @@ export class AudioEngine {
     if (v.concepts.has('sparse')) density *= 0.4;
     if (density < weight) return;
     const shift = KEY_ROOTS[this.clock.key] ?? 0, reg = Math.round((v.current.register - 0.5) * 24);
-    v.inst!.start({ note: note.midi + shift + reg, time, duration: note.steps * stepDur * 0.9, velocity: 50 + 60 * density, lpfCutoffHz: this.cutoff(v), detune: this.detune(v) });
+    this.strike(v, { note: note.midi + shift + reg, time, duration: note.steps * stepDur * 0.9, velocity: 50 + 60 * density, lpfCutoffHz: this.cutoff(v), detune: this.detune(v) });
   }
 
   private chord(v: Voice): number[] {
@@ -218,13 +245,13 @@ export class AudioEngine {
   }
 
   private startDrone(v: Voice, time: number, seconds: number) {
-    if (!v.inst) return;
+    if (!this.canPlay(v)) return;
     const notes = this.chord(v); v.droneNotes = notes;
     const tensionTone = notes[notes.length - 1];
     for (const m of notes) {
       const isTension = v.current.tension > 0.15 && m === tensionTone;
       const vel = isTension ? 20 + 70 * v.current.tension : 40 + 40 * v.current.volume;
-      v.droneStops.push(v.inst.start({ note: m, time, duration: seconds, velocity: vel, lpfCutoffHz: this.cutoff(v), detune: this.detune(v) }));
+      v.droneStops.push(this.strike(v, { note: m, time, duration: seconds, velocity: vel, lpfCutoffHz: this.cutoff(v), detune: this.detune(v) }));
     }
   }
 

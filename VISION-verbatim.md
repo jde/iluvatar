@@ -110,4 +110,17 @@ and edits; your own are saved in the browser. Beyond his words: the strict copyr
 dead before 1956 and published before 1929, or traditional), transposing each tune to C so the score
 plays it in the piece's key, and the credit line under a sound's notes.*
 
+## Prompt 11 — MIDI out (2026-10-09, live session)
+
+> I'd like to explore the possibility of using this app in a midi / synth system. I know very little about this, but could this be something that transmits midi signals?
+
+(He then chose "Build it": a MIDI output picker per sound, sending notes and knob changes.)
+
+*Interpretation: each sound gets an Output (browser, or a MIDI port and channel), using the
+browser's Web MIDI API so the live site needs no install. Beyond his words: the rule-driven
+properties go out as controllers so the synth's sound follows the system — level as CC 7,
+brightness as CC 74, tension as pitch bend; no program change is sent (it would overwrite the patch
+chosen on the synth); a sound whose port is missing falls back to the browser rather than going
+silent; pause sends all-notes-off.*
+
 *(More prompts appended below as Dave continues.)*
