@@ -123,4 +123,22 @@ brightness as CC 74, tension as pitch bend; no program change is sent (it would 
 chosen on the synth); a sound whose port is missing falls back to the browser rather than going
 silent; pause sends all-notes-off.*
 
+## Prompt 12 — real synths (2026-10-11, live session)
+
+> Please create a new branch for synths. It should have a variety of popular synths and map the various inputs/controls to the controls on those synths. I'd like to make this as realistic as possible, so mirror real hardware/software synths, starting with the ones that seem most popular.
+
+(Asked whether each synth should also get a browser stand-in, he chose "Both": real MIDI control
+profiles, plus an in-browser voice built like each synth.)
+
+*Interpretation, written up as [docs/04-synths.md](docs/04-synths.md): a synth library where each
+profile mirrors one real synth's front panel and its maker's MIDI implementation chart (CC, 14-bit
+CC and NRPN numbers, cited). A sound picks a synth; its panel shows the real knob names. Rules can
+drive any knob directly ("drive Bass · CUTOFF"), and the score's five properties turn sensible
+knobs by default (brightness → cutoff, tension → resonance, volume → volume). Beyond his words:
+only knobs the composer sets or a rule turns are sent to hardware, so the synth's own patch is not
+overwritten; the stand-in is built like the synth (voices, oscillators, filter poles) but does not
+claim to sound like it; synths whose knobs are analog-only (Grandmother, Model D) are included and
+say plainly what MIDI cannot reach; software synths that only work by MIDI learn get suggested CCs
+and a "send" button to teach them.*
+
 *(More prompts appended below as Dave continues.)*

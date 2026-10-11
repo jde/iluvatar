@@ -1,0 +1,1466 @@
+[
+  {
+    "id": "logic-retro-synth",
+    "name": "Retro Synth (Logic Pro)",
+    "maker": "Apple",
+    "kind": "software",
+    "popularity": "Bundled with Logic Pro for Mac; no usage numbers found",
+    "price": "included with Logic Pro (paid)",
+    "defaultChannel": "follows the Logic track (Logic routes MIDI input to the selected/record-enabled track)",
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Settings label > Global parameters > Bend pop-up menu (default value not stated in Apple docs). MIDI Mono Mode bend range (extended parameters) defaults to 48 semitones"
+    },
+    "respondsTo": {
+      "cc7Volume": null,
+      "cc1ModWheel": true,
+      "cc11Expression": null,
+      "cc64Sustain": null,
+      "velocity": true
+    },
+    "fixedCcMap": false,
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "Mod Wheel to",
+        "section": "SETTINGS > Controller",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": "Mod wheel (CC1) goes to a target chosen in the 'Mod Wheel to' menu (e.g. Filter Cutoff, Wave Shape, LFO/Vibrato Rate); amount slider sets depth. Target is per patch."
+      },
+      {
+        "id": "assignable_cc",
+        "label": "Assignable CC",
+        "section": "SETTINGS > Controller",
+        "cc": null,
+        "kind": "continuous",
+        "role": "other",
+        "default": false,
+        "notes": "One assignable MIDI CC with a target menu and amount slider. Apple suggests CC#4 (foot controller); default CC number not stated in docs."
+      },
+      {
+        "id": "cutoff",
+        "label": "Cutoff",
+        "section": "FILTER",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default. Use Logic Learn Assignment."
+      },
+      {
+        "id": "resonance",
+        "label": "Resonance",
+        "section": "FILTER",
+        "cc": 71,
+        "kind": "continuous",
+        "role": "resonance",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "amp_attack",
+        "label": "Attack (amp envelope)",
+        "section": "ENVELOPES",
+        "cc": 73,
+        "kind": "continuous",
+        "role": "amp_attack",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "amp_release",
+        "label": "Release (amp envelope)",
+        "section": "ENVELOPES",
+        "cc": 72,
+        "kind": "continuous",
+        "role": "amp_release",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      }
+    ],
+    "learnSteps": [
+      "Open the instrument plug-in window and click the knob/slider you want to control",
+      "Choose Logic Pro > Control Surfaces > Learn Assignment for [parameter name] (or press Command-L)",
+      "Move/send the CC from the browser app (the Controller Assignments window shows it in 'Input message')",
+      "Click the Learn Mode button (or press Command-L) to finish",
+      "Alternative (Smart Controls): open the Smart Controls pane (press B), click the Inspector button",
+      "Select a screen control, click External Assignment, click Learn",
+      "Send the CC from the browser app, then click Learn again to stop"
+    ],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output",
+      "In Logic, create or select a Software Instrument track with the instrument loaded",
+      "Logic plays the selected/record-enabled instrument track from incoming MIDI inputs (IAC Bus 1 appears as an input once online)"
+    ],
+    "sources": [
+      {
+        "url": "https://support.apple.com/guide/logicpro/global-and-controller-settings-lgsi213c4bd3/mac",
+        "what": "Retro Synth global/controller settings: Bend menu, Mod Wheel to / Velocity to / Aftertouch to / Assignable CC"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/extended-parameters-lgsi06d85204/mac",
+        "what": "Retro Synth MIDI Mono Mode bend range default 48"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/filter-controls-lgsi213c45bb/mac",
+        "what": "Retro Synth filter: Cutoff, Resonance controls"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/assign-and-delete-controllers-in-easy-view-ctls71c31855/mac",
+        "what": "Logic: Learn Assignment for [parameter] / Command-L steps"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/assign-hardware-controls-to-screen-controls-lgcp0155c51f/mac",
+        "what": "Logic: Smart Controls External Assignment Learn steps"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/general-project-settings-lgcp94b70f34/mac",
+        "what": "Logic: project setting 'Control change message 7/10 sets Volume fader/Pan knob for channel strips' (checkbox; default state not stated)"
+      },
+      {
+        "url": "https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac",
+        "what": "Apple: IAC Driver setup steps (Window > Show MIDI Studio > IAC Driver > Device is online)"
+      }
+    ],
+    "confidence": "high for what is listed (Apple docs); no fixed CC for cutoff/resonance is documented, so those are learn-only"
+  },
+  {
+    "id": "logic-alchemy",
+    "name": "Alchemy (Logic Pro)",
+    "maker": "Apple",
+    "kind": "software",
+    "popularity": "Flagship synth bundled with Logic Pro for Mac; no usage numbers found",
+    "price": "included with Logic Pro (paid)",
+    "defaultChannel": "follows the Logic track",
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Advanced view > Global > master voice section > Pitch bend Up/Down menus (default not stated). MIDI Mono Mode bend range defaults to 48"
+    },
+    "respondsTo": {
+      "cc7Volume": null,
+      "cc1ModWheel": true,
+      "cc11Expression": null,
+      "cc64Sustain": null,
+      "velocity": true
+    },
+    "fixedCcMap": false,
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "ModWheel",
+        "section": "Modulation rack > MIDI",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": "ModWheel is a modulation source; what it moves depends on each preset's routing."
+      },
+      {
+        "id": "ctrl_a",
+        "label": "Ctrl A (2 Breath)",
+        "section": "Extended parameters / modulation rack",
+        "cc": 2,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": "Default Ctrl A = CC#2. It is a modulation SOURCE: it only does something if the preset routes Ctrl A to a target."
+      },
+      {
+        "id": "ctrl_b",
+        "label": "Ctrl B (4 Foot)",
+        "section": "Extended parameters / modulation rack",
+        "cc": 4,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": "Default Ctrl B = CC#4. Modulation source; preset must route it."
+      },
+      {
+        "id": "ctrl_c",
+        "label": "Ctrl C (74 Bright)",
+        "section": "Extended parameters / modulation rack",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": true,
+        "notes": "Default Ctrl C = CC#74 (Brightness). Modulation source: moves cutoff only if the preset routes Ctrl C to cutoff. 'Ctrl 71-78 Bipolar' option makes value 64 the neutral point."
+      },
+      {
+        "id": "ctrl_d",
+        "label": "Ctrl D (75)",
+        "section": "Extended parameters / modulation rack",
+        "cc": 75,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": "Default Ctrl D = CC#75. Modulation source; preset must route it."
+      },
+      {
+        "id": "perf_knobs",
+        "label": "Performance control knobs 1-8",
+        "section": "Perform",
+        "cc": null,
+        "kind": "continuous",
+        "role": "other",
+        "default": false,
+        "notes": "Eight per-preset macro knobs (Apple guideline: knobs 2 and 6 often cutoff/resonance, 1 and 5 delay/reverb). No CC by default; use Logic Learn Assignment."
+      }
+    ],
+    "learnSteps": [
+      "Open the instrument plug-in window and click the knob/slider you want to control",
+      "Choose Logic Pro > Control Surfaces > Learn Assignment for [parameter name] (or press Command-L)",
+      "Move/send the CC from the browser app (the Controller Assignments window shows it in 'Input message')",
+      "Click the Learn Mode button (or press Command-L) to finish",
+      "Alternative (Smart Controls): open the Smart Controls pane (press B), click the Inspector button",
+      "Select a screen control, click External Assignment, click Learn",
+      "Send the CC from the browser app, then click Learn again to stop",
+      "To change Ctrl A-D CC numbers: click the disclosure triangle at Alchemy's lower left (extended parameters) and pick a CC in the Ctrl A/B/C/D menus"
+    ],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output",
+      "In Logic, create or select a Software Instrument track with the instrument loaded",
+      "Logic plays the selected/record-enabled instrument track from incoming MIDI inputs (IAC Bus 1 appears as an input once online)"
+    ],
+    "sources": [
+      {
+        "url": "https://support.apple.com/guide/logicpro/alchemy-extended-parameters-lgsicf381ff6/mac",
+        "what": "Ctrl A CC#2, Ctrl B CC#4, Ctrl C CC#74, Ctrl D CC#75 defaults; Ctrl 71-78 Bipolar; MIDI Mono Mode bend 48"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/midi-control-modulators-lgcp59b0d8f9/mac",
+        "what": "MIDI modulation sources: Pitchbend, ModWheel, Ctrl A-D"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/alchemy-master-voice-section-lgsi1d9b7d23/mac",
+        "what": "Pitch bend Up/Down menus"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/performance-controls-overview-lgsi7f5355c2/mac",
+        "what": "Performance controls and suggested knob layout"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/assign-and-delete-controllers-in-easy-view-ctls71c31855/mac",
+        "what": "Logic: Learn Assignment for [parameter] / Command-L steps"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/assign-hardware-controls-to-screen-controls-lgcp0155c51f/mac",
+        "what": "Logic: Smart Controls External Assignment Learn steps"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/general-project-settings-lgcp94b70f34/mac",
+        "what": "Logic: project setting 'Control change message 7/10 sets Volume fader/Pan knob for channel strips' (checkbox; default state not stated)"
+      },
+      {
+        "url": "https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac",
+        "what": "Apple: IAC Driver setup steps (Window > Show MIDI Studio > IAC Driver > Device is online)"
+      }
+    ],
+    "confidence": "high for the Ctrl A-D defaults (Apple docs); medium on real effect, because each preset decides whether Ctrl C (CC74) is routed anywhere"
+  },
+  {
+    "id": "logic-es2",
+    "name": "ES2 (Logic Pro)",
+    "maker": "Apple",
+    "kind": "software",
+    "popularity": "Long-standing Logic Pro virtual analog synth; no usage numbers found",
+    "price": "included with Logic Pro (paid)",
+    "defaultChannel": "follows the Logic track",
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Bend range fields (upward/downward, or Link mode); default not stated in docs"
+    },
+    "respondsTo": {
+      "cc7Volume": null,
+      "cc1ModWheel": true,
+      "cc11Expression": null,
+      "cc64Sustain": null,
+      "velocity": true
+    },
+    "fixedCcMap": false,
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "ModWhl (router source)",
+        "section": "Router",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": "Apple: 'controller 1 is used as modulation source in the router'. What it moves depends on the patch's router."
+      },
+      {
+        "id": "ctrl_a_f",
+        "label": "Ctrl A to Ctrl F",
+        "section": "Controller Assignments (MIDI button, lower left)",
+        "cc": null,
+        "kind": "continuous",
+        "role": "other",
+        "default": false,
+        "notes": "Six assignable CC sources for the router. Saved with each setting; default CC numbers not stated in docs. CCs 33-63 cannot be chosen (14-bit LSBs)."
+      },
+      {
+        "id": "cutoff",
+        "label": "Cutoff (Filter 1/2)",
+        "section": "FILTER",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "resonance",
+        "label": "Resonance",
+        "section": "FILTER",
+        "cc": 71,
+        "kind": "continuous",
+        "role": "resonance",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      }
+    ],
+    "learnSteps": [
+      "Click the MIDI button in ES2's lower-left corner to show Controller Assignments",
+      "Choose Learn from one of the Ctrl A-F menus",
+      "Send the CC within 20 seconds",
+      "Then route that Ctrl source to a target in the Router",
+      "Open the instrument plug-in window and click the knob/slider you want to control",
+      "Choose Logic Pro > Control Surfaces > Learn Assignment for [parameter name] (or press Command-L)",
+      "Move/send the CC from the browser app (the Controller Assignments window shows it in 'Input message')",
+      "Click the Learn Mode button (or press Command-L) to finish"
+    ],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output",
+      "In Logic, create or select a Software Instrument track with the instrument loaded",
+      "Logic plays the selected/record-enabled instrument track from incoming MIDI inputs (IAC Bus 1 appears as an input once online)"
+    ],
+    "sources": [
+      {
+        "url": "https://support.apple.com/guide/logicpro/assign-midi-controllers-lgsia12440f/mac",
+        "what": "ES2 Ctrl A-F, CC1 as router mod source, reserved CCs, Learn item"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/set-the-pitch-bend-range-lgsia12ac86/mac",
+        "what": "ES2 bend range fields"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/assign-and-delete-controllers-in-easy-view-ctls71c31855/mac",
+        "what": "Logic: Learn Assignment for [parameter] / Command-L steps"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/assign-hardware-controls-to-screen-controls-lgcp0155c51f/mac",
+        "what": "Logic: Smart Controls External Assignment Learn steps"
+      },
+      {
+        "url": "https://support.apple.com/guide/logicpro/general-project-settings-lgcp94b70f34/mac",
+        "what": "Logic: project setting 'Control change message 7/10 sets Volume fader/Pan knob for channel strips' (checkbox; default state not stated)"
+      },
+      {
+        "url": "https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac",
+        "what": "Apple: IAC Driver setup steps (Window > Show MIDI Studio > IAC Driver > Device is online)"
+      }
+    ],
+    "confidence": "high for documented behavior; ES2 Ctrl A-F default CCs are undocumented"
+  },
+  {
+    "id": "garageband-synth-patches",
+    "name": "GarageBand synth patches (Mac)",
+    "maker": "Apple",
+    "kind": "software",
+    "popularity": "Free and preinstalled on many Macs; no usage numbers found",
+    "price": "free",
+    "defaultChannel": "follows the selected software instrument track",
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": null,
+      "how": "Not documented in the GarageBand user guide"
+    },
+    "respondsTo": {
+      "cc7Volume": null,
+      "cc1ModWheel": true,
+      "cc11Expression": null,
+      "cc64Sustain": true,
+      "velocity": true
+    },
+    "fixedCcMap": false,
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "Modulation",
+        "section": "Musical Typing / keyboard",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": "GarageBand's Musical Typing has mod wheel, pitch bend and sustain keys, so these performance controls exist; what mod wheel does depends on the patch."
+      },
+      {
+        "id": "sustain",
+        "label": "Sustain",
+        "section": "Musical Typing / keyboard",
+        "cc": 64,
+        "kind": "toggle",
+        "role": "other",
+        "default": true,
+        "notes": "Sustain is a documented performance control (Tab in Musical Typing)."
+      },
+      {
+        "id": "cutoff",
+        "label": "Cutoff (Smart Control, if the patch has one)",
+        "section": "Smart Controls",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": false,
+        "notes": "UNVERIFIED: no Apple doc says GarageBand patches respond to CC74 or CC71. Apple says a synth Smart Control 'might include' cutoff and resonance screen controls. Test before relying on it."
+      },
+      {
+        "id": "resonance",
+        "label": "Resonance (Smart Control, if present)",
+        "section": "Smart Controls",
+        "cc": 71,
+        "kind": "continuous",
+        "role": "resonance",
+        "default": false,
+        "notes": "UNVERIFIED, same as cutoff."
+      }
+    ],
+    "learnSteps": [
+      "No MIDI Learn or controller-assignment feature is documented in the GarageBand for Mac user guide",
+      "Use Logic Pro (same instruments, adds Learn Assignment) if knob mapping is needed"
+    ],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output",
+      "In GarageBand, select the software instrument track; it plays from connected MIDI inputs"
+    ],
+    "sources": [
+      {
+        "url": "https://support.apple.com/guide/garageband/smart-controls-overview-gbndfd8fa312/mac",
+        "what": "Smart Controls: synth Smart Control 'might include' waveform, resonance, cutoff"
+      },
+      {
+        "url": "https://support.apple.com/guide/garageband/play-software-instruments-gbndd5278cd1/mac",
+        "what": "Musical Typing: mod wheel, pitch bend, sustain keys"
+      },
+      {
+        "url": "https://support.apple.com/guide/garageband/connect-a-music-keyboard-gbndfe7f6293/mac",
+        "what": "Connecting a MIDI keyboard"
+      },
+      {
+        "url": "https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac",
+        "what": "Apple: IAC Driver setup steps (Window > Show MIDI Studio > IAC Driver > Device is online)"
+      }
+    ],
+    "confidence": "low for CC74/CC71: nothing official found either way; must be tested on a real Mac"
+  },
+  {
+    "id": "vital",
+    "name": "Vital",
+    "maker": "Matt Tytel / Vital Audio",
+    "kind": "software",
+    "popularity": "Widely used free wavetable synth; source code is public (github.com/mtytel/vital); no usage numbers found",
+    "price": "free tier plus paid tiers",
+    "defaultChannel": "omni (MIDI manager processes every channel; no channel filter in code)",
+    "bendRangeSemitones": {
+      "default": 2,
+      "settable": true,
+      "how": "pitch_bend_range parameter, range 0 to 48, default 2 (synth_parameters.cpp); shown in Vital's voice/keyboard settings"
+    },
+    "respondsTo": {
+      "cc7Volume": false,
+      "cc1ModWheel": true,
+      "cc11Expression": false,
+      "cc64Sustain": true,
+      "velocity": true
+    },
+    "fixedCcMap": false,
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "MOD WHEEL (mod source)",
+        "section": "Modulation sources",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": "CC1 drives the mod wheel source; it only changes the sound if the preset routes the mod wheel."
+      },
+      {
+        "id": "slide",
+        "label": "SLIDE (mod source)",
+        "section": "Modulation sources",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": "Vital always treats CC74 (MSB) + CC106 (LSB) as the MPE 'Slide' mod source, per channel, even without MPE. It only affects sound if the preset routes Slide. CC74 can also be MIDI-learned in addition."
+      },
+      {
+        "id": "sustain",
+        "label": "Sustain",
+        "section": "Performance",
+        "cc": 64,
+        "kind": "toggle",
+        "role": "other",
+        "default": true,
+        "notes": "CC64 sustain; CC66 sostenuto also handled."
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "FILTER 1",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": false,
+        "notes": "Learn-only. Note CC74 is also the Slide source, so learning cutoff to CC74 is fine but Slide routings will also move. Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "resonance",
+        "label": "RESONANCE",
+        "section": "FILTER 1",
+        "cc": 71,
+        "kind": "continuous",
+        "role": "resonance",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "amp_attack",
+        "label": "ATTACK",
+        "section": "ENVELOPE 1",
+        "cc": 73,
+        "kind": "continuous",
+        "role": "amp_attack",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "amp_release",
+        "label": "RELEASE",
+        "section": "ENVELOPE 1",
+        "cc": 72,
+        "kind": "continuous",
+        "role": "amp_release",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "volume",
+        "label": "VOLUME",
+        "section": "Master",
+        "cc": 7,
+        "kind": "continuous",
+        "role": "volume",
+        "default": false,
+        "notes": "CC7 is NOT handled natively; learn it if needed."
+      }
+    ],
+    "learnSteps": [
+      "Right-click the knob in Vital",
+      "Choose 'Learn MIDI Assignment'",
+      "Send the CC from the browser app",
+      "To remove: right-click > 'Clear MIDI Assignment'",
+      "Mappings are saved in Vital's global config (not per preset)"
+    ],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output",
+      "Load Vital in a DAW (Logic, GarageBand, etc.) on an instrument track, or use the Vital standalone app and enable 'IAC Driver Bus 1' as its MIDI input"
+    ],
+    "sources": [
+      {
+        "url": "https://github.com/mtytel/vital/blob/main/src/common/midi_manager.cpp",
+        "what": "Source: handled CCs (1, 64, 66, 74/106 slide, 0/32 bank, 120/121/123), everything else goes to MIDI learn map"
+      },
+      {
+        "url": "https://github.com/mtytel/vital/blob/main/src/common/synth_parameters.cpp",
+        "what": "Source: pitch_bend_range 0-48 default 2"
+      },
+      {
+        "url": "https://github.com/mtytel/vital/blob/main/src/interface/editor_components/synth_slider.cpp",
+        "what": "Source: right-click menu items 'Learn MIDI Assignment' / 'Clear MIDI Assignment'"
+      },
+      {
+        "url": "https://github.com/mtytel/vital/blob/main/src/common/load_save.cpp",
+        "what": "Source: MIDI learn map saved to global config"
+      },
+      {
+        "url": "https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac",
+        "what": "Apple: IAC Driver setup steps (Window > Show MIDI Studio > IAC Driver > Device is online)"
+      }
+    ],
+    "confidence": "high: read from the open-source code; the shipped commercial build could differ slightly from the public repo. Standalone MIDI-input menu location not verified"
+  },
+  {
+    "id": "serum-2",
+    "name": "Serum 2",
+    "maker": "Xfer Records",
+    "kind": "software",
+    "popularity": "Successor to Serum, one of the most widely used wavetable synths; no usage numbers found",
+    "price": "paid (see xferrecords.com)",
+    "defaultChannel": null,
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Not found in the Serum 2 user guide for normal (non-MPE) bend. MPE Bend Range defaults to 48 (main menu, 1-96)"
+    },
+    "respondsTo": {
+      "cc7Volume": null,
+      "cc1ModWheel": true,
+      "cc11Expression": null,
+      "cc64Sustain": true,
+      "velocity": true
+    },
+    "fixedCcMap": false,
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "Mod Wheel (mod source)",
+        "section": "Mod Matrix",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": "Mod Wheel is a modulation source; preset must route it."
+      },
+      {
+        "id": "sustain",
+        "label": "Sustain",
+        "section": "Performance",
+        "cc": 64,
+        "kind": "toggle",
+        "role": "other",
+        "default": true,
+        "notes": "CC64 sustain; when the arp is on, CC64 controls arp latch instead."
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "FILTER 1",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "resonance",
+        "label": "RES",
+        "section": "FILTER 1",
+        "cc": 71,
+        "kind": "continuous",
+        "role": "resonance",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "amp_attack",
+        "label": "ATK",
+        "section": "ENV 1",
+        "cc": 73,
+        "kind": "continuous",
+        "role": "amp_attack",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "amp_release",
+        "label": "REL",
+        "section": "ENV 1",
+        "cc": 72,
+        "kind": "continuous",
+        "role": "amp_release",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      }
+    ],
+    "learnSteps": [
+      "Right-click the knob or slider",
+      "Choose 'MIDI Learn'",
+      "Send the CC from the browser app (learn mode ends after one CC)",
+      "To remove: right-click > 'Remove MIDI cc'",
+      "To make it the default for new instances: main menu > Save MIDI Map, save as default.SerumMIDIMap in Serum 2 Presets/System/MIDI CC Maps"
+    ],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output",
+      "Load Serum 2 on an instrument track in a DAW (Logic, GarageBand, etc.); the DAW passes IAC input to the selected track"
+    ],
+    "sources": [
+      {
+        "url": "https://xferrecords.com/web-manual/serum-2/using-knobs-and-sliders",
+        "what": "MIDI Learn, saving rules, default.SerumMIDIMap"
+      },
+      {
+        "url": "https://xferrecords.com/manual/serum-2",
+        "what": "Serum 2 User Guide PDF: Remove MIDI cc, mod sources, CC64 arp latch, MPE Bend Range 48, Load MIDI Map from Presets preference (off by default)"
+      },
+      {
+        "url": "https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac",
+        "what": "Apple: IAC Driver setup steps (Window > Show MIDI Studio > IAC Driver > Device is online)"
+      }
+    ],
+    "confidence": "high for learn workflow; no factory CC map exists (only an optional user default map); normal bend range default not documented"
+  },
+  {
+    "id": "arturia-pigments",
+    "name": "Pigments",
+    "maker": "Arturia",
+    "kind": "software",
+    "popularity": "Arturia's flagship multi-engine synth; no usage numbers found",
+    "price": "paid (see arturia.com)",
+    "defaultChannel": "global MIDI Channel setting with 'All' (omni) option; standalone listens on all channels",
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Click the gear icon next to the pitch wheel (virtual keyboard); Up and Down set independently (default not stated). MPE Bend Range default 48"
+    },
+    "respondsTo": {
+      "cc7Volume": null,
+      "cc1ModWheel": true,
+      "cc11Expression": true,
+      "cc64Sustain": true,
+      "velocity": true
+    },
+    "fixedCcMap": false,
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "Mod Wheel",
+        "section": "Keyboard / mod sources",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": "Reserved CC (cannot be reassigned)."
+      },
+      {
+        "id": "expression",
+        "label": "Expression",
+        "section": "Keyboard / mod sources",
+        "cc": 11,
+        "kind": "continuous",
+        "role": "expression",
+        "default": true,
+        "notes": "Reserved CC 11. What it moves is not described in the manual."
+      },
+      {
+        "id": "sustain",
+        "label": "Sustain",
+        "section": "Keyboard",
+        "cc": 64,
+        "kind": "toggle",
+        "role": "other",
+        "default": true,
+        "notes": "Reserved CC 64."
+      },
+      {
+        "id": "mpe_slide",
+        "label": "Slide CC (MPE)",
+        "section": "Settings > MPE",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "other",
+        "default": false,
+        "notes": "Only when MPE is enabled: CC74 by default goes to Macro 1 as Slide, and stops reaching anything learned to CC74."
+      },
+      {
+        "id": "cutoff",
+        "label": "Cutoff",
+        "section": "FILTER 1",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": false,
+        "notes": "The factory 'Default' MIDI config has some predetermined assignments, but the manual does not list them. Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "resonance",
+        "label": "Resonance",
+        "section": "FILTER 1",
+        "cc": 71,
+        "kind": "continuous",
+        "role": "resonance",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      }
+    ],
+    "learnSteps": [
+      "Click the gear icon at the top right to open the side panel",
+      "Open the MIDI tab and click Learn (assignable controls turn purple)",
+      "Click the control, then send the CC (control turns red)",
+      "Click Learn again to finish",
+      "To remove: right-click (or Control-click) a red control",
+      "Assignments are saved per preset"
+    ],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output",
+      "Standalone: in Audio MIDI settings, tick the 'IAC Driver Bus 1' checkbox under MIDI Devices",
+      "Or load Pigments on an instrument track in a DAW"
+    ],
+    "sources": [
+      {
+        "url": "https://downloads.arturia.net/products/pigments/manual/pigments_Manual_7_0_0_EN.pdf",
+        "what": "Pigments 7 manual: MIDI tab Learn steps, Default/Empty configs, reserved CCs (pitch bend, 1, 11, 64, 123, aftertouch), MPE Slide CC 74, MPE bend 48, MIDI channel All, pitch-bend gear"
+      },
+      {
+        "url": "https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac",
+        "what": "Apple: IAC Driver setup steps (Window > Show MIDI Studio > IAC Driver > Device is online)"
+      }
+    ],
+    "confidence": "high for documented items; the contents of the factory 'Default' MIDI config are not documented"
+  },
+  {
+    "id": "arturia-analog-lab",
+    "name": "Analog Lab",
+    "maker": "Arturia",
+    "kind": "software",
+    "popularity": "Preset player for the Arturia V Collection; bundled free (Intro edition) with Arturia keyboards; no usage numbers found",
+    "price": "paid; Intro edition bundled with Arturia hardware",
+    "defaultChannel": "omni (receives on all 16 channels by default)",
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Per preset: Settings > Preset Settings > Pitch Bend Range (only on presets whose instrument offers it)"
+    },
+    "respondsTo": {
+      "cc7Volume": null,
+      "cc1ModWheel": true,
+      "cc11Expression": true,
+      "cc64Sustain": true,
+      "velocity": true
+    },
+    "fixedCcMap": false,
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "Mod Wheel",
+        "section": "Keyboard",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": "Standard CC listed in the manual."
+      },
+      {
+        "id": "expression",
+        "label": "Expression",
+        "section": "Keyboard",
+        "cc": 11,
+        "kind": "continuous",
+        "role": "expression",
+        "default": true,
+        "notes": "Standard CC listed in the manual."
+      },
+      {
+        "id": "sustain",
+        "label": "Sustain",
+        "section": "Keyboard",
+        "cc": 64,
+        "kind": "toggle",
+        "role": "other",
+        "default": true,
+        "notes": "Standard CC listed in the manual."
+      },
+      {
+        "id": "brightness",
+        "label": "Brightness (Macro 1)",
+        "section": "Performance Controls",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": false,
+        "notes": "Official only with an Arturia MiniLab 3 selected as controller (MiniLab 3 manual: knob 1 sends CC74 -> Brightness). Not documented for the Generic config."
+      },
+      {
+        "id": "timbre",
+        "label": "Timbre (Macro 2)",
+        "section": "Performance Controls",
+        "cc": 71,
+        "kind": "continuous",
+        "role": "other",
+        "default": false,
+        "notes": "MiniLab 3 mapping: knob 2 CC71 -> Timbre."
+      },
+      {
+        "id": "time",
+        "label": "Time (Macro 3)",
+        "section": "Performance Controls",
+        "cc": 76,
+        "kind": "continuous",
+        "role": "other",
+        "default": false,
+        "notes": "MiniLab 3 mapping: knob 3 CC76 -> Time."
+      },
+      {
+        "id": "movement",
+        "label": "Movement (Macro 4)",
+        "section": "Performance Controls",
+        "cc": 77,
+        "kind": "continuous",
+        "role": "other",
+        "default": false,
+        "notes": "MiniLab 3 mapping: knob 4 CC77 -> Movement."
+      },
+      {
+        "id": "fx_a_mix",
+        "label": "FX A Dry/Wet",
+        "section": "Effects",
+        "cc": 93,
+        "kind": "continuous",
+        "role": "other",
+        "default": false,
+        "notes": "MiniLab 3 mapping: knob 5 CC93."
+      },
+      {
+        "id": "fx_b_mix",
+        "label": "FX B Dry/Wet",
+        "section": "Effects",
+        "cc": 18,
+        "kind": "continuous",
+        "role": "other",
+        "default": false,
+        "notes": "MiniLab 3 mapping: knob 6 CC18."
+      },
+      {
+        "id": "delay_mix",
+        "label": "Delay Volume",
+        "section": "Effects",
+        "cc": 19,
+        "kind": "continuous",
+        "role": "delay_mix",
+        "default": false,
+        "notes": "MiniLab 3 mapping: knob 7 CC19."
+      },
+      {
+        "id": "reverb_mix",
+        "label": "Reverb Volume",
+        "section": "Effects",
+        "cc": 16,
+        "kind": "continuous",
+        "role": "reverb_mix",
+        "default": false,
+        "notes": "MiniLab 3 mapping: knob 8 CC16."
+      },
+      {
+        "id": "master_volume",
+        "label": "Master Volume",
+        "section": "Master",
+        "cc": 17,
+        "kind": "continuous",
+        "role": "volume",
+        "default": false,
+        "notes": "MiniLab 3 mapping: fader 4 CC17 (faders 1-3: Bass CC82, Mid CC83, Treble CC85)."
+      }
+    ],
+    "learnSteps": [
+      "Open the settings side panel, MIDI tab",
+      "Set MIDI Controller to a Generic option (Generic 9 Knobs or Generic 9 Knobs + 9 Faders)",
+      "Click Learn (available controls turn purple)",
+      "Click a control, then send the CC (control turns red)",
+      "Click Learn again to finish",
+      "Or: click Add Control at the bottom of the list, pick a parameter, then send the CC",
+      "Factory config 'Generic (Default)' has pre-set assignments (not listed in the manual)"
+    ],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output",
+      "Standalone: enable 'IAC Driver Bus 1' as a MIDI input in Analog Lab's audio/MIDI settings",
+      "Or load Analog Lab on an instrument track in a DAW"
+    ],
+    "sources": [
+      {
+        "url": "https://www.arturia.com/api/download/products/analoglab-v/manual/analog-lab_Manual_5_11_1_EN.pdf",
+        "what": "Analog Lab manual 5.11.1: all 16 channels by default, Generic controller, Learn, Add Control, Generic (Default) config, standard CCs 1/11/64/123, Pitch Bend Range preset setting"
+      },
+      {
+        "url": "https://www.arturia.com/api/download/products/minilab-3/manual/minilab-3_Manual_1_0_5_EN.pdf",
+        "what": "MiniLab 3 manual: Analog Lab knob/fader CC table (74 Brightness, 71 Timbre, 76 Time, 77 Movement, 93, 18, 19, 16, 82, 83, 85, 17)"
+      },
+      {
+        "url": "https://forum.arturia.com/t/bug-report-alv-changes-preset-previous-next-in-my-playlist-when-receiving-midi-cc-28-and-29/5693",
+        "what": "User report (not Arturia staff): Generic config uses CC28/29 for previous/next preset. Low confidence"
+      },
+      {
+        "url": "https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac",
+        "what": "Apple: IAC Driver setup steps (Window > Show MIDI Studio > IAC Driver > Device is online)"
+      }
+    ],
+    "confidence": "medium: MiniLab 3 CC table is official, but whether the same CCs work with the Generic config (no Arturia hardware) is unverified"
+  },
+  {
+    "id": "uhe-diva",
+    "name": "Diva",
+    "maker": "u-he",
+    "kind": "software",
+    "popularity": "Widely used analog-modeling synth; no usage numbers found",
+    "price": "paid (see u-he.com)",
+    "defaultChannel": "plays notes on any channel (Multichannel MIDI needs no activation); MIDI Table CC assignments are per channel",
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "MAIN panel > Tuning > Up and Down (0 to 24, 36 or 48 semitones); default not stated. MPE manager channel defaults to +/-2"
+    },
+    "respondsTo": {
+      "cc7Volume": null,
+      "cc1ModWheel": true,
+      "cc11Expression": true,
+      "cc64Sustain": true,
+      "velocity": true
+    },
+    "fixedCcMap": false,
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "ModWheel (mod source)",
+        "section": "Modulation sources",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": "Mod source; preset decides what it moves."
+      },
+      {
+        "id": "control_a",
+        "label": "Control A (mod source)",
+        "section": "Modulation sources",
+        "cc": 2,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": "User-definable CC, default 02 (breath). Set to 74 for MPE timbre. Mod source; preset must route it."
+      },
+      {
+        "id": "control_b",
+        "label": "Control B (mod source)",
+        "section": "Modulation sources",
+        "cc": 11,
+        "kind": "continuous",
+        "role": "expression",
+        "default": true,
+        "notes": "User-definable CC, default 11 (expression pedal). Mod source; preset must route it."
+      },
+      {
+        "id": "sustain",
+        "label": "Hold pedal",
+        "section": "Performance",
+        "cc": 64,
+        "kind": "toggle",
+        "role": "other",
+        "default": true,
+        "notes": "Manual mentions hold pedal CC#64 as a global control (MPE chapter)."
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "VCF",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default. Manual's own MIDI Learn example uses the CUTOFF knob."
+      },
+      {
+        "id": "resonance",
+        "label": "RES",
+        "section": "VCF",
+        "cc": 71,
+        "kind": "continuous",
+        "role": "resonance",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "amp_attack",
+        "label": "Attack (Envelope 1)",
+        "section": "ENV",
+        "cc": 73,
+        "kind": "continuous",
+        "role": "amp_attack",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      },
+      {
+        "id": "amp_release",
+        "label": "Release (Envelope 1)",
+        "section": "ENV",
+        "cc": 72,
+        "kind": "continuous",
+        "role": "amp_release",
+        "default": false,
+        "notes": "Suggested assignment via MIDI learn (GM2 sound-controller convention); NOT a factory default."
+      }
+    ],
+    "learnSteps": [
+      "Click the cogwheel (top right, in the wooden end-cheek)",
+      "Click the 'L' MIDI Learn button",
+      "Click the knob/slider you want",
+      "Send the CC from the browser app",
+      "Check or edit it in the MIDI Table (the lower MIDI icon); set Channel, Controller, Mode there",
+      "Remove with the [x] on the row, or Delete All"
+    ],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output",
+      "Load Diva on an instrument track in a DAW (Logic, GarageBand, etc.)"
+    ],
+    "sources": [
+      {
+        "url": "https://dl.u-he.com/manuals/plugins/diva/Diva-user-guide.pdf",
+        "what": "Diva user guide: MIDI Learn / MIDI Table pages, Control A default CC02 and Control B default CC11, ModWheel CC01, bend Up/Down ranges, Multichannel MIDI, MPE CC#74 and CC#64"
+      },
+      {
+        "url": "https://support.apple.com/guide/audio-midi-setup/transfer-midi-information-between-apps-ams1013/mac",
+        "what": "Apple: IAC Driver setup steps (Window > Show MIDI Studio > IAC Driver > Device is online)"
+      }
+    ],
+    "confidence": "high for documented items; no factory MIDI Table defaults are documented (learn-only); CC7 not mentioned"
+  },
+  {
+    "id": "gm2-sound-controllers",
+    "name": "General MIDI 2 controller set",
+    "maker": "MIDI Manufacturers Association / AMEI",
+    "kind": "standard",
+    "popularity": "Standard (1999); required on GM2-certified sound modules",
+    "price": "spec download requires MIDI Association login",
+    "defaultChannel": "16 channels; channel 10 is drums by default",
+    "bendRangeSemitones": {
+      "default": 2,
+      "settable": true,
+      "how": "RPN 0 (Pitch Bend Sensitivity): CC101=0, CC100=0, then CC6 = semitones (default 2 semitones)"
+    },
+    "respondsTo": {
+      "cc7Volume": true,
+      "cc1ModWheel": true,
+      "cc11Expression": true,
+      "cc64Sustain": true,
+      "velocity": true
+    },
+    "fixedCcMap": true,
+    "controls": [
+      {
+        "id": "cc1",
+        "label": "Modulation Wheel",
+        "section": "GM2",
+        "cc": 1,
+        "kind": "continuous",
+        "role": "mod_wheel",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc5",
+        "label": "Portamento Time",
+        "section": "GM2",
+        "cc": 5,
+        "kind": "continuous",
+        "role": "portamento",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc7",
+        "label": "Channel Volume",
+        "section": "GM2",
+        "cc": 7,
+        "kind": "continuous",
+        "role": "volume",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc10",
+        "label": "Pan",
+        "section": "GM2",
+        "cc": 10,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc11",
+        "label": "Expression Controller",
+        "section": "GM2",
+        "cc": 11,
+        "kind": "continuous",
+        "role": "expression",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc64",
+        "label": "Damper Pedal (Sustain) on/off",
+        "section": "GM2",
+        "cc": 64,
+        "kind": "toggle",
+        "role": "other",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc65",
+        "label": "Portamento On/Off",
+        "section": "GM2",
+        "cc": 65,
+        "kind": "toggle",
+        "role": "portamento",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc70",
+        "label": "Sound Controller 1 (default: Sound Variation)",
+        "section": "GM2",
+        "cc": 70,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": "Listed as GM2-supported on Wikipedia."
+      },
+      {
+        "id": "cc71",
+        "label": "Sound Controller 2 (default: Timbre/Harmonic Intensity; GM2 = filter resonance)",
+        "section": "GM2",
+        "cc": 71,
+        "kind": "continuous",
+        "role": "resonance",
+        "default": true,
+        "notes": "Wikipedia GM2 table: 'Timbre/Harmonic Intensity (filter resonance)'."
+      },
+      {
+        "id": "cc72",
+        "label": "Sound Controller 3 (default: Release Time)",
+        "section": "GM2",
+        "cc": 72,
+        "kind": "continuous",
+        "role": "amp_release",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc73",
+        "label": "Sound Controller 4 (default: Attack Time)",
+        "section": "GM2",
+        "cc": 73,
+        "kind": "continuous",
+        "role": "amp_attack",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc74",
+        "label": "Sound Controller 5 (default: Brightness; GM2 = filter cutoff)",
+        "section": "GM2",
+        "cc": 74,
+        "kind": "continuous",
+        "role": "cutoff",
+        "default": true,
+        "notes": "Wikipedia GM2 table: 'Brightness (cutoff frequency)'."
+      },
+      {
+        "id": "cc75",
+        "label": "Sound Controller 6 (default: Decay Time)",
+        "section": "GM2",
+        "cc": 75,
+        "kind": "continuous",
+        "role": "amp_decay",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc76",
+        "label": "Sound Controller 7 (default: Vibrato Rate)",
+        "section": "GM2",
+        "cc": 76,
+        "kind": "continuous",
+        "role": "lfo_rate",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc77",
+        "label": "Sound Controller 8 (default: Vibrato Depth)",
+        "section": "GM2",
+        "cc": 77,
+        "kind": "continuous",
+        "role": "lfo_depth",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc78",
+        "label": "Sound Controller 9 (default: Vibrato Delay)",
+        "section": "GM2",
+        "cc": 78,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc79",
+        "label": "Sound Controller 10 (default: undefined)",
+        "section": "GM2",
+        "cc": 79,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": "Not in the GM2 supported-controller list (Wikipedia); undefined."
+      },
+      {
+        "id": "cc84",
+        "label": "Portamento Control",
+        "section": "GM2",
+        "cc": 84,
+        "kind": "continuous",
+        "role": "portamento",
+        "default": true,
+        "notes": "Defined in MIDI 1.0 but NOT in the GM2 supported-controller list (Wikipedia)."
+      },
+      {
+        "id": "cc91",
+        "label": "Effects 1 Depth (default: Reverb Send Level)",
+        "section": "GM2",
+        "cc": 91,
+        "kind": "continuous",
+        "role": "reverb_mix",
+        "default": true,
+        "notes": ""
+      },
+      {
+        "id": "cc93",
+        "label": "Effects 3 Depth (default: Chorus Send Level)",
+        "section": "GM2",
+        "cc": 93,
+        "kind": "continuous",
+        "role": "other",
+        "default": true,
+        "notes": ""
+      }
+    ],
+    "learnSteps": [],
+    "setup": [
+      "Open Audio MIDI Setup (Applications > Utilities)",
+      "Choose Window > Show MIDI Studio",
+      "Double-click IAC Driver",
+      "Select 'Device is online'",
+      "Make sure at least one bus exists (default name 'Bus 1'); click Apply",
+      "In the browser app, choose 'IAC Driver Bus 1' as the Web MIDI output"
+    ],
+    "honoredBy": [
+      {
+        "synth": "Logic Alchemy",
+        "status": "partial",
+        "detail": "Ctrl C defaults to CC74 and Ctrl D to CC75 as modulation sources; a preset must route them. 'Ctrl 71-78 Bipolar' option exists. Source: Apple Alchemy extended parameters page"
+      },
+      {
+        "synth": "Arturia Analog Lab + MiniLab 3",
+        "status": "partial",
+        "detail": "Official MiniLab 3 map: CC74 Brightness, CC71 Timbre, CC76 Time, CC77 Movement macros (GM2-like meanings, not exact)"
+      },
+      {
+        "synth": "Vital",
+        "status": "no (different meaning)",
+        "detail": "CC74 is always the MPE 'Slide' mod source, not a fixed cutoff. Source: Vital midi_manager.cpp"
+      },
+      {
+        "synth": "Pigments",
+        "status": "no by default",
+        "detail": "CC74 is the MPE Slide CC only when MPE is enabled"
+      },
+      {
+        "synth": "Diva",
+        "status": "no by default",
+        "detail": "CC74 only if Control A is set to 74 (recommended for MPE)"
+      },
+      {
+        "synth": "Serum 2",
+        "status": "no",
+        "detail": "No factory CC map; learn only"
+      },
+      {
+        "synth": "FluidSynth (SoundFont players)",
+        "status": "no for 71-78",
+        "detail": "Default SF2.01 modulators cover velocity, channel pressure, CC1, CC7, CC10, CC11, CC91, CC93, pitch bend. CC71-78 need SoundFont-defined modulators. Source: fluid_synth.c"
+      },
+      {
+        "synth": "GM2-certified hardware/software modules (e.g. Roland Sound Canvas line)",
+        "status": "expected yes, UNVERIFIED",
+        "detail": "GM2 compliance requires 70-78 support per the GM2 controller list; specific products not checked against their manuals"
+      },
+      {
+        "synth": "GarageBand",
+        "status": "UNVERIFIED",
+        "detail": "No Apple doc found either way"
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://midi.org/midi-1-0-control-change-messages",
+        "what": "Official MIDI Association CC table: 70-79 sound controller defaults, 84 Portamento Control, 91/93 effects depth"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/General_MIDI_Level_2",
+        "what": "GM2 supported-controller list (0/32, 1, 2, 4, 5, 6/38, 7, 10, 11, 64-67, 70-78, 91-95, 100/101) and RPNs"
+      },
+      {
+        "url": "https://midi.org/general-midi-2",
+        "what": "GM2 spec landing page (PDF behind login)"
+      },
+      {
+        "url": "https://github.com/FluidSynth/fluidsynth/blob/master/src/synth/fluid_synth.c",
+        "what": "FluidSynth default modulators list"
+      }
+    ],
+    "confidence": "high for CC meanings (official midi.org table); medium for the exact GM2 required list (from Wikipedia, official PDF not read)"
+  }
+]

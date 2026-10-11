@@ -30,6 +30,7 @@ export default function App() {
   const onLibrary = route.startsWith('#/library');
 
   useEffect(() => { rt.run(); return rt.subscribe(bump); }, [rt]);
+  useEffect(() => { if (import.meta.env.DEV) (window as any).__rt = rt; }, [rt]); // the browser tests read the engine
 
   const update = (s: Score) => {
     setScoreState(s); rt.setScore(s);

@@ -1,0 +1,2261 @@
+[
+  {
+    "id": "minilogue-xd",
+    "name": "minilogue xd",
+    "maker": "Korg",
+    "kind": "hardware",
+    "popularity": "Korg's 4-voice analog poly with digital multi-engine; widely reviewed (Sound On Sound review: https://www.soundonsound.com/reviews/korg-minilogue-xd). No sales-chart figure checked.",
+    "voices": 4,
+    "noteRange": [
+      0,
+      127
+    ],
+    "defaultChannel": null,
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Per program: PROGRAM EDIT > Button 4 (JOYSTICK) > X+ Bend Range and X- Bend Range, Off or 1-12 notes each. Also NRPN LSB 0x20 (+) / 0x21 (-) via CC99/98 then CC6. Factory default value not stated in the documents."
+    },
+    "respondsTo": {
+      "cc7Volume": true,
+      "cc1ModWheel": true,
+      "programChange": true,
+      "velocity": true,
+      "cc64Sustain": true
+    },
+    "controls": [
+      {
+        "id": "portamento",
+        "label": "PORTAMENTO",
+        "section": "MASTER",
+        "cc": 5,
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": ""
+      },
+      {
+        "id": "voice_mode_depth",
+        "label": "VOICE MODE DEPTH",
+        "section": "VOICE MODE",
+        "cc": 27,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works. CC59 is also VOICE MODE DEPTH without display update."
+      },
+      {
+        "id": "vco1_wave",
+        "label": "WAVE",
+        "section": "VCO 1",
+        "cc": 50,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 42,
+            "meaning": "SQR"
+          },
+          {
+            "from": 43,
+            "to": 85,
+            "meaning": "TRI"
+          },
+          {
+            "from": 86,
+            "to": 127,
+            "meaning": "SAW"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "vco1_octave",
+        "label": "OCTAVE",
+        "section": "VCO 1",
+        "cc": 48,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 31,
+            "meaning": "16'"
+          },
+          {
+            "from": 32,
+            "to": 63,
+            "meaning": "8'"
+          },
+          {
+            "from": 64,
+            "to": 95,
+            "meaning": "4'"
+          },
+          {
+            "from": 96,
+            "to": 127,
+            "meaning": "2'"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "vco1_pitch",
+        "label": "PITCH",
+        "section": "VCO 1",
+        "cc": 34,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "vco1_shape",
+        "label": "SHAPE",
+        "section": "VCO 1",
+        "cc": 36,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "vco2_wave",
+        "label": "WAVE",
+        "section": "VCO 2",
+        "cc": 51,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 42,
+            "meaning": "SQR"
+          },
+          {
+            "from": 43,
+            "to": 85,
+            "meaning": "TRI"
+          },
+          {
+            "from": 86,
+            "to": 127,
+            "meaning": "SAW"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "vco2_octave",
+        "label": "OCTAVE",
+        "section": "VCO 2",
+        "cc": 49,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 31,
+            "meaning": "16'"
+          },
+          {
+            "from": 32,
+            "to": 63,
+            "meaning": "8'"
+          },
+          {
+            "from": 64,
+            "to": 95,
+            "meaning": "4'"
+          },
+          {
+            "from": 96,
+            "to": 127,
+            "meaning": "2'"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "vco2_pitch",
+        "label": "PITCH",
+        "section": "VCO 2",
+        "cc": 35,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "vco2_shape",
+        "label": "SHAPE",
+        "section": "VCO 2",
+        "cc": 37,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "sync",
+        "label": "SYNC",
+        "section": "VCO 2",
+        "cc": 80,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 63,
+            "meaning": "OFF (per transmit table; receive table says ON)"
+          },
+          {
+            "from": 64,
+            "to": 127,
+            "meaning": "ON (per transmit table; receive table says OFF)"
+          }
+        ],
+        "role": "other",
+        "notes": "Korg doc conflict: transmit table says OFF=0, ON=127; receive table says 0-63=ON, 64-127=OFF. Send 0 or 127 and verify on hardware."
+      },
+      {
+        "id": "ring",
+        "label": "RING",
+        "section": "VCO 2",
+        "cc": 81,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 63,
+            "meaning": "OFF (per transmit table; receive table says ON)"
+          },
+          {
+            "from": 64,
+            "to": 127,
+            "meaning": "ON (per transmit table; receive table says OFF)"
+          }
+        ],
+        "role": "other",
+        "notes": "Same transmit/receive conflict as SYNC. Verify on hardware."
+      },
+      {
+        "id": "cross_mod_depth",
+        "label": "CROSS MOD DEPTH",
+        "section": "VCO 2",
+        "cc": 41,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "multi_type",
+        "label": "NOISE/VPM/USR",
+        "section": "MULTI ENGINE",
+        "cc": 53,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 42,
+            "meaning": "NOISE"
+          },
+          {
+            "from": 43,
+            "to": 85,
+            "meaning": "VPM"
+          },
+          {
+            "from": 86,
+            "to": 127,
+            "meaning": "USR"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "multi_sub_type",
+        "label": "TYPE",
+        "section": "MULTI ENGINE",
+        "cc": 103,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Meaning depends on MULTI TYPE. VPM and USER: 16 equal ranges of 8 (0-7, 8-15 ... 120-127) = SIN1,SIN2,SIN3,SIN4,SAW1,SAW2,SQU1,SQU2,FAT1,FAT2,AIR1,AIR2,DECAY1,DECAY2,CREEP,THROAT (VPM) or USER1-16. NOISE: HIGH, LOW, PEAK, DECIM; receive table ranges are garbled in the Korg doc, transmit values are 0,42,84,127 - send those exact values."
+      },
+      {
+        "id": "multi_shape",
+        "label": "SHAPE",
+        "section": "MULTI ENGINE",
+        "cc": 54,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "multi_shift_shape",
+        "label": "SHAPE (with SHIFT held)",
+        "section": "MULTI ENGINE",
+        "cc": 104,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "MULTI SHIFT SHAPE in the Korg doc; reached on the panel by holding SHIFT and turning SHAPE (label inferred from name). Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "mixer_vco1",
+        "label": "VCO 1",
+        "section": "MIXER",
+        "cc": 39,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "mixer_vco2",
+        "label": "VCO 2",
+        "section": "MIXER",
+        "cc": 40,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "mixer_multi",
+        "label": "MULTI",
+        "section": "MIXER",
+        "cc": 33,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "FILTER",
+        "cc": 43,
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "resonance",
+        "label": "RESONANCE",
+        "section": "FILTER",
+        "cc": 44,
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "drive",
+        "label": "DRIVE",
+        "section": "FILTER",
+        "cc": 84,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 42,
+            "meaning": "0%"
+          },
+          {
+            "from": 43,
+            "to": 85,
+            "meaning": "50%"
+          },
+          {
+            "from": 86,
+            "to": 127,
+            "meaning": "100%"
+          }
+        ],
+        "role": "drive",
+        "notes": ""
+      },
+      {
+        "id": "keytrack",
+        "label": "KEYTRACK",
+        "section": "FILTER",
+        "cc": 83,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 42,
+            "meaning": "0%"
+          },
+          {
+            "from": 43,
+            "to": 85,
+            "meaning": "50%"
+          },
+          {
+            "from": 86,
+            "to": 127,
+            "meaning": "100%"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "amp_attack",
+        "label": "ATTACK",
+        "section": "AMP EG",
+        "cc": 16,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "amp_decay",
+        "label": "DECAY",
+        "section": "AMP EG",
+        "cc": 17,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "amp_sustain",
+        "label": "SUSTAIN",
+        "section": "AMP EG",
+        "cc": 18,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "amp_release",
+        "label": "RELEASE",
+        "section": "AMP EG",
+        "cc": 19,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_release",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "eg_attack",
+        "label": "ATTACK",
+        "section": "EG",
+        "cc": 20,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_attack",
+        "notes": "Mod EG; acts on the filter only when EG TARGET = CUTOFF. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "eg_decay",
+        "label": "DECAY",
+        "section": "EG",
+        "cc": 21,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_decay",
+        "notes": "Mod EG; destination set by EG TARGET. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "eg_int",
+        "label": "EG INT",
+        "section": "EG",
+        "cc": 22,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": "Only acts on the filter when EG TARGET = CUTOFF. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "eg_target",
+        "label": "TARGET",
+        "section": "EG",
+        "cc": 23,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 42,
+            "meaning": "CUTOFF"
+          },
+          {
+            "from": 43,
+            "to": 85,
+            "meaning": "PITCH 2"
+          },
+          {
+            "from": 86,
+            "to": 127,
+            "meaning": "PITCH"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "lfo_wave",
+        "label": "WAVE",
+        "section": "LFO",
+        "cc": 57,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 42,
+            "meaning": "SQR"
+          },
+          {
+            "from": 43,
+            "to": 85,
+            "meaning": "TRI"
+          },
+          {
+            "from": 86,
+            "to": 127,
+            "meaning": "SAW"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "lfo_mode",
+        "label": "MODE",
+        "section": "LFO",
+        "cc": 58,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 42,
+            "meaning": "1-SHOT"
+          },
+          {
+            "from": 43,
+            "to": 85,
+            "meaning": "NORMAL"
+          },
+          {
+            "from": 86,
+            "to": 127,
+            "meaning": "BPM"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "lfo_rate",
+        "label": "RATE",
+        "section": "LFO",
+        "cc": 24,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "lfo_int",
+        "label": "INT",
+        "section": "LFO",
+        "cc": 26,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "lfo_target",
+        "label": "TARGET",
+        "section": "LFO",
+        "cc": 56,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 42,
+            "meaning": "CUTOFF"
+          },
+          {
+            "from": 43,
+            "to": 85,
+            "meaning": "SHAPE"
+          },
+          {
+            "from": 86,
+            "to": 127,
+            "meaning": "PITCH"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "modfx_onoff",
+        "label": "OFF/ON/SELECT (MOD FX)",
+        "section": "EFFECTS",
+        "cc": 92,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 63,
+            "meaning": "OFF"
+          },
+          {
+            "from": 64,
+            "to": 127,
+            "meaning": "ON"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "delay_onoff",
+        "label": "OFF/ON/SELECT (DELAY)",
+        "section": "EFFECTS",
+        "cc": 93,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 63,
+            "meaning": "OFF"
+          },
+          {
+            "from": 64,
+            "to": 127,
+            "meaning": "ON"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "reverb_onoff",
+        "label": "OFF/ON/SELECT (REVERB)",
+        "section": "EFFECTS",
+        "cc": 94,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 63,
+            "meaning": "OFF"
+          },
+          {
+            "from": 64,
+            "to": 127,
+            "meaning": "ON"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "modfx_type",
+        "label": "MOD FX TYPE",
+        "section": "EFFECTS",
+        "cc": 88,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 25,
+            "meaning": "CHORUS"
+          },
+          {
+            "from": 26,
+            "to": 51,
+            "meaning": "ENSEMBLE"
+          },
+          {
+            "from": 52,
+            "to": 76,
+            "meaning": "PHASER"
+          },
+          {
+            "from": 77,
+            "to": 101,
+            "meaning": "FLANGER"
+          },
+          {
+            "from": 102,
+            "to": 127,
+            "meaning": "USER"
+          }
+        ],
+        "role": "other",
+        "notes": "Korg doc lists 77~102 and 102~127 (overlap at 102); treated 102 as USER. No dedicated panel knob; chosen with the SELECT position."
+      },
+      {
+        "id": "modfx_sub_type",
+        "label": "MOD FX SUB TYPE",
+        "section": "EFFECTS",
+        "cc": 96,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Depends on MOD FX TYPE. CHORUS/PHASER/FLANGER: 8 ranges of 16 (0-15...112-127). CHORUS = STEREO, LIGHT, DEEP, TRIPHASE, HARMONIC, MONO, FEEDBACK, VIBRATO. PHASER = STEREO, FAST, ORANGE, SMALL, SMALL RESO, BLACK, FORMANT, TWINKLE. FLANGER = STEREO, LIGHT, MONO, HIGH SWEEP, MID SWEEP, PAN SWEEP, MONO SWEEP, TRIPHASE. ENSEMBLE: 0-42 STEREO, 43-85 LIGHT, 86-127 MONO. USER: 16 ranges of 8."
+      },
+      {
+        "id": "modfx_time",
+        "label": "TIME (MOD FX)",
+        "section": "EFFECTS",
+        "cc": 28,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Panel TIME knob when DEL/REV/MOD switch = MOD. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "modfx_depth",
+        "label": "DEPTH (MOD FX)",
+        "section": "EFFECTS",
+        "cc": 29,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Panel DEPTH knob when DEL/REV/MOD switch = MOD. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "delay_sub_type",
+        "label": "DELAY SUB TYPE",
+        "section": "EFFECTS",
+        "cc": 89,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 6,
+            "meaning": "STEREO"
+          },
+          {
+            "from": 7,
+            "to": 12,
+            "meaning": "MONO"
+          },
+          {
+            "from": 13,
+            "to": 19,
+            "meaning": "PING PONG"
+          },
+          {
+            "from": 20,
+            "to": 25,
+            "meaning": "HIPASS"
+          },
+          {
+            "from": 26,
+            "to": 31,
+            "meaning": "TAPE"
+          },
+          {
+            "from": 32,
+            "to": 38,
+            "meaning": "ONE TAP"
+          },
+          {
+            "from": 39,
+            "to": 44,
+            "meaning": "STEREO BPM"
+          },
+          {
+            "from": 45,
+            "to": 51,
+            "meaning": "MONO BPM"
+          },
+          {
+            "from": 52,
+            "to": 57,
+            "meaning": "PING BPM"
+          },
+          {
+            "from": 58,
+            "to": 63,
+            "meaning": "HIPASS BPM"
+          },
+          {
+            "from": 64,
+            "to": 70,
+            "meaning": "TAPE BPM"
+          },
+          {
+            "from": 71,
+            "to": 76,
+            "meaning": "DOUBLING"
+          },
+          {
+            "from": 77,
+            "to": 83,
+            "meaning": "USER1"
+          },
+          {
+            "from": 84,
+            "to": 89,
+            "meaning": "USER2"
+          },
+          {
+            "from": 90,
+            "to": 95,
+            "meaning": "USER3"
+          },
+          {
+            "from": 96,
+            "to": 102,
+            "meaning": "USER4"
+          },
+          {
+            "from": 103,
+            "to": 108,
+            "meaning": "USER5"
+          },
+          {
+            "from": 109,
+            "to": 115,
+            "meaning": "USER6"
+          },
+          {
+            "from": 116,
+            "to": 121,
+            "meaning": "USER7"
+          },
+          {
+            "from": 122,
+            "to": 127,
+            "meaning": "USER8"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "delay_time",
+        "label": "TIME (DELAY)",
+        "section": "EFFECTS",
+        "cc": 105,
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_time",
+        "notes": "Panel TIME knob when DEL/REV/MOD switch = DEL. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "delay_depth",
+        "label": "DEPTH (DELAY)",
+        "section": "EFFECTS",
+        "cc": 106,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Panel DEPTH knob when switch = DEL. Korg does not define DEPTH as feedback, so not tagged delay_feedback. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "delay_dry_wet",
+        "label": "DELAY DRY WET",
+        "section": "EFFECTS",
+        "cc": 107,
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_mix",
+        "notes": "No dedicated panel knob (edit-menu / SHIFT parameter). Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "reverb_sub_type",
+        "label": "REVERB SUB TYPE",
+        "section": "EFFECTS",
+        "cc": 90,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 7,
+            "meaning": "HALL"
+          },
+          {
+            "from": 8,
+            "to": 14,
+            "meaning": "SMOOTH"
+          },
+          {
+            "from": 15,
+            "to": 21,
+            "meaning": "ARENA"
+          },
+          {
+            "from": 22,
+            "to": 28,
+            "meaning": "PLATE"
+          },
+          {
+            "from": 29,
+            "to": 35,
+            "meaning": "ROOM"
+          },
+          {
+            "from": 36,
+            "to": 42,
+            "meaning": "EARLY REF"
+          },
+          {
+            "from": 43,
+            "to": 49,
+            "meaning": "SPACE"
+          },
+          {
+            "from": 50,
+            "to": 56,
+            "meaning": "RISER"
+          },
+          {
+            "from": 57,
+            "to": 63,
+            "meaning": "SUBMARINE"
+          },
+          {
+            "from": 64,
+            "to": 71,
+            "meaning": "HORROR"
+          },
+          {
+            "from": 72,
+            "to": 78,
+            "meaning": "USER1"
+          },
+          {
+            "from": 79,
+            "to": 85,
+            "meaning": "USER2"
+          },
+          {
+            "from": 86,
+            "to": 92,
+            "meaning": "USER3"
+          },
+          {
+            "from": 93,
+            "to": 99,
+            "meaning": "USER4"
+          },
+          {
+            "from": 100,
+            "to": 106,
+            "meaning": "USER5"
+          },
+          {
+            "from": 107,
+            "to": 113,
+            "meaning": "USER6"
+          },
+          {
+            "from": 114,
+            "to": 120,
+            "meaning": "USER7"
+          },
+          {
+            "from": 121,
+            "to": 127,
+            "meaning": "USER8"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "reverb_time",
+        "label": "TIME (REVERB)",
+        "section": "EFFECTS",
+        "cc": 108,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Panel TIME knob when switch = REV. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "reverb_depth",
+        "label": "DEPTH (REVERB)",
+        "section": "EFFECTS",
+        "cc": 109,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Panel DEPTH knob when switch = REV. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "reverb_dry_wet",
+        "label": "REVERB DRY WET",
+        "section": "EFFECTS",
+        "cc": 110,
+        "kind": "continuous",
+        "steps": null,
+        "role": "reverb_mix",
+        "notes": "No dedicated panel knob. Optional 10-bit resolution: send the low 3 bits on CC63 first, then this CC (Korg MIDI Implementation note *5-4). Plain 7-bit works."
+      },
+      {
+        "id": "joystick_up",
+        "label": "Joystick (+Y)",
+        "section": "JOYSTICK",
+        "cc": 1,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Modulation 1. Destination set per program (Y+ Assign)."
+      },
+      {
+        "id": "joystick_down",
+        "label": "Joystick (-Y)",
+        "section": "JOYSTICK",
+        "cc": 2,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Modulation 2. Destination set per program (Y- Assign)."
+      },
+      {
+        "id": "volume",
+        "label": "Volume (no panel knob)",
+        "section": null,
+        "cc": 7,
+        "kind": "continuous",
+        "steps": null,
+        "role": "volume",
+        "notes": "Recognized per owner's manual chart v1.22 (CC7/11 row, recognized = O). Not in the older MIDI Implementation txt rev 1.01. MASTER knob itself has no CC."
+      },
+      {
+        "id": "expression",
+        "label": "Expression (no panel knob)",
+        "section": null,
+        "cc": 11,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Same source/caveat as CC7."
+      },
+      {
+        "id": "damper",
+        "label": "DAMPER jack",
+        "section": null,
+        "cc": 64,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Not gated by MIDI Rx CC (manual tip)."
+      },
+      {
+        "id": "cv_in1",
+        "label": "CV IN 1",
+        "section": null,
+        "cc": 118,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Received only when program CV IN Mode = Modulation."
+      },
+      {
+        "id": "cv_in2",
+        "label": "CV IN 2",
+        "section": null,
+        "cc": 119,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Received only when program CV IN Mode = Modulation."
+      }
+    ],
+    "setup": [
+      "Press EDIT MODE, turn PROGRAM/VALUE to GLOBAL EDIT (or press EDIT MODE again)",
+      "Press button 7 (GLOBAL 5): set MIDI Rx CC = On, MIDI Rx Prog Chg = On, MIDI Rx Pitch Bend = On",
+      "Press button 6 (GLOBAL 4): set MIDI Ch to match the app; set MIDI Route = USB+MIDI (or USB if only using USB)",
+      "Press EXIT",
+      "Factory defaults of MIDI Rx CC and MIDI Ch are not stated in the Korg documents, so check them once"
+    ],
+    "sources": [
+      {
+        "url": "https://cdn.korg.com/us/support/download/files/5227b0b2f7c1da5acd0911ac3e8c4f38.txt",
+        "what": "Korg minilogue xd MIDI Implementation rev 1.01 (2020.2.10), section 2-1 Recognized Receive Data, value tables *6-01..*6-19 (download page https://www.korg.com/us/support/download/manual/0/811/4440/)"
+      },
+      {
+        "url": "https://cdn.korg.com/us/support/download/files/a5bba576f00973bf63c78cdeff83a7f7.pdf",
+        "what": "minilogue xd Owner's Manual (published 02/2025): p.5-6 panel labels, p.35 bend range, p.45-46 GLOBAL 4/5 MIDI settings, p.68 MIDI Implementation Chart v1.22"
+      }
+    ],
+    "confidence": "high: every CC and value range copied from Korg's own receive table; two Korg doc errors flagged (SYNC/RING polarity, NOISE sub-type ranges)."
+  },
+  {
+    "id": "volca-keys",
+    "name": "volca keys",
+    "maker": "Korg",
+    "kind": "hardware",
+    "popularity": "Entry-level 3-voice analog from Korg's low-cost volca line. No sales-chart source checked.",
+    "voices": 3,
+    "noteRange": [
+      0,
+      127
+    ],
+    "defaultChannel": null,
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": false,
+      "how": "Pitch bend is recognized (chart), but no bend-range setting or value appears in Korg's documents."
+    },
+    "respondsTo": {
+      "cc7Volume": false,
+      "cc1ModWheel": false,
+      "programChange": false,
+      "velocity": null,
+      "cc64Sustain": false
+    },
+    "controls": [
+      {
+        "id": "voice",
+        "label": "VOICE",
+        "section": "VCO",
+        "cc": 40,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 12,
+            "meaning": "POLY"
+          },
+          {
+            "from": 13,
+            "to": 37,
+            "meaning": "UNISON"
+          },
+          {
+            "from": 38,
+            "to": 62,
+            "meaning": "OCTAVE"
+          },
+          {
+            "from": 63,
+            "to": 87,
+            "meaning": "FIFTH"
+          },
+          {
+            "from": 88,
+            "to": 112,
+            "meaning": "UNISON RING"
+          },
+          {
+            "from": 113,
+            "to": 127,
+            "meaning": "POLY RING"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "octave",
+        "label": "OCTAVE",
+        "section": "VCO",
+        "cc": 41,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 21,
+            "meaning": "32'"
+          },
+          {
+            "from": 22,
+            "to": 43,
+            "meaning": "16'"
+          },
+          {
+            "from": 44,
+            "to": 65,
+            "meaning": "8'"
+          },
+          {
+            "from": 66,
+            "to": 87,
+            "meaning": "4'"
+          },
+          {
+            "from": 88,
+            "to": 109,
+            "meaning": "2'"
+          },
+          {
+            "from": 110,
+            "to": 127,
+            "meaning": "1'"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "detune",
+        "label": "DETUNE",
+        "section": "VCO",
+        "cc": 42,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": ""
+      },
+      {
+        "id": "portamento",
+        "label": "PORTAMENTO",
+        "section": "VCO",
+        "cc": 5,
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": ""
+      },
+      {
+        "id": "vco_eg_int",
+        "label": "EG INT",
+        "section": "VCO",
+        "cc": 43,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "VCO EG INT in Korg chart: EG amount applied to pitch."
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "VCF",
+        "cc": 44,
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": ""
+      },
+      {
+        "id": "vcf_eg_int",
+        "label": "EG INT",
+        "section": "VCF",
+        "cc": 45,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": "VCF EG INT in Korg chart."
+      },
+      {
+        "id": "lfo_rate",
+        "label": "RATE",
+        "section": "LFO",
+        "cc": 46,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": ""
+      },
+      {
+        "id": "lfo_pitch_int",
+        "label": "PITCH INT",
+        "section": "LFO",
+        "cc": 47,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "LFO amount to pitch."
+      },
+      {
+        "id": "lfo_cutoff_int",
+        "label": "CUTOFF INT",
+        "section": "LFO",
+        "cc": 48,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "LFO amount to cutoff."
+      },
+      {
+        "id": "eg_attack",
+        "label": "ATTACK",
+        "section": "EG",
+        "cc": 49,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "Single EG drives the VCA (and VCF/VCO via the EG INT knobs)."
+      },
+      {
+        "id": "eg_decay_release",
+        "label": "DECAY/RELEASE",
+        "section": "EG",
+        "cc": 50,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": "One knob sets both decay and release."
+      },
+      {
+        "id": "eg_sustain",
+        "label": "SUSTAIN",
+        "section": "EG",
+        "cc": 51,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": ""
+      },
+      {
+        "id": "delay_time",
+        "label": "TIME",
+        "section": "DELAY",
+        "cc": 52,
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_time",
+        "notes": ""
+      },
+      {
+        "id": "delay_feedback",
+        "label": "FEEDBACK",
+        "section": "DELAY",
+        "cc": 53,
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_feedback",
+        "notes": "Manual: sets feedback and the wet/dry mix together."
+      },
+      {
+        "id": "expression",
+        "label": "Expression (no panel knob)",
+        "section": null,
+        "cc": 11,
+        "kind": "continuous",
+        "steps": null,
+        "role": "volume",
+        "notes": "Chart note *3: cannot be changed with machine operations, MIDI only. The VOLUME knob and PEAK knob have no CC."
+      }
+    ],
+    "setup": [
+      "MIDI channel: hold MEMORY while turning the power on, then press keyboard button 1-16 for channel 1-16",
+      "CC receive: hold FUNC while turning the power on, press keyboard button 7 (MIDI RX ShortMessage) so its LED is lit (On; factory default is On), then press REC to save",
+      "Optional: on the same FUNC power-on screen, button 6 = MIDI Clock Src (Auto is default)"
+    ],
+    "sources": [
+      {
+        "url": "https://cdn.korg.com/us/support/download/files/348ad7bac64b8a64d3d72d2092a7f989.txt",
+        "what": "Korg volca keys MIDI Implementation rev 0.01 (2013.06.23): receive CC list and VOICE/OCTAVE value ranges (download page https://www.korg.com/us/support/download/manual/0/138/2739/)"
+      },
+      {
+        "url": "https://cdn.korg.com/us/support/download/files/d9a276cdfce7ff88c32a38ba6f3ba8aa.pdf",
+        "what": "volca keys MIDI Implementation Chart ver 1.02 (2013.06.10) (page https://www.korg.com/us/support/download/manual/0/138/1971/)"
+      },
+      {
+        "url": "https://cdn.korg.com/us/support/download/files/3cd22056ae227511e90ddca28530f6de.pdf",
+        "what": "volca keys Owner's Manual: panel knob names, global parameters (MIDI channel, MIDI RX ShortMessage default On)"
+      }
+    ],
+    "confidence": "high for the CC list (two matching Korg docs). Default MIDI channel, velocity response and bend range are not stated by Korg, so left null."
+  },
+  {
+    "id": "ju-06a",
+    "name": "JU-06A",
+    "maker": "Roland",
+    "kind": "hardware",
+    "popularity": "Roland Boutique recreation of the Juno-60 and Juno-106. No sales-chart source checked.",
+    "voices": 4,
+    "noteRange": [
+      0,
+      127
+    ],
+    "defaultChannel": 1,
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Per patch: SEQUENCER [EDIT] dark, hold [MANUAL (16)], press [3] Bend Range, turn [VALUE]: OFF or 1-24 semitones. Also CC87 (BEND RANGE). Factory default not stated."
+    },
+    "respondsTo": {
+      "cc7Volume": false,
+      "cc1ModWheel": true,
+      "programChange": true,
+      "velocity": true,
+      "cc64Sustain": true
+    },
+    "controls": [
+      {
+        "id": "lfo_rate",
+        "label": "RATE",
+        "section": "LFO",
+        "cc": 3,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": ""
+      },
+      {
+        "id": "lfo_delay",
+        "label": "DELAY TIME",
+        "section": "LFO",
+        "cc": 9,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "LFO DELAY in chart (LFO fade-in time), not the delay effect."
+      },
+      {
+        "id": "dco_range",
+        "label": "RANGE [16] [8] [4]",
+        "section": "DCO",
+        "cc": 12,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Value ranges per position not published by Roland."
+      },
+      {
+        "id": "dco_lfo",
+        "label": "LFO",
+        "section": "DCO",
+        "cc": 13,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "LFO to pitch (vibrato depth)."
+      },
+      {
+        "id": "dco_pwm",
+        "label": "PWM",
+        "section": "DCO",
+        "cc": 14,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": ""
+      },
+      {
+        "id": "dco_pwm_source",
+        "label": "LFO/MAN/ENV",
+        "section": "DCO",
+        "cc": 15,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Value ranges not published."
+      },
+      {
+        "id": "dco_square",
+        "label": "Square/pulse wave button",
+        "section": "DCO",
+        "cc": 16,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "DCO SQR SW. On/off values not published."
+      },
+      {
+        "id": "dco_saw",
+        "label": "Sawtooth wave button",
+        "section": "DCO",
+        "cc": 17,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "DCO SAW SW. On/off values not published."
+      },
+      {
+        "id": "dco_sub_sw",
+        "label": "SUB (button)",
+        "section": "DCO",
+        "cc": 28,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "DCO SUB SW. On/off values not published."
+      },
+      {
+        "id": "dco_sub",
+        "label": "SUB (slider)",
+        "section": "DCO",
+        "cc": 18,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": ""
+      },
+      {
+        "id": "dco_noise",
+        "label": "NOISE",
+        "section": "DCO",
+        "cc": 19,
+        "kind": "continuous",
+        "steps": null,
+        "role": "noise",
+        "notes": ""
+      },
+      {
+        "id": "hpf_freq",
+        "label": "FREQ",
+        "section": "HPF",
+        "cc": 20,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "High-pass cutoff."
+      },
+      {
+        "id": "vcf_freq",
+        "label": "FREQ",
+        "section": "VCF",
+        "cc": 74,
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": ""
+      },
+      {
+        "id": "vcf_res",
+        "label": "RES",
+        "section": "VCF",
+        "cc": 71,
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": ""
+      },
+      {
+        "id": "vcf_env_polarity",
+        "label": "ENV polarity switch",
+        "section": "VCF",
+        "cc": 21,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Value ranges not published."
+      },
+      {
+        "id": "vcf_env",
+        "label": "ENV",
+        "section": "VCF",
+        "cc": 22,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": ""
+      },
+      {
+        "id": "vcf_lfo",
+        "label": "LFO",
+        "section": "VCF",
+        "cc": 23,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "LFO to cutoff."
+      },
+      {
+        "id": "vcf_kybd",
+        "label": "KYBD",
+        "section": "VCF",
+        "cc": 24,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Key follow."
+      },
+      {
+        "id": "vca_env_gate",
+        "label": "ENV/GATE switch",
+        "section": "VCA",
+        "cc": 25,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Value ranges not published."
+      },
+      {
+        "id": "vca_level",
+        "label": "LEVEL",
+        "section": "VCA",
+        "cc": 26,
+        "kind": "continuous",
+        "steps": null,
+        "role": "volume",
+        "notes": "Patch level slider."
+      },
+      {
+        "id": "env_a",
+        "label": "A",
+        "section": "ENV",
+        "cc": 73,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "Single ENV shared by VCF and VCA (VCA uses it when switch = ENV)."
+      },
+      {
+        "id": "env_d",
+        "label": "D",
+        "section": "ENV",
+        "cc": 75,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": ""
+      },
+      {
+        "id": "env_s",
+        "label": "S",
+        "section": "ENV",
+        "cc": 27,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": ""
+      },
+      {
+        "id": "env_r",
+        "label": "R",
+        "section": "ENV",
+        "cc": 72,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_release",
+        "notes": ""
+      },
+      {
+        "id": "chorus",
+        "label": "CHORUS I / CHORUS II buttons",
+        "section": "Common",
+        "cc": 93,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart: CHORUS OFF / I / II / I+II. Value ranges not published."
+      },
+      {
+        "id": "delay_sw",
+        "label": "DELAY (button)",
+        "section": "Common",
+        "cc": 89,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Delay on/off. Values not published."
+      },
+      {
+        "id": "delay_level",
+        "label": "Delay Level",
+        "section": "Delay Parameters (menu)",
+        "cc": 91,
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_mix",
+        "notes": "No panel slider; menu parameter 0-15."
+      },
+      {
+        "id": "delay_time",
+        "label": "Delay Time",
+        "section": "Delay Parameters (menu)",
+        "cc": 82,
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_time",
+        "notes": "No panel slider; menu parameter 0-15."
+      },
+      {
+        "id": "delay_feedback",
+        "label": "Delay Feedback",
+        "section": "Delay Parameters (menu)",
+        "cc": 83,
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_feedback",
+        "notes": "No panel slider; menu parameter 0-15."
+      },
+      {
+        "id": "portamento_time",
+        "label": "Portamento Time",
+        "section": "Patch Parameters (menu)",
+        "cc": 5,
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": ""
+      },
+      {
+        "id": "portamento_sw",
+        "label": "Portamento Switch",
+        "section": "Patch Parameters (menu)",
+        "cc": 65,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "lfo_wave",
+        "label": "LFO waveform",
+        "section": "Patch Parameters (menu)",
+        "cc": 29,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Tri, Sqr, SA1, SA2, Sin, rd1, rd2. Value ranges not published."
+      },
+      {
+        "id": "lfo_trig",
+        "label": "LFO Key Trigger",
+        "section": "Patch Parameters (menu)",
+        "cc": 30,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "tempo_sync",
+        "label": "Tempo Sync",
+        "section": "Patch Parameters (menu)",
+        "cc": 88,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "bend_range",
+        "label": "Bend Range",
+        "section": "Patch Parameters (menu)",
+        "cc": 87,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "OFF, 1-24 semitones; CC value mapping not published."
+      },
+      {
+        "id": "voice_mode",
+        "label": "POLY / (POLY) / SOLO / UNISON",
+        "section": "KEYBOARD",
+        "cc": 86,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Value ranges not published."
+      },
+      {
+        "id": "modulation",
+        "label": "Modulation (no panel control)",
+        "section": null,
+        "cc": 1,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "expression",
+        "label": "Expression pedal",
+        "section": null,
+        "cc": 11,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Recognized only."
+      },
+      {
+        "id": "hold",
+        "label": "HOLD",
+        "section": null,
+        "cc": 64,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Recognized only."
+      }
+    ],
+    "setup": [
+      "Hold ARPEGGIO [ON/OFF] and press button [2] (MIDI Channel), turn [VALUE] to the channel (factory default 1), press ARPEGGIO [ON/OFF] to confirm",
+      "No CC-receive on/off setting exists in the owner's manual; CC receive is always on (the only CC setting, [11] Control Change Output Mode, is for transmit)",
+      "Do not start the unit in Control Surface Mode: in that mode it makes no sound and recognizes no CC"
+    ],
+    "sources": [
+      {
+        "url": "https://static.roland.com/assets/media/pdf/JU-06A_MIDIImpleChart_multi02_W.pdf",
+        "what": "Roland JU-06A MIDI Implementation Chart v1.01 (Sep. 5, 2019), from roland.com support page; CC list identical to the widely mirrored v1.00 at files.kraftmusic.com"
+      },
+      {
+        "url": "https://static.roland.com/assets/media/pdf/JU-06A_eng02_W.pdf",
+        "what": "JU-06A Owner's Manual: panel descriptions, patch/delay parameters, System Settings (MIDI Channel default 1, Chain Mode, Control Change Output Mode), 4-voice spec"
+      }
+    ],
+    "confidence": "high for CC numbers (Roland chart). Medium for switches: Roland does not publish value ranges for switch positions, so steps are null and must be measured on hardware."
+  },
+  {
+    "id": "sh-01a",
+    "name": "SH-01A",
+    "maker": "Roland",
+    "kind": "hardware",
+    "popularity": "Roland Boutique recreation of the SH-101, extended to 4 voices. No sales-chart source checked.",
+    "voices": 4,
+    "noteRange": [
+      0,
+      127
+    ],
+    "defaultChannel": null,
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Set by the BENDER [VCO] slider (also CC18 VCO BEND DEPTH). Roland does not give a semitone scale or default."
+    },
+    "respondsTo": {
+      "cc7Volume": false,
+      "cc1ModWheel": true,
+      "programChange": true,
+      "velocity": true,
+      "cc64Sustain": true
+    },
+    "controls": [
+      {
+        "id": "lfo_rate",
+        "label": "RATE",
+        "section": "LFO",
+        "cc": 3,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": ""
+      },
+      {
+        "id": "lfo_wave",
+        "label": "Wave knob",
+        "section": "LFO",
+        "cc": 12,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "LFO WAVE FORM: saw, reverse saw, triangle, square, RANDOM, NOISE. Value ranges not published."
+      },
+      {
+        "id": "vco_mod",
+        "label": "MOD",
+        "section": "VCO",
+        "cc": 13,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "VCO MOD DEPTH: LFO to pitch."
+      },
+      {
+        "id": "vco_range",
+        "label": "RANGE",
+        "section": "VCO",
+        "cc": 14,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Value ranges not published."
+      },
+      {
+        "id": "pulse_width",
+        "label": "PULSE WIDTH (slider)",
+        "section": "VCO",
+        "cc": 15,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": ""
+      },
+      {
+        "id": "pwm_source",
+        "label": "PULSE WIDTH switch (LFO/MAN/ENV)",
+        "section": "VCO",
+        "cc": 16,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "VCO PWM SOURCE. Value ranges not published."
+      },
+      {
+        "id": "vco_mod_sens",
+        "label": "VCO MOD SENS",
+        "section": null,
+        "cc": 17,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart name only. The manual does not say which panel control this is (possibly the Common MOD [LFO] slider - unverified)."
+      },
+      {
+        "id": "bender_vco",
+        "label": "BENDER [VCO]",
+        "section": "Common",
+        "cc": 18,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "VCO BEND DEPTH: pitch-bend amount."
+      },
+      {
+        "id": "bender_vcf",
+        "label": "BENDER [VCF]",
+        "section": "Common",
+        "cc": 27,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "VCF BEND DEPTH."
+      },
+      {
+        "id": "mix_pulse",
+        "label": "Square wave level slider",
+        "section": "SOURCE MIXER",
+        "cc": 19,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "Chart calls it VCO PWM LEVEL; matched to the mixer's square/pulse slider by name."
+      },
+      {
+        "id": "mix_saw",
+        "label": "Sawtooth wave level slider",
+        "section": "SOURCE MIXER",
+        "cc": 20,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": ""
+      },
+      {
+        "id": "mix_sub",
+        "label": "SUB OSC (slider)",
+        "section": "SOURCE MIXER",
+        "cc": 21,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": ""
+      },
+      {
+        "id": "sub_type",
+        "label": "SUB OSC (switch)",
+        "section": "SOURCE MIXER",
+        "cc": 22,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "1 OCT DOWN / 2 OCT DOWN / 2 OCT DOWN narrow. Value ranges not published."
+      },
+      {
+        "id": "mix_noise",
+        "label": "NOISE",
+        "section": "SOURCE MIXER",
+        "cc": 23,
+        "kind": "continuous",
+        "steps": null,
+        "role": "noise",
+        "notes": ""
+      },
+      {
+        "id": "vcf_freq",
+        "label": "FREQ",
+        "section": "VCF",
+        "cc": 74,
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": ""
+      },
+      {
+        "id": "vcf_res",
+        "label": "RES",
+        "section": "VCF",
+        "cc": 71,
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": ""
+      },
+      {
+        "id": "vcf_env",
+        "label": "ENV",
+        "section": "VCF",
+        "cc": 24,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": ""
+      },
+      {
+        "id": "vcf_mod",
+        "label": "MOD",
+        "section": "VCF",
+        "cc": 25,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "Modulator to cutoff."
+      },
+      {
+        "id": "vcf_kybd",
+        "label": "KYBD",
+        "section": "VCF",
+        "cc": 26,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Key follow."
+      },
+      {
+        "id": "vca_env_gate",
+        "label": "ENV/GATE switch",
+        "section": "VCA",
+        "cc": 28,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "VCA ENV SW. Value ranges not published."
+      },
+      {
+        "id": "env_mode",
+        "label": "GATE/TRIG switch (probable)",
+        "section": "ENV",
+        "cc": 29,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart name is VCA ENV MODE; mapping to the ENV GATE/TRIG switch is inferred, not stated by Roland."
+      },
+      {
+        "id": "env_a",
+        "label": "A",
+        "section": "ENV",
+        "cc": 73,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "Single ENV shared by VCF and VCA."
+      },
+      {
+        "id": "env_d",
+        "label": "D",
+        "section": "ENV",
+        "cc": 75,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": ""
+      },
+      {
+        "id": "env_s",
+        "label": "S",
+        "section": "ENV",
+        "cc": 30,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": ""
+      },
+      {
+        "id": "env_r",
+        "label": "R",
+        "section": "ENV",
+        "cc": 72,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_release",
+        "notes": ""
+      },
+      {
+        "id": "portamento",
+        "label": "PORTAMENTO (knob)",
+        "section": "Common",
+        "cc": 5,
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": ""
+      },
+      {
+        "id": "portamento_mode",
+        "label": "PORTAMENTO switch (OFF/AUTO/ON)",
+        "section": "Common",
+        "cc": 31,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "PORTAMENT MODE. Value ranges not published."
+      },
+      {
+        "id": "portamento_onoff",
+        "label": "Portamento on/off",
+        "section": null,
+        "cc": 65,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "tune",
+        "label": "TUNE",
+        "section": "Common",
+        "cc": 76,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "transpose",
+        "label": "TRANSPOSE switch (L/M/H)",
+        "section": "Common",
+        "cc": 77,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Value ranges not published."
+      },
+      {
+        "id": "noise_mode",
+        "label": "NOISE mode",
+        "section": "SYSTEM menu (stored in patch)",
+        "cc": 78,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Original / Variation."
+      },
+      {
+        "id": "lfo_mode",
+        "label": "LFO mode",
+        "section": "SYSTEM menu (stored in patch)",
+        "cc": 79,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Original / Advanced."
+      },
+      {
+        "id": "assign_mode",
+        "label": "Assign Mode (MONO/UNISON/POLY/CHORD)",
+        "section": "MENU [3]",
+        "cc": 80,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Value ranges not published."
+      },
+      {
+        "id": "chord_v2_sw",
+        "label": "Voice 2 on/off",
+        "section": "MENU [3] button [6]",
+        "cc": 81,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "chord_v3_sw",
+        "label": "Voice 3 on/off",
+        "section": "MENU [3] button [7]",
+        "cc": 82,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "chord_v4_sw",
+        "label": "Voice 4 on/off",
+        "section": "MENU [3] button [8]",
+        "cc": 83,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "chord_v2_shift",
+        "label": "Voice 2 key shift",
+        "section": "MENU [3]",
+        "cc": 85,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "chord_v3_shift",
+        "label": "Voice 3 key shift",
+        "section": "MENU [3]",
+        "cc": 86,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "chord_v4_shift",
+        "label": "Voice 4 key shift",
+        "section": "MENU [3]",
+        "cc": 87,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "modulation",
+        "label": "C2 ribbon (modulation)",
+        "section": "Ribbon controllers",
+        "cc": 1,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "expression",
+        "label": "Expression pedal",
+        "section": null,
+        "cc": 11,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Recognized only."
+      },
+      {
+        "id": "hold",
+        "label": "HOLD",
+        "section": null,
+        "cc": 64,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      }
+    ],
+    "setup": [
+      "Press [MENU], press [4] (SYSTEM), turn [TEMPO/VALUE] to MIDI channel, press [1], turn [TEMPO/VALUE] to the channel (1-16 or OFF), press [MENU] to exit",
+      "No CC-receive on/off setting exists in the owner's manual; CC receive is always on (CC Output Mode only controls sending CC on patch change)",
+      "Factory default MIDI channel is not stated in the owner's manual, so set it explicitly"
+    ],
+    "sources": [
+      {
+        "url": "https://static.roland.com/assets/media/pdf/SH-01A_MIDI_Imple_Chart_eng01_W.pdf",
+        "what": "Roland SH-01A MIDI Implementation Chart v1.00 (Aug. 8, 2017) and Control change list, from roland.com support page"
+      },
+      {
+        "url": "https://static.roland.com/assets/media/pdf/SH-01A_eng04_W.pdf",
+        "what": "SH-01A Owner's Manual: panel descriptions, SYSTEM settings (MIDI channel, CC Output Mode), Assign Mode, 4-voice spec"
+      }
+    ],
+    "confidence": "high for CC numbers (Roland list). Medium for which panel control a few CCs move (17, 19, 29): Roland gives only parameter names. Switch value ranges are not published. CC84 is absent from Roland's list and is not included."
+  }
+]

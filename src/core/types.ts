@@ -35,11 +35,20 @@ export interface Sound {
   preset?: string;
   /** Where it plays. Absent: in the browser. A MIDI port (by name) and channel 1–16: sent there instead. */
   output?: { port: string; channel: number };
+  /**
+   * A real synth this sound is played on (src/synths): over MIDI when `output` is set, else by its
+   * browser stand-in. `knobs`: panel positions 0..1 the composer set (only these are sent to the
+   * hardware, so the synth's own patch is not overwritten). `map`: overrides of the profile's
+   * property → knob map; null turns a property's knob off.
+   */
+  synth?: { profile: string; knobs?: Record<string, number>; map?: Partial<Record<Property, string | null>> };
 }
 
 /** Continuous properties a rule can drive. */
 export type Property = 'volume' | 'density' | 'brightness' | 'tension' | 'register';
 export const PROPERTIES: Property[] = ['volume', 'density', 'brightness', 'tension', 'register'];
+/** What a "drive" rule can move: one of the properties, or a knob on the sound's synth ("knob:cutoff"). */
+export type Target = Property | `knob:${string}`;
 
 /** Harmonic concepts a rule can introduce on a drone or the whole piece. */
 export type Concept = 'minor' | 'suspended' | 'major' | 'sparse';
@@ -51,7 +60,7 @@ export type Condition =
   | { kind: 'above'; value: number; for: number };
 
 export type Action =
-  | { kind: 'set'; sound: SoundId; property: Property; range: [number, number]; curve: Curve; smooth: number }
+  | { kind: 'set'; sound: SoundId; property: Target; range: [number, number]; curve: Curve; smooth: number }
   | { kind: 'introduce'; concept: Concept; sound: SoundId | 'piece'; fade: number }
   | { kind: 'trigger'; sound: SoundId; quantize: 'beat' | 'bar'; cooldown: number };
 
@@ -81,6 +90,6 @@ export interface Score {
 
 // What the evaluator emits each tick. The renderer only knows these.
 export type Effect =
-  | { kind: 'set'; sound: SoundId; property: Property; value: number; smooth: number; ruleId: string }
+  | { kind: 'set'; sound: SoundId; property: Target; value: number; smooth: number; ruleId: string }
   | { kind: 'concept'; sound: SoundId | 'piece'; concept: Concept; active: boolean; fade: number; ruleId: string }
   | { kind: 'trigger'; sound: SoundId; quantize: 'beat' | 'bar'; ruleId: string; at: number };

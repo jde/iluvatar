@@ -7,6 +7,8 @@ import { parseMotif } from '../core/motif';
 import { CONCEPTS, PROPERTIES, type Action, type Condition, type Input, type Rule, type Score, type Sound } from '../core/types';
 import type { Runtime } from '../runtime';
 import { PresetPicker } from './presets';
+import { SynthPanel, SynthRow } from './synth';
+import { profileById } from '../synths/profiles';
 
 const fmt = (v: number, unit: string) => (Number.isFinite(v) ? (unit === 'ratio' ? `${(v * 100).toFixed(1)} %` : v.toFixed(1)) : '—');
 const uid = (p: string) => `${p}${Math.random().toString(36).slice(2, 7)}`;
@@ -112,13 +114,15 @@ export function SoundsPanel({ rt, score, update }: { rt: Runtime; score: Score; 
               <button onClick={() => rt.audio.audition(s.id)} disabled={!rt.audio.isLoaded(s.id)} title="Audition" data-testid={`audition-${s.id}`}>▶</button>
               <button className="ghost" onClick={() => remove(s.id)} title="Remove">✕</button>
             </div>
-            <label className="row">Instrument
+            <SynthRow sound={s} set={(synth) => setSound(s.id, { synth })} />
+            {!s.synth && <label className="row">Instrument
               <select value={s.instrument} onChange={(e) => setSound(s.id, { instrument: e.target.value })} data-testid={`instrument-${s.id}`}>
                 {INSTRUMENT_NAMES.map((n, k) => <option key={n} value={n}>{k} · {n.replace(/_/g, ' ')}</option>)}
               </select>
               <span className="hint">{rt.audio.started ? (rt.audio.isLoaded(s.id) ? 'loaded' : 'loading…') : 'audio not started'}</span>
-            </label>
+            </label>}
             <OutputRow rt={rt} sound={s} set={(output) => setSound(s.id, { output })} />
+            <SynthPanel rt={rt} sound={s} set={(synth) => setSound(s.id, { synth })} />
             {s.kind === 'drone' ? (
               <label className="row">Chord degrees
                 <input value={(s.degrees ?? []).join(' ')} onChange={(e) => setSound(s.id, { degrees: e.target.value.split(/\s+/).map(Number).filter((n) => Number.isFinite(n) && n > 0) })} />
@@ -168,6 +172,19 @@ function OutputRow({ rt, sound: s, set }: { rt: Runtime; sound: Sound; set: (o: 
       </select>}
       {missing && <span className="hint" data-testid={`output-missing-${s.id}`}>{m.status === 'ready' ? 'not connected' : 'connect MIDI'} — playing in the browser</span>}
     </label>
+  );
+}
+
+/** A drive rule's target: a property, or any knob on the sound's synth. */
+function TargetSelect({ score, rule, set }: { score: Score; rule: Rule; set: (p: Partial<Rule>) => void }) {
+  if (rule.do.kind !== 'set') return null;
+  const d = rule.do;
+  const p = profileById(score.sounds.find((x) => x.id === d.sound)?.synth?.profile);
+  return (
+    <select value={d.property} onChange={(e) => set({ do: { ...d, property: e.target.value as typeof d.property } })} data-testid={`rule-target-${rule.id}`}>
+      {PROPERTIES.map((x) => <option key={x} value={x}>{x}</option>)}
+      {p && <optgroup label={`${p.name} knobs`}>{p.controls.map((c) => <option key={c.id} value={`knob:${c.id}`}>{c.section} · {c.label}</option>)}</optgroup>}
+    </select>
   );
 }
 
@@ -225,8 +242,8 @@ function RuleRow({ rt, score, rule, set, remove }: { rt: Runtime; score: Score; 
         </select>
         {rule.do.kind === 'set' && (
           <>
-            <select value={rule.do.sound} onChange={(e) => set({ do: { ...rule.do, sound: e.target.value } as Action })}>{score.sounds.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}</select>
-            <select value={rule.do.property} onChange={(e) => set({ do: { ...rule.do, property: e.target.value } as Action })}>{PROPERTIES.map((p) => <option key={p} value={p}>{p}</option>)}</select>
+            <select value={rule.do.sound} onChange={(e) => { const ns = score.sounds.find((x) => x.id === e.target.value); const keep = !(rule.do as any).property.startsWith('knob:') || profileById(ns?.synth?.profile)?.controls.some((c) => `knob:${c.id}` === (rule.do as any).property); set({ do: { ...rule.do, sound: e.target.value, ...(keep ? {} : { property: 'volume' }) } as Action }); }} data-testid={`rule-sound-${rule.id}`}>{score.sounds.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}</select>
+            <TargetSelect score={score} rule={rule} set={set} />
             <span>from</span><input type="number" className="num" step={step} value={rule.do.range[0]} onChange={(e) => set({ do: { ...rule.do, range: [+e.target.value, (rule.do as any).range[1]] } as Action })} />
             <span>to</span><input type="number" className="num" step={step} value={rule.do.range[1]} onChange={(e) => set({ do: { ...rule.do, range: [(rule.do as any).range[0], +e.target.value] } as Action })} />
             <select value={rule.do.curve} onChange={(e) => set({ do: { ...rule.do, curve: e.target.value } as Action })}><option value="linear">linear</option><option value="log">log</option><option value="exp">exp</option><option value="steps">steps</option></select>

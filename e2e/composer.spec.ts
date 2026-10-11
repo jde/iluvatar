@@ -204,3 +204,67 @@ test('MIDI out: a browser without Web MIDI says so', async ({ page }) => {
   await expect(page.getByTestId('midi-status')).toHaveText('MIDI: not in this browser');
   await expect(page.getByTestId('connect-midi')).toHaveCount(0);
 });
+
+test('synths: a stand-in plays in the browser, its knobs change the sound, no soundfont needed', async ({ page }) => {
+  test.slow();
+  await page.getByTestId('synth-bass').selectOption('minilogue-xd');
+  await expect(page.getByTestId('instrument-bass')).toHaveCount(0); // a synth replaces the General MIDI instrument
+  await expect(page.getByTestId('synth-panel-bass')).toContainText('browser stand-in built like the minilogue xd');
+  await page.getByTestId('synth-panel-bass').getByText('Front panel').click();
+  await expect(page.getByTestId('knob-bass-cutoff')).toContainText('CC 43');
+  await expect(page.getByTestId('knob-bass-amp_attack')).toContainText('CC 16');
+  await page.getByTestId('start-audio').click();
+  await expect(page.getByTestId('audition-bass')).toBeEnabled({ timeout: 20_000 });
+  const level = () => page.evaluate(() => (window as any).__rt.audio.level() as number);
+  await page.getByTestId('audition-bass').click();
+  await expect.poll(level, { timeout: 5000 }).toBeGreaterThan(0.005); // it makes sound
+  // Same knob, same direction as the real synth: closing CUTOFF takes the highs out.
+  await page.getByTestId('play-pause').click(); // pause the score so only auditions play
+  await page.evaluate(() => { const rt = (window as any).__rt, sc = rt.getScore(); rt.setScore({ ...sc, sounds: sc.sounds.filter((x: any) => x.id === 'bass'), rules: sc.rules.filter((r: any) => r.do.sound === 'bass') }); });
+  const peak = () => page.evaluate(async () => {
+    const rt = (window as any).__rt; await new Promise((r) => setTimeout(r, 4000)); // let the last notes and the reverb die away
+    rt.audio.audition('bass'); let sum = 0;
+    for (let i = 0; i < 30; i++) { await new Promise((r) => setTimeout(r, 50)); sum += rt.audio.energyAbove(1500); }
+    return sum;
+  });
+  await page.getByTestId('knob-input-bass-cutoff').fill('127');
+  const open = await peak();
+  await page.getByTestId('knob-input-bass-cutoff').fill('0');
+  const closed = await peak();
+  expect(open).toBeGreaterThan(0);
+  expect(closed).toBeLessThan(open / 5); // at least 7 dB less above 1.5 kHz
+  // The panel setting is saved with the score.
+  await page.reload();
+  await expect(page.getByTestId('synth-bass')).toHaveValue('minilogue-xd');
+});
+
+test('synths: on a real synth over MIDI, panel knobs and rules send the maker\'s CC numbers', async ({ page }) => {
+  test.slow();
+  await page.addInitScript(fakeMidi);
+  await page.reload();
+  await page.getByTestId('connect-midi').click();
+  await page.getByTestId('synth-bass').selectOption('minilogue-xd');
+  await page.getByTestId('output-bass').selectOption('Test Synth');
+  await expect(page.getByTestId('synth-panel-bass')).toContainText('Playing the real minilogue xd on Test Synth, channel 1');
+  await page.getByTestId('start-audio').click();
+  await expect(page.getByTestId('play-pause')).toBeVisible({ timeout: 20_000 });
+  const sent = async () => (await page.evaluate(() => (window as any).__midiSent as { data: number[] }[])).map((m) => m.data);
+  // Nothing but volume is sent until a knob is set or a rule turns it: the synth keeps its own patch.
+  await page.waitForTimeout(1000);
+  expect((await sent()).some((d) => d[0] === 0xb0 && d[1] === 43)).toBe(false);
+  await page.getByTestId('synth-panel-bass').getByText('Front panel').click();
+  await page.getByTestId('knob-input-bass-cutoff').fill('64');
+  await expect.poll(async () => (await sent()).some((d) => d[0] === 0xb0 && d[1] === 43 && d[2] === 64)).toBe(true); // CUTOFF = CC 43
+  await page.getByTestId('knob-input-bass-vco1_wave').selectOption({ label: 'TRI' });
+  await expect.poll(async () => (await sent()).some((d) => d[0] === 0xb0 && d[1] === 50 && d[2] === 64)).toBe(true); // VCO 1 WAVE = CC 50, TRI = 43–85
+  // A rule turns RESONANCE (CC 44) from the errors input.
+  await page.getByTestId('add-rule').click();
+  const rules = page.locator('[data-testid^="rule-r"]:not([data-testid*="-input-"]):not([data-testid*="-when-"]):not([data-testid*="-do-"]):not([data-testid*="-threshold-"]):not([data-testid*="-sound-"]):not([data-testid*="-target-"])');
+  const id = (await rules.last().getAttribute('data-testid'))!.replace('rule-', '');
+  await page.getByTestId(`rule-input-${id}`).selectOption('errors');
+  await page.getByTestId(`rule-sound-${id}`).selectOption('bass');
+  await page.getByTestId(`rule-target-${id}`).selectOption('knob:resonance');
+  await expect.poll(async () => (await sent()).some((d) => d[0] === 0xb0 && d[1] === 44), { timeout: 10_000 }).toBe(true);
+  await page.getByTestId('audition-bass').click();
+  await expect.poll(async () => (await sent()).filter((d) => d[0] === 0x90).length, { timeout: 10_000 }).toBeGreaterThan(3); // notes too
+});

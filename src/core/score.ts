@@ -1,5 +1,6 @@
 import yaml from 'js-yaml';
 import type { Score } from './types';
+import { profileById } from '../synths/profiles';
 
 /** The starter score: two feeds, three sounds, four rules. Shipped as scores/storefront-ambient too. */
 export function defaultScore(): Score {
@@ -44,6 +45,11 @@ export function validate(s: Score): void {
     if (!inputs.has(r.input)) throw new Error(`rule ${r.id}: unknown input "${r.input}"`);
     const target = r.do.kind === 'introduce' ? r.do.sound : r.do.sound;
     if (target !== 'piece' && !sounds.has(target)) throw new Error(`rule ${r.id}: unknown sound "${target}"`);
+    if (r.do.kind === 'set' && r.do.property.startsWith('knob:')) {
+      const snd = s.sounds.find((x) => x.id === r.do.sound), p = profileById(snd?.synth?.profile), knob = r.do.property.slice(5);
+      if (!snd?.synth) throw new Error(`rule ${r.id}: turns a knob but sound "${r.do.sound}" has no synth`);
+      if (p && !p.controls.some((c) => c.id === knob)) throw new Error(`rule ${r.id}: ${p.name} has no knob "${knob}"`);
+    }
   }
   for (const x of s.sounds) if (x.output && !(typeof x.output.port === 'string' && Number.isInteger(x.output.channel) && x.output.channel >= 1 && x.output.channel <= 16)) throw new Error(`sound ${x.id}: output needs a port name and a channel 1–16`);
   for (const i of s.inputs) if (i.derive && !inputs.has(i.derive.of)) throw new Error(`input ${i.id}: derives from unknown "${i.derive.of}"`);

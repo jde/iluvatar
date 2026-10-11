@@ -64,6 +64,16 @@ No hardware: on a Mac, open Audio MIDI Setup → Window → Show MIDI Studio →
 GarageBand or Logic can play it. If a score names a port that isn't connected, that sound plays in
 the browser and says so. Pause sends all-notes-off.
 
+## Real synths
+
+Each sound can be played on one of 23 real synths (minilogue xd, MicroFreak, Bass Station II,
+Prophet Rev2, Vital, Serum 2 and more). Pick it under **Synth** on a sound:
+
+- With no MIDI port, a browser stand-in built like that synth plays, and its knobs work.
+- On a MIDI port, the real synth plays, and rules can turn its real knobs ("drive Bass · CUTOFF").
+
+Details, sources and known gaps: [docs/04-synths.md](docs/04-synths.md).
+
 ## What it will do (first sketch, to be revised)
 
 | A system does this | You hear this |

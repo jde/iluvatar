@@ -106,7 +106,18 @@ export class MidiOut {
     this.send(port, controlChange(channel, cc, v));
   }
 
-  bend(port: string, channel: number, cents: number) {
+  /** A synth knob: its messages (CC, 14-bit pair or NRPN), sent only when its raw value changed. */
+  knob(port: string, channel: number, id: string, raw: number, messages: number[][]) {
+    const key = `${port}|${channel}|knob:${id}`;
+    if (this.sent.get(key) === raw) return;
+    this.sent.set(key, raw);
+    for (const m of messages) this.send(port, m);
+  }
+
+  /** Forget what was sent for a knob, so the next value goes out even if unchanged (a "send" or MIDI-learn wiggle). */
+  forget(port: string, channel: number, id: string) { this.sent.delete(`${port}|${channel}|knob:${id}`); }
+
+    bend(port: string, channel: number, cents: number) {
     const msg = pitchBend(channel, cents), v = msg[1] | (msg[2] << 7), key = `${port}|${channel}|bend`;
     if (this.sent.get(key) === v) return;
     this.sent.set(key, v);

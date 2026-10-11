@@ -1,0 +1,1839 @@
+[
+  {
+    "id": "microfreak",
+    "name": "MicroFreak",
+    "maker": "Arturia",
+    "kind": "hardware",
+    "popularity": "Long-running budget hybrid synth (2019 onward, still current with firmware 5) with wide press coverage, e.g. Sound On Sound review (https://www.soundonsound.com/reviews/arturia-microfreak); no sales-chart figure was checked.",
+    "voices": 4,
+    "noteRange": [
+      null,
+      null
+    ],
+    "defaultChannel": null,
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Per preset: Utility > Preset > Bend Range, 0 to 24 semitones (manual v5.0.1 p.26). Factory default value not stated in the manual. No CC for it."
+    },
+    "respondsTo": {
+      "cc7Volume": false,
+      "cc1ModWheel": false,
+      "programChange": null,
+      "velocity": true,
+      "cc64Sustain": false
+    },
+    "respondsToNotes": {
+      "cc7Volume": "CC 7 is not in the manual's CC table (Appendix D). Treat as not received.",
+      "cc1ModWheel": "CC 1 is not in the manual's CC table. The MicroFreak has no mod wheel.",
+      "programChange": "The manual does not mention receiving Program Change. Unknown.",
+      "velocity": "Utility > Preset > Velo Amp Mod (0-10) sets how velocity affects volume; Press Mode selects Aftertouch or Velocity for the keyboard. Velocity response to incoming MIDI notes is implied, not explicitly stated.",
+      "cc64Sustain": "CC 64 is listed as 'Keyboard Hold (toggle)', i.e. it toggles the Hold button, not a classic momentary sustain. Treat with care: each value change may flip Hold on/off."
+    },
+    "controls": [
+      {
+        "id": "glide",
+        "label": "GLIDE",
+        "section": "GLIDE",
+        "cc": 5,
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": ""
+      },
+      {
+        "id": "osc_type",
+        "label": "TYPE",
+        "section": "OSCILLATOR",
+        "cc": 9,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Selects oscillator engine. Value-to-type table is not in the manual. Arturia forum report (forum.arturia.com/t/6268) says transmitted and received CC 9 values do not match for about 11 types, so do not derive receive ranges from what the synth sends. Leave steps unset until measured."
+      },
+      {
+        "id": "osc_wave",
+        "label": "WAVE",
+        "section": "OSCILLATOR",
+        "cc": 10,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Function depends on oscillator type."
+      },
+      {
+        "id": "osc_timbre",
+        "label": "TIMBRE",
+        "section": "OSCILLATOR",
+        "cc": 12,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Function depends on oscillator type."
+      },
+      {
+        "id": "osc_shape",
+        "label": "SHAPE",
+        "section": "OSCILLATOR",
+        "cc": 13,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Function depends on oscillator type."
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "FILTER",
+        "cc": 23,
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": "Manual p.122: CC 23 value 0 closes the filter fully, 127 opens it fully."
+      },
+      {
+        "id": "resonance",
+        "label": "RESONANCE",
+        "section": "FILTER",
+        "cc": 83,
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": ""
+      },
+      {
+        "id": "cyc_rise",
+        "label": "RISE",
+        "section": "CYCLING ENVELOPE",
+        "cc": 102,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Appendix D says 102. The tutorial on p.123 says the Rise knob sent CC 5, which conflicts with Glide = 5 in Appendix D; Appendix D is used here."
+      },
+      {
+        "id": "cyc_fall",
+        "label": "FALL",
+        "section": "CYCLING ENVELOPE",
+        "cc": 103,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "cyc_hold",
+        "label": "HOLD",
+        "section": "CYCLING ENVELOPE",
+        "cc": 28,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "cyc_amount",
+        "label": "AMOUNT",
+        "section": "CYCLING ENVELOPE",
+        "cc": 24,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Appendix D name: 'Cycling Env Amount'."
+      },
+      {
+        "id": "env_attack",
+        "label": "ATTACK",
+        "section": "ENVELOPE",
+        "cc": 105,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_attack",
+        "notes": "The main envelope drives the filter by default; it also drives the amp only when the Amp Mod switch is on. Role set to filter_attack for that reason."
+      },
+      {
+        "id": "env_decay",
+        "label": "DECAY/RELEASE",
+        "section": "ENVELOPE",
+        "cc": 106,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_decay",
+        "notes": "Single Decay/Release stage. Appendix D name: 'Envelope Decay'. Same Amp Mod caveat as Attack."
+      },
+      {
+        "id": "env_sustain",
+        "label": "SUSTAIN",
+        "section": "ENVELOPE",
+        "cc": 29,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_sustain",
+        "notes": "Same Amp Mod caveat as Attack."
+      },
+      {
+        "id": "env_filter_amt",
+        "label": "FILTER AMT",
+        "section": "ENVELOPE",
+        "cc": 26,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": "Appendix D name: 'Filter Amount'. Panel label taken from manual text ('Filter Amt')."
+      },
+      {
+        "id": "lfo_rate_free",
+        "label": "RATE",
+        "section": "LFO",
+        "cc": 93,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "Free (unsynced) rate. Used when LFO Sync is off."
+      },
+      {
+        "id": "lfo_rate_sync",
+        "label": "RATE (synced)",
+        "section": "LFO",
+        "cc": 94,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "Synced rate (time divisions). Used when LFO Sync is on. Same physical knob as CC 93."
+      },
+      {
+        "id": "arp_rate_free",
+        "label": "RATE",
+        "section": "ARP/SEQ",
+        "cc": 91,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Arp/Seq free tempo."
+      },
+      {
+        "id": "arp_rate_sync",
+        "label": "RATE (synced)",
+        "section": "ARP/SEQ",
+        "cc": 92,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Arp/Seq synced rate. Same physical knob as CC 91."
+      },
+      {
+        "id": "spice",
+        "label": "SPICE",
+        "section": "TOUCH STRIP",
+        "cc": 2,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Spice amount set via the touch strip, not a knob. Only audible when Arp or Seq runs."
+      },
+      {
+        "id": "hold",
+        "label": "HOLD",
+        "section": "KEYBOARD",
+        "cc": 64,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Appendix D: 'Keyboard Hold (toggle)'."
+      }
+    ],
+    "setup": [
+      "Set the receive channel: press Utility, go to MIDI > Input chan, choose All or the channel your app sends on (manual p.120 and p.96).",
+      "If notes play but no sound changes come back to the app, that is the transmit side: Utility > MIDI > Knob send CCs = On (only needed for the synth to send, not to receive).",
+      "If the keyboard seems dead, check Utility > MIDI > Local is On (Local Off disconnects the keyboard from the engine; external MIDI still plays).",
+      "After loading a preset, physical knob positions do not match the sound. CC messages set the value directly regardless of knob position."
+    ],
+    "sources": [
+      {
+        "url": "https://www.arturia.com/api/download/products/microfreak/manual/microfreak_Manual_5_0_1_EN.pdf",
+        "what": "MicroFreak User Manual v5.0.1 (EN), Appendix D 'CC# Values' p.141-142 (PDF p.146-147); MIDI chapter p.120-123; Utility tables p.26, p.96"
+      },
+      {
+        "url": "https://forum.arturia.com/t/transmitted-vs-received-midi-cc-values-for-digital-oscillator-type-parameter-dont-match/6268",
+        "what": "Arturia forum thread: CC 9 oscillator type send vs receive value mismatch (user report, Arturia staff acknowledged)"
+      }
+    ],
+    "confidence": "high for the 20 CC numbers (manufacturer table, firmware 5 manual); low for CC 9 value ranges and the default receive channel, which the manual does not state."
+  },
+  {
+    "id": "minifreak",
+    "name": "MiniFreak",
+    "maker": "Arturia",
+    "kind": "hardware",
+    "popularity": "Arturia's 6-voice polyphonic follow-up to the MicroFreak (2022), widely reviewed; no sales-chart figure was checked.",
+    "voices": 6,
+    "noteRange": [
+      null,
+      null
+    ],
+    "defaultChannel": null,
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Sound Edit > Keyboard > Bend Range, 1 to 12 semitones (manual v4.0.1 p.90). Default not stated. No CC for it."
+    },
+    "respondsTo": {
+      "cc7Volume": false,
+      "cc1ModWheel": true,
+      "programChange": true,
+      "velocity": true,
+      "cc64Sustain": true
+    },
+    "respondsToNotes": {
+      "cc7Volume": "CC 7 is not in the manual's MIDI implementation chart. Oscillator volumes are CC 17 and 21. Treat master volume as not controllable by CC.",
+      "programChange": "512 presets = 4 banks of 128. Send Bank Select then Program Change (manual p.115). Utility > MIDI > Program Change must be on to send and receive.",
+      "velocity": "Keyboard and engine use velocity; engine also accepts polyphonic aftertouch from external MIDI (manual p.86)."
+    },
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "WHEEL",
+        "section": "TOUCH STRIPS",
+        "cc": 1,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Wheel touch strip = Mod Wheel CC 1."
+      },
+      {
+        "id": "sustain",
+        "label": "Sustain pedal",
+        "section": "PEDALS",
+        "cc": 64,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "glide",
+        "label": "GLIDE",
+        "section": "GENERAL",
+        "cc": 5,
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": ""
+      },
+      {
+        "id": "osc1_tune",
+        "label": "TUNE (Osc 1)",
+        "section": "OSCILLATORS",
+        "cc": 70,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "Panel knob is shared between Osc 1 and Osc 2 via the Select button. Over MIDI each oscillator has its own CC, so no Select press is needed."
+      },
+      {
+        "id": "osc1_wave",
+        "label": "WAVE (Osc 1)",
+        "section": "OSCILLATORS",
+        "cc": 14,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Function depends on oscillator type."
+      },
+      {
+        "id": "osc1_timbre",
+        "label": "TIMBRE (Osc 1)",
+        "section": "OSCILLATORS",
+        "cc": 15,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Function depends on oscillator type."
+      },
+      {
+        "id": "osc1_shape",
+        "label": "SHAPE (Osc 1)",
+        "section": "OSCILLATORS",
+        "cc": 16,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Function depends on oscillator type."
+      },
+      {
+        "id": "osc1_volume",
+        "label": "VOLUME (Osc 1)",
+        "section": "OSCILLATORS",
+        "cc": 17,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": ""
+      },
+      {
+        "id": "osc2_tune",
+        "label": "TUNE (Osc 2)",
+        "section": "OSCILLATORS",
+        "cc": 73,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": ""
+      },
+      {
+        "id": "osc2_wave",
+        "label": "WAVE (Osc 2)",
+        "section": "OSCILLATORS",
+        "cc": 18,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": ""
+      },
+      {
+        "id": "osc2_timbre",
+        "label": "TIMBRE (Osc 2)",
+        "section": "OSCILLATORS",
+        "cc": 19,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": ""
+      },
+      {
+        "id": "osc2_shape",
+        "label": "SHAPE (Osc 2)",
+        "section": "OSCILLATORS",
+        "cc": 20,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": ""
+      },
+      {
+        "id": "osc2_volume",
+        "label": "VOLUME (Osc 2)",
+        "section": "OSCILLATORS",
+        "cc": 21,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": ""
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "ANALOG FILTER",
+        "cc": 74,
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": ""
+      },
+      {
+        "id": "resonance",
+        "label": "RESONANCE",
+        "section": "ANALOG FILTER",
+        "cc": 71,
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": ""
+      },
+      {
+        "id": "filter_env_amt",
+        "label": "ENV/VELO (Env)",
+        "section": "ANALOG FILTER",
+        "cc": 24,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": "Chart name 'VCF Env Amt'. Bipolar, center = no modulation."
+      },
+      {
+        "id": "filter_velo_env",
+        "label": "ENV/VELO (Shift: Velo)",
+        "section": "ANALOG FILTER",
+        "cc": 94,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart name 'Velocity Env Mod'. Shift function of the same knob."
+      },
+      {
+        "id": "cyc_rise",
+        "label": "RISE/SHAPE (Rise)",
+        "section": "CYCLING ENVELOPE",
+        "cc": 76,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "cyc_rise_shape",
+        "label": "RISE/SHAPE (Shift: Shape)",
+        "section": "CYCLING ENVELOPE",
+        "cc": 68,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "cyc_fall",
+        "label": "FALL/SHAPE (Fall)",
+        "section": "CYCLING ENVELOPE",
+        "cc": 77,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "cyc_fall_shape",
+        "label": "FALL/SHAPE (Shift: Shape)",
+        "section": "CYCLING ENVELOPE",
+        "cc": 69,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "cyc_hold",
+        "label": "HOLD/SUSTAIN",
+        "section": "CYCLING ENVELOPE",
+        "cc": 78,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart name 'Hold'."
+      },
+      {
+        "id": "amp_attack",
+        "label": "ATTACK",
+        "section": "ENVELOPE",
+        "cc": 80,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "Envelope defaults to controlling the VCAs (manual p.14)."
+      },
+      {
+        "id": "amp_decay",
+        "label": "DECAY",
+        "section": "ENVELOPE",
+        "cc": 81,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": ""
+      },
+      {
+        "id": "amp_sustain",
+        "label": "SUSTAIN",
+        "section": "ENVELOPE",
+        "cc": 82,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": ""
+      },
+      {
+        "id": "amp_release",
+        "label": "RELEASE",
+        "section": "ENVELOPE",
+        "cc": 83,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_release",
+        "notes": ""
+      },
+      {
+        "id": "lfo1_rate",
+        "label": "RATE/TRIG (LFO 1)",
+        "section": "LFO",
+        "cc": 85,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "Panel knob shared via Select; separate CC per LFO."
+      },
+      {
+        "id": "lfo2_rate",
+        "label": "RATE/TRIG (LFO 2)",
+        "section": "LFO",
+        "cc": 87,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": ""
+      },
+      {
+        "id": "fx1_time",
+        "label": "TIME (FX1)",
+        "section": "DIGITAL EFFECTS",
+        "cc": 22,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Meaning depends on the FX type loaded in slot 1 (delay, reverb, chorus, etc.). Map to delay_time/reverb only if the preset's FX1 is that type."
+      },
+      {
+        "id": "fx1_intensity",
+        "label": "INTENSITY (FX1)",
+        "section": "DIGITAL EFFECTS",
+        "cc": 23,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Meaning depends on FX type in slot 1."
+      },
+      {
+        "id": "fx1_amount",
+        "label": "AMOUNT (FX1)",
+        "section": "DIGITAL EFFECTS",
+        "cc": 25,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Wet amount for slot 1; meaning depends on FX type."
+      },
+      {
+        "id": "fx2_time",
+        "label": "TIME (FX2)",
+        "section": "DIGITAL EFFECTS",
+        "cc": 26,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Meaning depends on FX type in slot 2."
+      },
+      {
+        "id": "fx2_intensity",
+        "label": "INTENSITY (FX2)",
+        "section": "DIGITAL EFFECTS",
+        "cc": 27,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "fx2_amount",
+        "label": "AMOUNT (FX2)",
+        "section": "DIGITAL EFFECTS",
+        "cc": 28,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "fx3_time",
+        "label": "TIME (FX3)",
+        "section": "DIGITAL EFFECTS",
+        "cc": 29,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Meaning depends on FX type in slot 3."
+      },
+      {
+        "id": "fx3_intensity",
+        "label": "INTENSITY (FX3)",
+        "section": "DIGITAL EFFECTS",
+        "cc": 30,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "fx3_amount",
+        "label": "AMOUNT (FX3)",
+        "section": "DIGITAL EFFECTS",
+        "cc": 31,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "seq_gate",
+        "label": "GATE",
+        "section": "SEQUENCER",
+        "cc": 115,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Seq/Arp Gate via touch strip."
+      },
+      {
+        "id": "spice",
+        "label": "SPICE",
+        "section": "SEQUENCER",
+        "cc": 116,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Via touch strip."
+      },
+      {
+        "id": "macro1",
+        "label": "M1",
+        "section": "MACROS",
+        "cc": 117,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Touch strip in Macro mode."
+      },
+      {
+        "id": "macro2",
+        "label": "M2",
+        "section": "MACROS",
+        "cc": 118,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      }
+    ],
+    "setup": [
+      "Open Utility: hold Shift and press Sound Edit/Utility (button lights pale blue).",
+      "Turn the Preset/Edit encoder to MIDI, click it.",
+      "Set Input Channel to All or the channel your app sends on, click to save.",
+      "Set MIDI From to USB (or the port you use).",
+      "Check Local Control is On and MIDI Seq/Synth is 'MIDI > Synth' (default) so incoming notes go straight to the synth.",
+      "Incoming CC is always accepted, except while MiniFreak V software is connected and talking to the synth (manual p.117). Close MiniFreak V first."
+    ],
+    "sources": [
+      {
+        "url": "https://www.arturia.com/api/download/products/minifreak/manual/minifreak_Manual_4_0_1_EN.pdf",
+        "what": "MiniFreak User Manual v4.0.1 (EN), section 16.2.5 MIDI implementation chart p.116-117 (PDF p.121-122); Utility > MIDI p.108; Bend Range p.90"
+      }
+    ],
+    "confidence": "high for CC numbers (manufacturer chart in the current hardware manual; firmware is now 5.0.1 and the v5 hardware manual was not published separately, so a firmware-5 CC change is possible but none was found); panel labels for shared knobs are annotated with the slot in brackets."
+  },
+  {
+    "id": "bassstation2",
+    "name": "Bass Station II",
+    "maker": "Novation",
+    "kind": "hardware",
+    "popularity": "Novation's long-selling analogue mono synth (2013 onward, still sold with firmware updates such as AFX mode); no sales-chart figure was checked.",
+    "voices": 1,
+    "noteRange": [
+      null,
+      null
+    ],
+    "defaultChannel": 1,
+    "bendRangeSemitones": {
+      "default": 12,
+      "settable": true,
+      "how": "Hold Function and press upper C# (Oscillator: Pitch Bend Range), -24 to +24 (p.61). Init patch value is 12 (p.70). Also CC 107 'Bend Amount' per the MIDI chart."
+    },
+    "respondsTo": {
+      "cc7Volume": true,
+      "cc1ModWheel": null,
+      "programChange": true,
+      "velocity": true,
+      "cc64Sustain": true
+    },
+    "respondsToNotes": {
+      "cc1ModWheel": "The v5 chart prints 'mod cc 0', almost certainly a typo for CC 1 but not confirmed in a manufacturer document. Leave unverified.",
+      "programChange": "Chart lists patch inc/dec via program change 0-127.",
+      "velocity": "Velocity response depends on the patch: Velocity: Amp Env (CC 112) defaults to 0 = no velocity effect.",
+      "voices": "Monophonic; paraphonic mode (NRPN 0:107) allows 2 notes."
+    },
+    "controls": [
+      {
+        "id": "volume",
+        "label": "VOLUME",
+        "section": "MASTER",
+        "cc": 7,
+        "kind": "continuous",
+        "steps": null,
+        "role": "volume",
+        "notes": "Chart: 'patch volume'."
+      },
+      {
+        "id": "osc1_fine",
+        "label": "FINE (Osc 1)",
+        "section": "OSCILLATOR",
+        "cc": 26,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "14-bit: MSB CC 26, LSB CC 58. Sending only CC 26 gives 7-bit resolution. Panel knob shared by Osc 1/2 via Osc Select switch; separate CCs. -100 to +100 cents.",
+        "ccLsb": 58
+      },
+      {
+        "id": "osc1_range",
+        "label": "RANGE (Osc 1)",
+        "section": "OSCILLATOR",
+        "cc": 70,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 63,
+            "to": 63,
+            "meaning": "16'"
+          },
+          {
+            "from": 64,
+            "to": 64,
+            "meaning": "8'"
+          },
+          {
+            "from": 65,
+            "to": 65,
+            "meaning": "4'"
+          },
+          {
+            "from": 66,
+            "to": 66,
+            "meaning": "2'"
+          }
+        ],
+        "role": "other",
+        "notes": "Chart gives exact values 63/64/65/66."
+      },
+      {
+        "id": "osc1_coarse",
+        "label": "COARSE (Osc 1)",
+        "section": "OSCILLATOR",
+        "cc": 27,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "14-bit: MSB CC 27, LSB CC 59. Sending only CC 27 gives 7-bit resolution. -12 to +12 semitones.",
+        "ccLsb": 59
+      },
+      {
+        "id": "osc1_wave",
+        "label": "WAVEFORM (Osc 1)",
+        "section": "OSCILLATOR",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 72 (NRPN LSB), then CC 6 = value (data entry). Sine, tri, saw, pulse. Value-per-wave not given in the chart.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 72
+        }
+      },
+      {
+        "id": "osc1_modenv_depth",
+        "label": "MOD ENV DEPTH (Osc 1)",
+        "section": "OSCILLATOR",
+        "cc": 71,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Pitch mod from Mod Env, -63 to +63 (64 = centre)."
+      },
+      {
+        "id": "osc1_lfo1_depth",
+        "label": "LFO 1 DEPTH (Osc 1)",
+        "section": "OSCILLATOR",
+        "cc": 28,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "14-bit: MSB CC 28, LSB CC 60. Sending only CC 28 gives 7-bit resolution. Pitch mod from LFO 1, -127 to +127.",
+        "ccLsb": 60
+      },
+      {
+        "id": "osc1_pw_modenv",
+        "label": "PULSE WIDTH (Osc 1, source Mod Env)",
+        "section": "OSCILLATOR",
+        "cc": 72,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart: 'osc 1 Mod Env PW mod amount', -63 to +63. On panel this is the Pulse Width knob when the PW source switch is on Mod Env."
+      },
+      {
+        "id": "osc1_pw_lfo2",
+        "label": "PULSE WIDTH (Osc 1, source LFO 2)",
+        "section": "OSCILLATOR",
+        "cc": 73,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart: 'osc 1 LFO 2 PW mod amount', -90 to +90; 63 and 64 = 0%."
+      },
+      {
+        "id": "osc1_pw_manual",
+        "label": "PULSE WIDTH (Osc 1, source Manual)",
+        "section": "OSCILLATOR",
+        "cc": 74,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "5% to 95%; 64 = 50%."
+      },
+      {
+        "id": "osc2_fine",
+        "label": "FINE (Osc 2)",
+        "section": "OSCILLATOR",
+        "cc": 29,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "14-bit: MSB CC 29, LSB CC 61. Sending only CC 29 gives 7-bit resolution. -100 to +100 cents.",
+        "ccLsb": 61
+      },
+      {
+        "id": "osc2_range",
+        "label": "RANGE (Osc 2)",
+        "section": "OSCILLATOR",
+        "cc": 75,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 63,
+            "to": 63,
+            "meaning": "16'"
+          },
+          {
+            "from": 64,
+            "to": 64,
+            "meaning": "8'"
+          },
+          {
+            "from": 65,
+            "to": 65,
+            "meaning": "4'"
+          },
+          {
+            "from": 66,
+            "to": 66,
+            "meaning": "2'"
+          }
+        ],
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "osc2_coarse",
+        "label": "COARSE (Osc 2)",
+        "section": "OSCILLATOR",
+        "cc": 30,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "14-bit: MSB CC 30, LSB CC 62. Sending only CC 30 gives 7-bit resolution. -12 to +12 semitones.",
+        "ccLsb": 62
+      },
+      {
+        "id": "osc2_wave",
+        "label": "WAVEFORM (Osc 2)",
+        "section": "OSCILLATOR",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 82 (NRPN LSB), then CC 6 = value (data entry). Sine, tri, saw, pulse.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 82
+        }
+      },
+      {
+        "id": "osc2_modenv_depth",
+        "label": "MOD ENV DEPTH (Osc 2)",
+        "section": "OSCILLATOR",
+        "cc": 76,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "-63 to +63."
+      },
+      {
+        "id": "osc2_lfo1_depth",
+        "label": "LFO 1 DEPTH (Osc 2)",
+        "section": "OSCILLATOR",
+        "cc": 31,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "14-bit: MSB CC 31, LSB CC 63. Sending only CC 31 gives 7-bit resolution. -127 to +127.",
+        "ccLsb": 63
+      },
+      {
+        "id": "osc2_pw_modenv",
+        "label": "PULSE WIDTH (Osc 2, source Mod Env)",
+        "section": "OSCILLATOR",
+        "cc": 77,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart: 'osc 2 env 2 PW mod amount', -63 to +63."
+      },
+      {
+        "id": "osc2_pw_lfo2",
+        "label": "PULSE WIDTH (Osc 2, source LFO 2)",
+        "section": "OSCILLATOR",
+        "cc": 78,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "-90 to +90; 63 and 64 = 0%."
+      },
+      {
+        "id": "osc2_pw_manual",
+        "label": "PULSE WIDTH (Osc 2, source Manual)",
+        "section": "OSCILLATOR",
+        "cc": 79,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "5% to 94.3%; 64 = 50%."
+      },
+      {
+        "id": "sub_octave",
+        "label": "OCTAVE (Sub Osc)",
+        "section": "OSCILLATOR",
+        "cc": 81,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "-1 or -2 octaves below Osc 1. Values per position not given in the chart."
+      },
+      {
+        "id": "sub_wave",
+        "label": "SUB OSC WAVE",
+        "section": "OSCILLATOR",
+        "cc": 80,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Sine, pulse, square. Values per position not given."
+      },
+      {
+        "id": "osc_tuning_error",
+        "label": "Osc: Tuning Error (hidden, Function + Pitch Bend Range twice)",
+        "section": "OSCILLATOR",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 111 (NRPN LSB), then CC 6 = value (data entry). 0-7 per manual p.37 text ('E-0' to 'E-7').",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 111
+        }
+      },
+      {
+        "id": "paraphonic",
+        "label": "Paraphonic mode (hidden)",
+        "section": "OSCILLATOR",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 107 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 107
+        }
+      },
+      {
+        "id": "glide_divergence",
+        "label": "Glide Divergence (hidden, Function + Input Gain twice)",
+        "section": "PORTAMENTO",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 113 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 113
+        }
+      },
+      {
+        "id": "sub_coarse",
+        "label": "Sub-osc coarse (hidden)",
+        "section": "OSCILLATOR",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 84 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 84
+        }
+      },
+      {
+        "id": "sub_fine",
+        "label": "Sub-osc fine (hidden)",
+        "section": "OSCILLATOR",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 77 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 77
+        }
+      },
+      {
+        "id": "mix_osc1",
+        "label": "OSC 1",
+        "section": "MIXER",
+        "cc": 20,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "14-bit: MSB CC 20, LSB CC 52. Sending only CC 20 gives 7-bit resolution. 0 to 255 in 14-bit form.",
+        "ccLsb": 52
+      },
+      {
+        "id": "mix_osc2",
+        "label": "OSC 2",
+        "section": "MIXER",
+        "cc": 21,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "14-bit: MSB CC 21, LSB CC 53. Sending only CC 21 gives 7-bit resolution.",
+        "ccLsb": 53
+      },
+      {
+        "id": "mix_sub",
+        "label": "SUB",
+        "section": "MIXER",
+        "cc": 22,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "14-bit: MSB CC 22, LSB CC 54. Sending only CC 22 gives 7-bit resolution.",
+        "ccLsb": 54
+      },
+      {
+        "id": "mix_noise",
+        "label": "NOISE/RING/EXT (Noise)",
+        "section": "MIXER",
+        "cc": 23,
+        "kind": "continuous",
+        "steps": null,
+        "role": "noise",
+        "notes": "14-bit: MSB CC 23, LSB CC 55. Sending only CC 23 gives 7-bit resolution. Chart prints '23.55' (typo for 23:55, matching the pattern of the rows around it). One panel knob whose function depends on the Noise/Ring/Ext switch; over MIDI each level has its own CC.",
+        "ccLsb": 55
+      },
+      {
+        "id": "mix_ring",
+        "label": "NOISE/RING/EXT (Ring)",
+        "section": "MIXER",
+        "cc": 24,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "14-bit: MSB CC 24, LSB CC 56. Sending only CC 24 gives 7-bit resolution. Ring mod level.",
+        "ccLsb": 56
+      },
+      {
+        "id": "mix_ext",
+        "label": "NOISE/RING/EXT (Ext)",
+        "section": "MIXER",
+        "cc": 25,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "14-bit: MSB CC 25, LSB CC 57. Sending only CC 25 gives 7-bit resolution. External input level.",
+        "ccLsb": 57
+      },
+      {
+        "id": "filter_type",
+        "label": "TYPE",
+        "section": "FILTER",
+        "cc": 83,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Classic or Acid. Values not given."
+      },
+      {
+        "id": "filter_slope",
+        "label": "SLOPE",
+        "section": "FILTER",
+        "cc": 106,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "12 or 24 dB. Values not given."
+      },
+      {
+        "id": "filter_shape",
+        "label": "SHAPE",
+        "section": "FILTER",
+        "cc": 84,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "LP, BP, HP. Values not given."
+      },
+      {
+        "id": "cutoff",
+        "label": "FREQUENCY",
+        "section": "FILTER",
+        "cc": 16,
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": "14-bit: MSB CC 16, LSB CC 48. Sending only CC 16 gives 7-bit resolution. 0 to 255 in 14-bit form.",
+        "ccLsb": 48
+      },
+      {
+        "id": "resonance",
+        "label": "RESONANCE",
+        "section": "FILTER",
+        "cc": 82,
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": ""
+      },
+      {
+        "id": "filter_modenv",
+        "label": "MOD ENV DEPTH (Filter)",
+        "section": "FILTER",
+        "cc": 85,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": "-63 to +63 (64 = centre)."
+      },
+      {
+        "id": "filter_lfo2",
+        "label": "LFO 2 DEPTH (Filter)",
+        "section": "FILTER",
+        "cc": 17,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "14-bit: MSB CC 17, LSB CC 49. Sending only CC 17 gives 7-bit resolution. -127 to +127.",
+        "ccLsb": 49
+      },
+      {
+        "id": "overdrive",
+        "label": "OVERDRIVE",
+        "section": "FILTER",
+        "cc": 114,
+        "kind": "continuous",
+        "steps": null,
+        "role": "drive",
+        "notes": "Pre-filter."
+      },
+      {
+        "id": "filter_tracking",
+        "label": "Filter tracking (hidden)",
+        "section": "FILTER",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 108 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 108
+        }
+      },
+      {
+        "id": "glide",
+        "label": "GLIDE TIME",
+        "section": "PORTAMENTO",
+        "cc": 5,
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": "0 = off."
+      },
+      {
+        "id": "lfo1_speed",
+        "label": "LFO 1 (Speed)",
+        "section": "LFO",
+        "cc": 18,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "14-bit: MSB CC 18, LSB CC 50. Sending only CC 18 gives 7-bit resolution. Rotary knob in Speed mode.",
+        "ccLsb": 50
+      },
+      {
+        "id": "lfo1_delay",
+        "label": "LFO 1 (Delay)",
+        "section": "LFO",
+        "cc": 86,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Same knob in Delay mode. 0 = off."
+      },
+      {
+        "id": "lfo2_speed",
+        "label": "LFO 2 (Speed)",
+        "section": "LFO",
+        "cc": 19,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "14-bit: MSB CC 19, LSB CC 51. Sending only CC 19 gives 7-bit resolution.",
+        "ccLsb": 51
+      },
+      {
+        "id": "lfo2_delay",
+        "label": "LFO 2 (Delay)",
+        "section": "LFO",
+        "cc": 87,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "lfo1_wave",
+        "label": "LFO 1 WAVEFORM",
+        "section": "LFO",
+        "cc": 88,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Triangle, saw, square, S&H. Values not given."
+      },
+      {
+        "id": "lfo2_wave",
+        "label": "LFO 2 WAVEFORM",
+        "section": "LFO",
+        "cc": 89,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "amp_attack",
+        "label": "ATTACK (Amp Env)",
+        "section": "ENVELOPES",
+        "cc": 90,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "Faders shared via Env Select switch; separate CCs per envelope."
+      },
+      {
+        "id": "amp_decay",
+        "label": "DECAY (Amp Env)",
+        "section": "ENVELOPES",
+        "cc": 91,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": ""
+      },
+      {
+        "id": "amp_sustain",
+        "label": "SUSTAIN (Amp Env)",
+        "section": "ENVELOPES",
+        "cc": 92,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": ""
+      },
+      {
+        "id": "amp_release",
+        "label": "RELEASE (Amp Env)",
+        "section": "ENVELOPES",
+        "cc": 93,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_release",
+        "notes": ""
+      },
+      {
+        "id": "mod_attack",
+        "label": "ATTACK (Mod Env)",
+        "section": "ENVELOPES",
+        "cc": 102,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_attack",
+        "notes": "Mod Env drives filter via Filter MOD ENV DEPTH (CC 85)."
+      },
+      {
+        "id": "mod_decay",
+        "label": "DECAY (Mod Env)",
+        "section": "ENVELOPES",
+        "cc": 103,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_decay",
+        "notes": ""
+      },
+      {
+        "id": "mod_sustain",
+        "label": "SUSTAIN (Mod Env)",
+        "section": "ENVELOPES",
+        "cc": 104,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_sustain",
+        "notes": ""
+      },
+      {
+        "id": "mod_release",
+        "label": "RELEASE (Mod Env)",
+        "section": "ENVELOPES",
+        "cc": 105,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_release",
+        "notes": ""
+      },
+      {
+        "id": "amp_env_trig",
+        "label": "TRIGGERING (Amp Env)",
+        "section": "ENVELOPES",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 73 (NRPN LSB), then CC 6 = value (data entry). Values 1,2,3 (Single/Multi/Autoglide).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 73
+        }
+      },
+      {
+        "id": "amp_env_retrig",
+        "label": "Amp Env retrigger (hidden)",
+        "section": "ENVELOPES",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 109 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 109
+        }
+      },
+      {
+        "id": "amp_env_fixed_sustain",
+        "label": "Amp Env fixed sustain duration (hidden)",
+        "section": "ENVELOPES",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 114 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 114
+        }
+      },
+      {
+        "id": "amp_env_retrig_count",
+        "label": "Amp Env retrigger count (hidden)",
+        "section": "ENVELOPES",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 117 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 117
+        }
+      },
+      {
+        "id": "mod_env_trig",
+        "label": "TRIGGERING (Mod Env)",
+        "section": "ENVELOPES",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 105 (NRPN LSB), then CC 6 = value (data entry). Values 1,2,3.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 105
+        }
+      },
+      {
+        "id": "mod_env_retrig",
+        "label": "Mod Env retrigger (hidden)",
+        "section": "ENVELOPES",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 110 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 110
+        }
+      },
+      {
+        "id": "mod_env_fixed_sustain",
+        "label": "Mod Env fixed sustain duration (hidden)",
+        "section": "ENVELOPES",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 115 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 115
+        }
+      },
+      {
+        "id": "mod_env_retrig_count",
+        "label": "Mod Env retrigger count (hidden)",
+        "section": "ENVELOPES",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 118 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 118
+        }
+      },
+      {
+        "id": "distortion",
+        "label": "DISTORTION",
+        "section": "EFFECTS",
+        "cc": 94,
+        "kind": "continuous",
+        "steps": null,
+        "role": "drive",
+        "notes": "Post-filter."
+      },
+      {
+        "id": "osc_filter_mod",
+        "label": "OSC FILTER MOD",
+        "section": "EFFECTS",
+        "cc": 115,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "0 = off."
+      },
+      {
+        "id": "arp_on",
+        "label": "ON/LEGATO",
+        "section": "ARPEGGIATOR",
+        "cc": 108,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "arp_latch",
+        "label": "LATCH/REST",
+        "section": "ARPEGGIATOR",
+        "cc": 109,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "arp_rhythm",
+        "label": "RHYTHM",
+        "section": "ARPEGGIATOR",
+        "cc": 119,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "32 patterns."
+      },
+      {
+        "id": "arp_mode",
+        "label": "ARP MODE",
+        "section": "ARPEGGIATOR",
+        "cc": 118,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart: 'note mode'."
+      },
+      {
+        "id": "arp_octaves",
+        "label": "ARP OCTAVES/SEQ",
+        "section": "ARPEGGIATOR",
+        "cc": 111,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "modwheel_lfo2_filter",
+        "label": "Mod Wh: LFO 2 Filter Freq",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 71 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 71
+        }
+      },
+      {
+        "id": "modwheel_lfo1_pitch",
+        "label": "Mod Wh: LFO 1 Osc Pitch",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 70 (NRPN LSB), then CC 6 = value (data entry). -63 to +63.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 70
+        }
+      },
+      {
+        "id": "modwheel_osc2_pitch",
+        "label": "Mod Wh: Osc 2 Pitch",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 78 (NRPN LSB), then CC 6 = value (data entry). -63 to +63.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 78
+        }
+      },
+      {
+        "id": "at_filter",
+        "label": "Aftertouch: Filter Freq",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 74 (NRPN LSB), then CC 6 = value (data entry). -63 to +63.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 74
+        }
+      },
+      {
+        "id": "at_lfo1_pitch",
+        "label": "Aftertouch: LFO 1 to Osc Pitch",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 75 (NRPN LSB), then CC 6 = value (data entry). -63 to +63.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 75
+        }
+      },
+      {
+        "id": "at_lfo2_speed",
+        "label": "Aftertouch: LFO 2 Speed",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 76 (NRPN LSB), then CC 6 = value (data entry). 0 = off, 1 to 127.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 76
+        }
+      },
+      {
+        "id": "lfo1_keysync",
+        "label": "LFO: Key Sync LFO 1",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 89 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 89
+        }
+      },
+      {
+        "id": "lfo2_keysync",
+        "label": "LFO: Key Sync LFO 2",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 93 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 93
+        }
+      },
+      {
+        "id": "lfo1_speed_sync",
+        "label": "LFO: Speed/Sync LFO 1",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 87 (NRPN LSB), then CC 6 = value (data entry). Chart also lists 'LFO 1 Sync value NRPN 87' (no MSB printed); assumed the same 0:87 parameter.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 87
+        }
+      },
+      {
+        "id": "lfo2_speed_sync",
+        "label": "LFO: Speed/Sync LFO 2",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 91 (NRPN LSB), then CC 6 = value (data entry). Chart also lists 'LFO 2 Sync value NRPN 91'.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 91
+        }
+      },
+      {
+        "id": "lfo1_slew",
+        "label": "LFO: Slew LFO 1",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 86 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 86
+        }
+      },
+      {
+        "id": "lfo2_slew",
+        "label": "LFO: Slew LFO 2",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 90 (NRPN LSB), then CC 6 = value (data entry).",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 90
+        }
+      },
+      {
+        "id": "bend_amount",
+        "label": "Oscillator: Pitch Bend Range",
+        "section": "ON-KEY FUNCTION",
+        "cc": 107,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart: 'Bend Amount cc 107, 1 to 12'. On-key range is -24 to +24 (p.61); chart range differs, value mapping unclear."
+      },
+      {
+        "id": "osc_sync",
+        "label": "Oscillator: Osc 1-2 Sync",
+        "section": "ON-KEY FUNCTION",
+        "cc": 110,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "vel_amp",
+        "label": "Velocity: Amp Env",
+        "section": "ON-KEY FUNCTION",
+        "cc": 112,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "-63 to +63. Default 0 means no velocity response until raised."
+      },
+      {
+        "id": "vel_mod",
+        "label": "Velocity: Mod Env",
+        "section": "ON-KEY FUNCTION",
+        "cc": 113,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "vca_limit",
+        "label": "VCA: Limiter",
+        "section": "ON-KEY FUNCTION",
+        "cc": 95,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "arp_swing",
+        "label": "Arp: Swing",
+        "section": "ON-KEY FUNCTION",
+        "cc": 116,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "seq_retrig",
+        "label": "Arp: Seq Retrig",
+        "section": "ON-KEY FUNCTION",
+        "cc": null,
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN, not CC: send CC 99 = 0 (NRPN MSB), CC 98 = 106 (NRPN LSB), then CC 6 = value (data entry). Chart prints 'NRPN 106' without MSB; assumed 0:106.",
+        "nrpn": {
+          "msb": 0,
+          "lsb": 106
+        }
+      }
+    ],
+    "setup": [
+      "Set the MIDI channel: hold Function/Exit, press upper G# key, release, use Patch/Value buttons to pick the channel (default 1, saved on power-down).",
+      "Leave Local On (upper A) unless you want the keyboard disconnected; Local Off is not needed for receiving MIDI.",
+      "To send an NRPN: CC 99 = NRPN MSB, CC 98 = NRPN LSB, CC 6 = value. Pitch bend and aftertouch are standard messages."
+    ],
+    "sources": [
+      {
+        "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/bass_station_ii_user_guide_v5_en.pdf",
+        "what": "Bass Station II User Guide v5 (EN), 'MIDI parameters list' p.71-74; On-key functions p.61-64; hardware overview p.8-12; init values p.69-70"
+      }
+    ],
+    "confidence": "high for CC and NRPN numbers (manufacturer chart, current v5 guide); medium for switch value-to-position mappings, which the chart mostly omits, and for the two chart typos noted (mod 'cc 0', noise '23.55')."
+  }
+]

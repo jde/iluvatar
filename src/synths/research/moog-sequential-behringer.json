@@ -1,0 +1,3111 @@
+[
+  {
+    "id": "subsequent-37",
+    "name": "Subsequent 37",
+    "maker": "Moog",
+    "kind": "hardware",
+    "popularity": "Moog's two-note paraphonic analog keyboard synth (successor to the Sub 37); the manual says every knob and button transmits MIDI, which suits DAW automation. Source: Subsequent 37 manual p.11.",
+    "voices": 2,
+    "noteRange": [
+      18,
+      116
+    ],
+    "noteRangeNote": "Manual spec page: 'Guaranteed note range at 8' of Note 18 to 116'. This is the calibrated pitch range, not a statement about which MIDI note numbers are accepted.",
+    "defaultChannel": 1,
+    "bendRangeSemitones": {
+      "default": 2,
+      "settable": true,
+      "how": "Per preset: PRESET EDIT MENU 2.2 BEND UP (+0..+24) and 2.3 BEND DOWN (-0..-24). Also CC 107 (bend up 0..24) and CC 108 (bend down 0..24). Manual p.42 and p.55."
+    },
+    "respondsTo": {
+      "cc7Volume": true,
+      "cc1ModWheel": true,
+      "programChange": true,
+      "velocity": true,
+      "cc64Sustain": true
+    },
+    "controls": [
+      {
+        "id": "lfo1_rate",
+        "label": "LFO RATE",
+        "section": "MOD 1",
+        "cc": 3,
+        "ccLsb": 35,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "14-bit pair: CC 3 is MSB (0-127); CC 35 is LSB, giving 0-16383 with both. Manual p.53. When LFO 1 is clock-synced, the CC value selects a clock division instead (table on p.52)."
+      },
+      {
+        "id": "mod1_pitch_amt",
+        "label": "PITCH AMT",
+        "section": "MOD 1",
+        "cc": 4,
+        "ccLsb": 36,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "14-bit pair: CC 4 is MSB (0-127); CC 36 is LSB, giving 0-16383 with both. Manual p.53. Amount of Mod 1 source applied to pitch (vibrato when source is an LFO)."
+      },
+      {
+        "id": "mod1_filter_amt",
+        "label": "FILTER AMT",
+        "section": "MOD 1",
+        "cc": 11,
+        "ccLsb": 43,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "14-bit pair: CC 11 is MSB (0-127); CC 43 is LSB, giving 0-16383 with both. Manual p.53. Amount of Mod 1 source applied to filter cutoff."
+      },
+      {
+        "id": "mod1_pgm_amt",
+        "label": "PGM DEST AMT",
+        "section": "MOD 1",
+        "cc": 20,
+        "ccLsb": 52,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "14-bit pair: CC 20 is MSB (0-127); CC 52 is LSB, giving 0-16383 with both. Manual p.53. Mod 1 amount to the selected destination (MOD 1 DEST)."
+      },
+      {
+        "id": "lfo2_rate",
+        "label": "LFO RATE",
+        "section": "MOD 2",
+        "cc": 8,
+        "ccLsb": 40,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "14-bit pair: CC 8 is MSB (0-127); CC 40 is LSB, giving 0-16383 with both. Manual p.53. When LFO 2 is clock-synced, the CC value selects a clock division instead (table on p.52)."
+      },
+      {
+        "id": "mod2_pitch_amt",
+        "label": "PITCH AMT",
+        "section": "MOD 2",
+        "cc": 15,
+        "ccLsb": 47,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "14-bit pair: CC 15 is MSB (0-127); CC 47 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "mod2_filter_amt",
+        "label": "FILTER AMT",
+        "section": "MOD 2",
+        "cc": 16,
+        "ccLsb": 48,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "14-bit pair: CC 16 is MSB (0-127); CC 48 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "mod2_pgm_amt",
+        "label": "PGM DEST AMT",
+        "section": "MOD 2",
+        "cc": 17,
+        "ccLsb": 49,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "14-bit pair: CC 17 is MSB (0-127); CC 49 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "glide_time",
+        "label": "TIME",
+        "section": "GLIDE",
+        "cc": 5,
+        "ccLsb": 37,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": "14-bit pair: CC 5 is MSB (0-127); CC 37 is LSB, giving 0-16383 with both. Manual p.53. Glide must be on (CC 65) to hear it."
+      },
+      {
+        "id": "glide_on",
+        "label": "GLIDE ON",
+        "section": "GLIDE",
+        "cc": 65,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 63,
+            "meaning": "off"
+          },
+          {
+            "from": 64,
+            "to": 127,
+            "meaning": "on"
+          }
+        ],
+        "role": "portamento",
+        "notes": "Manual p.53: 0 = OFF / 64 = ON."
+      },
+      {
+        "id": "osc1_octave",
+        "label": "OCTAVE",
+        "section": "OSC 1",
+        "cc": 74,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 31,
+            "meaning": "16'"
+          },
+          {
+            "from": 32,
+            "to": 63,
+            "meaning": "8'"
+          },
+          {
+            "from": 64,
+            "to": 95,
+            "meaning": "4'"
+          },
+          {
+            "from": 96,
+            "to": 127,
+            "meaning": "2'"
+          }
+        ],
+        "role": "other",
+        "notes": "Manual p.54 gives the values 0/32/64/96; the in-between ranges are inferred from those step starts."
+      },
+      {
+        "id": "osc1_wave",
+        "label": "WAVE",
+        "section": "OSC 1",
+        "cc": 9,
+        "ccLsb": 41,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "14-bit pair: CC 9 is MSB (0-127); CC 41 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "osc2_octave",
+        "label": "OCTAVE",
+        "section": "OSC 2",
+        "cc": 75,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 31,
+            "meaning": "16'"
+          },
+          {
+            "from": 32,
+            "to": 63,
+            "meaning": "8'"
+          },
+          {
+            "from": 64,
+            "to": 95,
+            "meaning": "4'"
+          },
+          {
+            "from": 96,
+            "to": 127,
+            "meaning": "2'"
+          }
+        ],
+        "role": "other",
+        "notes": "Manual p.54 gives the values 0/32/64/96; the in-between ranges are inferred from those step starts."
+      },
+      {
+        "id": "osc2_wave",
+        "label": "WAVE",
+        "section": "OSC 2",
+        "cc": 14,
+        "ccLsb": 46,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "14-bit pair: CC 14 is MSB (0-127); CC 46 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "osc2_freq",
+        "label": "FREQUENCY",
+        "section": "OSC 2",
+        "cc": 12,
+        "ccLsb": 44,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "14-bit pair: CC 12 is MSB (0-127); CC 44 is LSB, giving 0-16383 with both. Manual p.53. Detunes osc 2 +/-7 semitones; center = unison with osc 1 (p.26)."
+      },
+      {
+        "id": "osc2_beat",
+        "label": "BEAT FREQ",
+        "section": "OSC 2",
+        "cc": 13,
+        "ccLsb": 45,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "14-bit pair: CC 13 is MSB (0-127); CC 45 is LSB, giving 0-16383 with both. Manual p.53. Constant detune +/-3.5 Hz, center = 0 Hz (p.26)."
+      },
+      {
+        "id": "osc2_sync",
+        "label": "HARD SYNC",
+        "section": "OSC 2",
+        "cc": 77,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 63,
+            "meaning": "off"
+          },
+          {
+            "from": 64,
+            "to": 127,
+            "meaning": "on"
+          }
+        ],
+        "role": "other",
+        "notes": "Manual p.54: 0 = OFF / 64 = ON."
+      },
+      {
+        "id": "mix_osc1",
+        "label": "OSC 1",
+        "section": "MIXER",
+        "cc": 114,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "7-bit only (0-127); no LSB listed. Manual p.55."
+      },
+      {
+        "id": "mix_sub",
+        "label": "SUB OSC",
+        "section": "MIXER",
+        "cc": 115,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "7-bit only (0-127). Manual p.55."
+      },
+      {
+        "id": "mix_osc2",
+        "label": "OSC 2",
+        "section": "MIXER",
+        "cc": 116,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "7-bit only (0-127). Manual p.55."
+      },
+      {
+        "id": "mix_noise",
+        "label": "NOISE",
+        "section": "MIXER",
+        "cc": 117,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "noise",
+        "notes": "7-bit only (0-127). Manual p.55."
+      },
+      {
+        "id": "mix_fdbk",
+        "label": "FDBK / EXT IN",
+        "section": "MIXER",
+        "cc": 118,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "drive",
+        "notes": "Chart name 'FEEDBACK/EXT LEVEL'. 7-bit only. Manual warns this can raise output volume considerably."
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "FILTER",
+        "cc": 19,
+        "ccLsb": 51,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": "14-bit pair: CC 19 is MSB (0-127); CC 51 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "resonance",
+        "label": "RESONANCE",
+        "section": "FILTER",
+        "cc": 21,
+        "ccLsb": 53,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": "14-bit pair: CC 21 is MSB (0-127); CC 53 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "multidrive",
+        "label": "MULTIDRIVE",
+        "section": "FILTER",
+        "cc": 18,
+        "ccLsb": 50,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "drive",
+        "notes": "14-bit pair: CC 18 is MSB (0-127); CC 50 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "filter_kb",
+        "label": "KB TRACK",
+        "section": "FILTER",
+        "cc": 22,
+        "ccLsb": 54,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "14-bit pair: CC 22 is MSB (0-127); CC 54 is LSB, giving 0-16383 with both. Manual p.53. Chart name 'FILTER KB AMT'."
+      },
+      {
+        "id": "filter_eg_amt",
+        "label": "EG AMOUNT",
+        "section": "FILTER",
+        "cc": 27,
+        "ccLsb": 59,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": "14-bit pair: CC 27 is MSB (0-127); CC 59 is LSB, giving 0-16383 with both. Manual p.53. Bipolar: center = no envelope effect (p.28)."
+      },
+      {
+        "id": "filter_slope",
+        "label": "SLOPE",
+        "section": "FILTER",
+        "cc": 109,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 31,
+            "meaning": "-6dB"
+          },
+          {
+            "from": 32,
+            "to": 63,
+            "meaning": "-12dB"
+          },
+          {
+            "from": 64,
+            "to": 95,
+            "meaning": "-18dB"
+          },
+          {
+            "from": 96,
+            "to": 127,
+            "meaning": "-24dB"
+          }
+        ],
+        "role": "other",
+        "notes": "Manual p.55 gives 0/32/64/96; in-between ranges inferred."
+      },
+      {
+        "id": "f_attack",
+        "label": "ATTACK",
+        "section": "FILTER EG",
+        "cc": 23,
+        "ccLsb": 55,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_attack",
+        "notes": "14-bit pair: CC 23 is MSB (0-127); CC 55 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "f_decay",
+        "label": "DECAY",
+        "section": "FILTER EG",
+        "cc": 24,
+        "ccLsb": 56,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_decay",
+        "notes": "14-bit pair: CC 24 is MSB (0-127); CC 56 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "f_sustain",
+        "label": "SUSTAIN",
+        "section": "FILTER EG",
+        "cc": 25,
+        "ccLsb": 57,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_sustain",
+        "notes": "14-bit pair: CC 25 is MSB (0-127); CC 57 is LSB, giving 0-16383 with both. Manual p.53. Chart calls it 'FILTER EG SUSTAIN TIME'; it is the sustain level knob."
+      },
+      {
+        "id": "f_release",
+        "label": "RELEASE",
+        "section": "FILTER EG",
+        "cc": 26,
+        "ccLsb": 58,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_release",
+        "notes": "14-bit pair: CC 26 is MSB (0-127); CC 58 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "a_attack",
+        "label": "ATTACK",
+        "section": "AMP EG",
+        "cc": 28,
+        "ccLsb": 60,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "14-bit pair: CC 28 is MSB (0-127); CC 60 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "a_decay",
+        "label": "DECAY",
+        "section": "AMP EG",
+        "cc": 29,
+        "ccLsb": 61,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": "14-bit pair: CC 29 is MSB (0-127); CC 61 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "a_sustain",
+        "label": "SUSTAIN",
+        "section": "AMP EG",
+        "cc": 30,
+        "ccLsb": 62,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": "14-bit pair: CC 30 is MSB (0-127); CC 62 is LSB, giving 0-16383 with both. Manual p.53. Chart calls it 'AMP EG SUSTAIN TIME'; it is the sustain level knob."
+      },
+      {
+        "id": "a_release",
+        "label": "RELEASE",
+        "section": "AMP EG",
+        "cc": 31,
+        "ccLsb": 63,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_release",
+        "notes": "14-bit pair: CC 31 is MSB (0-127); CC 63 is LSB, giving 0-16383 with both. Manual p.53."
+      },
+      {
+        "id": "master_volume",
+        "label": "MASTER VOLUME",
+        "section": "OUTPUT",
+        "cc": 7,
+        "ccLsb": 39,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "volume",
+        "notes": "14-bit pair: CC 7 is MSB (0-127); CC 39 is LSB, giving 0-16383 with both. Manual p.53."
+      }
+    ],
+    "setup": [
+      "Press MIDI, go to MIDI MENU 1.1 IN CHANNEL and set the channel the app sends on (default 1; ALL = omni).",
+      "MIDI MENU 2.1 IN PORTS: set to BOTH (default) or to the port you use (DIN or USB).",
+      "MIDI MENU 1.4 RCV PGM CHG: ON (default) if the app sends program changes.",
+      "No setting is needed to receive CCs. MIDI MENU 3.3 OUT FILTERS > KNB NRPN/CC and CC FORMAT only change what the synth transmits."
+    ],
+    "notes": "All main-sound knobs are reachable by CC, so no NRPN is used here. The manual's NRPN chart (p.56-59) is unusable as printed: several value-range cells are shifted by one row (for example 'OSC 2 FREQUENCY 3', 'OSC 1 LEVEL 2') and the table stops at NRPN 524 before the amp envelope. NRPN fields are left null on purpose. The manual does not state whether to send the 14-bit MSB or LSB first; MIDI convention is MSB then LSB.",
+    "sources": [
+      {
+        "url": "https://cdn.inmusicbrands.com/Moog/Subsequent37/Subsequent_37_Manual_0.pdf",
+        "what": "Subsequent 37 manual (Moog CDN, linked from moogmusic.com/downloads): p.35-37 MIDI menu, p.42 bend range, p.52-55 MIDI CC chart, p.56-59 NRPN chart, p.61 specs"
+      },
+      {
+        "url": "https://www.moogmusic.com/downloads/?product=Subsequent+37",
+        "what": "Moog downloads page that links the manual"
+      }
+    ],
+    "confidence": "high: every CC number comes straight from Moog's printed CC chart; only the NRPN chart was rejected as misprinted."
+  },
+  {
+    "id": "grandmother",
+    "name": "Grandmother",
+    "maker": "Moog",
+    "kind": "hardware",
+    "popularity": "Moog's semi-modular analog keyboard with spring reverb and arp/sequencer, aimed at hands-on patching. Source: Grandmother manual specs p.54.",
+    "voices": 1,
+    "noteRange": null,
+    "noteRangeNote": "The manual does not state which MIDI note numbers are accepted. Keyboard is 32 keys.",
+    "defaultChannel": 1,
+    "bendRangeSemitones": {
+      "default": 2,
+      "settable": true,
+      "how": "Global setting: hold HOLD + Osc 1 SYNC until SYNC blinks, press the D#1 key, then press one of the lowest 12 white keys (F0..C2) for 1..12 semitones (p.38). Over MIDI: CC 107 (up) and CC 108 (down) use the value table on p.44 (0..24 semitones, e.g. 2 semitones = 10, 12 = 61, 24 = 123). Manual also lists RPN 0 Pitch Bend Amount."
+    },
+    "respondsTo": {
+      "cc7Volume": false,
+      "cc1ModWheel": true,
+      "programChange": false,
+      "velocity": false,
+      "cc64Sustain": true
+    },
+    "respondsToNotes": "CC 7 is not in the chart. Grandmother has no presets, so program change does nothing. Velocity is received but not wired to anything inside; it only appears at the KB VEL OUT patch jack (spec p.54). CC 64 sustain is listed under Additional MIDI Functions.",
+    "controls": [
+      {
+        "id": "mod_rate",
+        "label": "RATE",
+        "section": "MODULATION",
+        "cc": 3,
+        "ccLsb": 35,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "Chart: 'MODULATION RATE CC 3, 0-127 (or 0-16383 using CC3 & CC 35)'. Manual p.43."
+      },
+      {
+        "id": "glide",
+        "label": "GLIDE",
+        "section": "LEFT-HAND CONTROLLER",
+        "cc": 5,
+        "ccLsb": 37,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": "Chart: 'GLIDE TIME CC 5 (or 14-bit with CC 37)'. Glide on/off is CC 65."
+      },
+      {
+        "id": "glide_on",
+        "label": "GLIDE ON/OFF",
+        "section": "LEFT-HAND CONTROLLER",
+        "cc": 65,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 63,
+            "meaning": "off"
+          },
+          {
+            "from": 64,
+            "to": 127,
+            "meaning": "on"
+          }
+        ],
+        "role": "portamento",
+        "notes": "Chart p.43: 0 = Off, 64 = On. There is no separate panel button; this is a MIDI-side switch."
+      },
+      {
+        "id": "osc2_freq",
+        "label": "FREQUENCY",
+        "section": "OSCILLATOR 2",
+        "cc": 12,
+        "ccLsb": 44,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "Chart: 'OSCILLATOR 2 FREQUENCY CC 12 (or 14-bit with CC 44)'. Detunes osc 2 +/-7 semitones; center = unison (p.12)."
+      },
+      {
+        "id": "osc1_octave",
+        "label": "OCTAVE",
+        "section": "OSCILLATOR 1",
+        "cc": 74,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 31,
+            "meaning": "32'"
+          },
+          {
+            "from": 32,
+            "to": 63,
+            "meaning": "16'"
+          },
+          {
+            "from": 64,
+            "to": 95,
+            "meaning": "8'"
+          },
+          {
+            "from": 96,
+            "to": 127,
+            "meaning": "4'"
+          }
+        ],
+        "role": "other",
+        "notes": "Chart p.43 values 0/32/64/96; in-between ranges inferred."
+      },
+      {
+        "id": "osc2_octave",
+        "label": "OCTAVE",
+        "section": "OSCILLATOR 2",
+        "cc": 75,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 31,
+            "meaning": "32'"
+          },
+          {
+            "from": 32,
+            "to": 63,
+            "meaning": "16'"
+          },
+          {
+            "from": 64,
+            "to": 95,
+            "meaning": "8'"
+          },
+          {
+            "from": 96,
+            "to": 127,
+            "meaning": "4'"
+          }
+        ],
+        "role": "other",
+        "notes": "Chart p.43 prints 32'/16'/8'/4' for both oscillators, but the Oscillator 2 text (p.12) says its switch is 16'/8'/4'/2'. Treat the footage names as uncertain; the 4 value positions are what the chart gives."
+      },
+      {
+        "id": "osc2_sync",
+        "label": "SYNC",
+        "section": "OSCILLATOR 2",
+        "cc": 77,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 63,
+            "meaning": "off"
+          },
+          {
+            "from": 64,
+            "to": 127,
+            "meaning": "on"
+          }
+        ],
+        "role": "other",
+        "notes": "Chart: 'OSCILLATOR 2 SYNC CC 77, 0 = Off, 64 = On'."
+      }
+    ],
+    "uncontrollable": "Not reachable by MIDI at all (the chart has no entry): filter CUTOFF, RESONANCE, envelope ATTACK/DECAY/SUSTAIN/RELEASE, mixer levels, noise, oscillator wave knobs, PITCH AMT / CUTOFF AMT / PULSE WIDTH AMT, spring REVERB MIX, VCA volume. On Grandmother these knobs are analog and must be turned by hand (or moved via patch-cable CV).",
+    "setup": [
+      "Set the MIDI channel: hold HOLD (left-hand controller) and SYNC (Oscillator 1) until SYNC blinks, press the F#0 key, then press one of the first 16 white keys (F0..G2) for channel 1..16. Press SYNC to exit. Default is channel 1.",
+      "No other setting is needed to receive the CCs listed."
+    ],
+    "notes": "Very few knobs are CC-controllable: only modulation RATE, GLIDE time and Oscillator 2 FREQUENCY are continuous; the rest are switches. A Moog forum thread reports CC 103 (Gated Glide), 107/108 (bend amount) and 119 (transpose) misbehaving on some firmware; not verified here.",
+    "sources": [
+      {
+        "url": "https://cdn.inmusicbrands.com/Moog/Grandmother/Grandmother_Manual_Version_2.pdf",
+        "what": "Grandmother manual version 2 (Moog CDN, linked from moogmusic.com/downloads): p.37-38 global settings, p.43-44 MIDI documentation charts, p.54 specs"
+      },
+      {
+        "url": "https://forum.moogmusic.com/t/grandmother-midi-implementation/20499",
+        "what": "User forum thread on Grandmother MIDI quirks (not manufacturer documentation)"
+      }
+    ],
+    "confidence": "high: the chart is short and unambiguous; only the Osc 2 octave footage labels conflict within the manual."
+  },
+  {
+    "id": "prophet-rev2",
+    "name": "Prophet Rev2",
+    "maker": "Sequential",
+    "kind": "hardware",
+    "popularity": "Sequential's 8- or 16-voice analog poly with Curtis filters, the successor to the Prophet '08. Source: Rev2 User's Guide, 'A Few Words of Thanks'.",
+    "voices": 8,
+    "voicesNote": "8 voices (Rev2-8) or 16 voices (Rev2-16), depending on model.",
+    "noteRange": [
+      0,
+      127
+    ],
+    "noteRangeNote": "MIDI chart: 'Note number 0 - 127' (p.83).",
+    "defaultChannel": null,
+    "defaultChannelNote": "The guide lists MIDI Channel as 'All, 1...16' but does not state the factory default.",
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Per program: press MISC PARAMS, scroll to Pitchbend Range, set 0..12 semitones (p.61). NRPN 113 (layer B 2161), range 0-12. Default not stated in the guide."
+    },
+    "respondsTo": {
+      "cc7Volume": true,
+      "cc1ModWheel": true,
+      "programChange": true,
+      "velocity": true,
+      "cc64Sustain": true
+    },
+    "respondsToNotes": "CC 7 'Volume: Combined with Master Volume and Program Volume'. Program change 0-127 selects a program within the current bank; bank via CC 32. Global 'MIDI Control Enable' must be On for wheel/pedal/volume; 'MIDI Program Enable' must be On for program change.",
+    "controls": [
+      {
+        "id": "osc1_freq",
+        "label": "FREQUENCY",
+        "section": "OSC 1",
+        "cc": 20,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 0,
+          "max": 120
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Base pitch over 9 octaves, in semitones. NRPN layer B = 2048."
+      },
+      {
+        "id": "osc1_fine",
+        "label": "FINE TUNE",
+        "section": "OSC 1",
+        "cc": 21,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 1,
+          "max": 100
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "+/- a quarter tone. NRPN layer B = 2049."
+      },
+      {
+        "id": "osc1_shape",
+        "label": "SHAPE",
+        "section": "OSC 1",
+        "cc": 22,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 2,
+          "max": 4
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Button. Guide lists Sawtooth, Sawtooth+Triangle, Triangle, Pulse but NRPN range is 0-4 (5 values); value-to-shape order not given, so steps are left out."
+      },
+      {
+        "id": "osc1_shape_mod",
+        "label": "SHAPE MOD",
+        "section": "OSC 1",
+        "cc": 30,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 102,
+          "max": 99
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Pulse width / shape modulation. NRPN range 0-99. Layer B = 2150."
+      },
+      {
+        "id": "osc2_freq",
+        "label": "FREQUENCY",
+        "section": "OSC 2",
+        "cc": 24,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 5,
+          "max": 120
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Layer B = 2053."
+      },
+      {
+        "id": "osc2_fine",
+        "label": "FINE TUNE",
+        "section": "OSC 2",
+        "cc": 25,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 6,
+          "max": 100
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "Layer B = 2054."
+      },
+      {
+        "id": "osc2_shape",
+        "label": "SHAPE",
+        "section": "OSC 2",
+        "cc": 26,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 7,
+          "max": 4
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "See Osc 1 SHAPE. Layer B = 2055."
+      },
+      {
+        "id": "osc2_shape_mod",
+        "label": "SHAPE MOD",
+        "section": "OSC 2",
+        "cc": 31,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 103,
+          "max": 99
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Layer B = 2151."
+      },
+      {
+        "id": "osc_sync",
+        "label": "SYNC",
+        "section": "OSCILLATORS",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 10,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 0,
+            "meaning": "off"
+          },
+          {
+            "from": 1,
+            "to": 1,
+            "meaning": "on"
+          }
+        ],
+        "role": "other",
+        "notes": "No CC. NRPN only. Layer B = 2058."
+      },
+      {
+        "id": "sub_octave",
+        "label": "SUB OCTAVE",
+        "section": "OSCILLATORS",
+        "cc": 8,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 110,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "Level of square-wave sub oscillator. Layer B = 2158."
+      },
+      {
+        "id": "osc_mix",
+        "label": "OSC MIX",
+        "section": "OSCILLATORS",
+        "cc": 28,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 13,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "Balance of osc 1 and osc 2. Layer B = 2061."
+      },
+      {
+        "id": "noise",
+        "label": "NOISE",
+        "section": "OSCILLATORS",
+        "cc": 29,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 14,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "noise",
+        "notes": "Layer B = 2062."
+      },
+      {
+        "id": "osc_slop",
+        "label": "OSC SLOP",
+        "section": "OSCILLATORS",
+        "cc": 9,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 12,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "Random per-voice detune. Layer B = 2060."
+      },
+      {
+        "id": "glide_rate",
+        "label": "RATE",
+        "section": "GLIDE",
+        "cc": 23,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 3,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": "Panel RATE knob. The MIDI chart has no single 'glide rate' entry: it lists Osc 1 Glide (CC 23 / NRPN 3) and Osc 2 Glide (CC 27 / NRPN 8). Send both to move both oscillators. Glide must be on (CC 65 / NRPN 111)."
+      },
+      {
+        "id": "glide_on",
+        "label": "GLIDE",
+        "section": "GLIDE",
+        "cc": 65,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 111,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "portamento",
+        "notes": "CC chart: 'Glide On/Off'. Exact CC on/off threshold not stated."
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "FILTER",
+        "cc": 102,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 15,
+          "max": 164
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": "NRPN 0-164 (full resolution); CC is 0-127 only. Layer B = 2063."
+      },
+      {
+        "id": "resonance",
+        "label": "RESONANCE",
+        "section": "FILTER",
+        "cc": 103,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 16,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": "Layer B = 2064."
+      },
+      {
+        "id": "filter_env_amt",
+        "label": "ENV AMOUNT",
+        "section": "FILTER",
+        "cc": 106,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 20,
+          "max": 254
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": "Bipolar -127..+127; NRPN 0-254 (127 = zero). Layer B = 2068."
+      },
+      {
+        "id": "filter_vel",
+        "label": "VELOCITY",
+        "section": "FILTER",
+        "cc": 107,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 21,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Velocity to filter env amount. Layer B = 2069."
+      },
+      {
+        "id": "filter_key",
+        "label": "KEY AMOUNT",
+        "section": "FILTER",
+        "cc": 104,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 17,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Keyboard tracking. Layer B = 2065."
+      },
+      {
+        "id": "filter_audio_mod",
+        "label": "AUDIO MOD",
+        "section": "FILTER",
+        "cc": 105,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 18,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Osc 1 audio-rate modulation of cutoff. Layer B = 2066."
+      },
+      {
+        "id": "f_delay",
+        "label": "DELAY",
+        "section": "FILTER ENVELOPE",
+        "cc": 108,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 22,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Layer B = 2070."
+      },
+      {
+        "id": "f_attack",
+        "label": "ATTACK",
+        "section": "FILTER ENVELOPE",
+        "cc": 109,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 23,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_attack",
+        "notes": "Layer B = 2071."
+      },
+      {
+        "id": "f_decay",
+        "label": "DECAY",
+        "section": "FILTER ENVELOPE",
+        "cc": 110,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 24,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_decay",
+        "notes": "Layer B = 2072."
+      },
+      {
+        "id": "f_sustain",
+        "label": "SUSTAIN",
+        "section": "FILTER ENVELOPE",
+        "cc": 111,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 25,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_sustain",
+        "notes": "Layer B = 2073."
+      },
+      {
+        "id": "f_release",
+        "label": "RELEASE",
+        "section": "FILTER ENVELOPE",
+        "cc": 112,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 26,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_release",
+        "notes": "Layer B = 2074."
+      },
+      {
+        "id": "a_delay",
+        "label": "DELAY",
+        "section": "AMPLIFIER",
+        "cc": 117,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 32,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Layer B = 2080."
+      },
+      {
+        "id": "a_attack",
+        "label": "ATTACK",
+        "section": "AMPLIFIER",
+        "cc": 118,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 33,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "Layer B = 2081."
+      },
+      {
+        "id": "a_decay",
+        "label": "DECAY",
+        "section": "AMPLIFIER",
+        "cc": 119,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 34,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": "Layer B = 2082."
+      },
+      {
+        "id": "a_sustain",
+        "label": "SUSTAIN",
+        "section": "AMPLIFIER",
+        "cc": 75,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 35,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": "Layer B = 2083."
+      },
+      {
+        "id": "a_release",
+        "label": "RELEASE",
+        "section": "AMPLIFIER",
+        "cc": 76,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 36,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_release",
+        "notes": "Layer B = 2084."
+      },
+      {
+        "id": "a_env_amt",
+        "label": "ENV AMOUNT",
+        "section": "AMPLIFIER",
+        "cc": 115,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 30,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Layer B = 2078."
+      },
+      {
+        "id": "a_vel",
+        "label": "VELOCITY",
+        "section": "AMPLIFIER",
+        "cc": 116,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 31,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Layer B = 2079."
+      },
+      {
+        "id": "pan_spread",
+        "label": "PAN SPREAD",
+        "section": "AMPLIFIER",
+        "cc": 114,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 28,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Layer B = 2076."
+      },
+      {
+        "id": "vca_level",
+        "label": "VCA Level",
+        "section": "AMPLIFIER",
+        "cc": 113,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 98,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Chart name 'VCA Level'; not shown as a panel knob in the guide's Amplifier figure. Layer B = 2146."
+      },
+      {
+        "id": "aux_amount",
+        "label": "AMOUNT",
+        "section": "AUXILIARY ENVELOPE",
+        "cc": 86,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 58,
+          "max": 254
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Env 3 amount, bipolar (NRPN 0-254). Destination: CC 85 / NRPN 57 (0-52). Layer B = 2106."
+      },
+      {
+        "id": "aux_attack",
+        "label": "ATTACK",
+        "section": "AUXILIARY ENVELOPE",
+        "cc": 89,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 61,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Env 3. Delay = CC 88 / NRPN 60; Velocity = CC 87 / NRPN 59."
+      },
+      {
+        "id": "aux_decay",
+        "label": "DECAY",
+        "section": "AUXILIARY ENVELOPE",
+        "cc": 90,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 62,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Env 3."
+      },
+      {
+        "id": "aux_sustain",
+        "label": "SUSTAIN",
+        "section": "AUXILIARY ENVELOPE",
+        "cc": 77,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 63,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Env 3."
+      },
+      {
+        "id": "aux_release",
+        "label": "RELEASE",
+        "section": "AUXILIARY ENVELOPE",
+        "cc": 78,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 64,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Env 3."
+      },
+      {
+        "id": "lfo1_freq",
+        "label": "FREQUENCY",
+        "section": "LOW FREQUENCY OSCILLATORS",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 37,
+          "max": 150
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "No CC for any LFO. One panel knob edits the selected LFO (1-4). NRPNs: LFO1 37, LFO2 42, LFO3 47, LFO4 52 (all 0-150). Layer B = +2048."
+      },
+      {
+        "id": "lfo1_amount",
+        "label": "AMOUNT",
+        "section": "LOW FREQUENCY OSCILLATORS",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 39,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "No CC. NRPNs: LFO1 39, LFO2 44, LFO3 49, LFO4 54 (0-127). Destination: LFO1 40, LFO2 45, LFO3 50, LFO4 55 (0-52)."
+      },
+      {
+        "id": "fx_on",
+        "label": "ON/OFF",
+        "section": "EFFECT",
+        "cc": 16,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 153,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Layer B = 2201."
+      },
+      {
+        "id": "fx_select",
+        "label": "SELECT",
+        "section": "EFFECT",
+        "cc": 3,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 154,
+          "max": 13
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Effect type. Guide lists 13 effects (Delay Mono, DDL Stereo, BBD Delay, Chorus, Phaser High, Phaser Low, Phaser Mst, Flanger 1, Flanger 2, Reverb, Ring Mod, Distortion, HP Filter) against a 0-13 range; value-to-type mapping not printed, so no steps."
+      },
+      {
+        "id": "fx_mix",
+        "label": "MIX",
+        "section": "EFFECT",
+        "cc": 17,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 155,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_mix",
+        "notes": "Wet/dry for whatever effect is selected (delay or reverb). Layer B = 2203."
+      },
+      {
+        "id": "fx_param1",
+        "label": "PARAM 1",
+        "section": "EFFECT",
+        "cc": 12,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 156,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_time",
+        "notes": "Meaning depends on effect: delay time for the three delays, rate for chorus/phaser/flanger, time for reverb (p.39). NRPN 0-255."
+      },
+      {
+        "id": "fx_param2",
+        "label": "PARAM 2",
+        "section": "EFFECT",
+        "cc": 13,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 157,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_feedback",
+        "notes": "Meaning depends on effect: feedback for delays, depth for modulation effects, color for reverb (p.39)."
+      },
+      {
+        "id": "master_volume",
+        "label": "MASTER VOLUME",
+        "section": "OUTPUT",
+        "cc": 7,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "volume",
+        "notes": "CC 7 'Master Volume'. Program Volume is NRPN 29 (0-127)."
+      }
+    ],
+    "setup": [
+      "Press GLOBAL. Use the parameter and value knobs.",
+      "3. MIDI Channel: set to the app's channel (or All).",
+      "7. MIDI Param Receive: set to NRPN for full resolution, or CC for the CC numbers above. The synth listens to only one of these at a time.",
+      "8. MIDI Control Enable: On (needed for mod wheel, pedal, volume).",
+      "9. MIDI Program Enable: On if the app sends program changes.",
+      "NRPN messages: CC 99 = param MSB, CC 98 = param LSB, CC 6 = value MSB, CC 38 = value LSB. Split the number into two 7-bit halves (e.g. 156 = MSB 1, LSB 28)."
+    ],
+    "notes": "All NRPNs above are Layer A. Layer B is the Layer A number + 2048 (table p.90-94). CCs only reach Layer A as documented.",
+    "sources": [
+      {
+        "url": "https://sequential.com/wp-content/uploads/2021/02/Prophet-Rev2-Users-Guide-1.2.4.pdf",
+        "what": "Prophet Rev2 User's Guide v1.2.4: p.14-15 globals, p.20-39 panel sections, p.59-61 glide and pitch bend, Appendix E p.82-95 MIDI implementation (CC table p.86, NRPN tables p.89-94)"
+      },
+      {
+        "url": "https://www.sequential.com/support/",
+        "what": "Sequential support page that links the guide"
+      }
+    ],
+    "confidence": "high: CC and NRPN numbers copied from the manufacturer's tables; gaps (bend default, shape and FX value maps, panel glide knob mapping) are flagged."
+  },
+  {
+    "id": "take-5",
+    "name": "Take 5",
+    "maker": "Sequential",
+    "kind": "hardware",
+    "popularity": "Sequential's compact 5-voice analog poly with 44 keys, a lower-cost Prophet-style synth. Source: Take 5 User's Guide p.1.",
+    "voices": 5,
+    "noteRange": [
+      0,
+      127
+    ],
+    "noteRangeNote": "MIDI implementation: 'Note number 0-127'. Keyboard is 44 keys.",
+    "defaultChannel": null,
+    "defaultChannelNote": "Guide lists 'All, 1...16'; factory default not stated.",
+    "bendRangeSemitones": {
+      "default": null,
+      "settable": true,
+      "how": "Per program: press PROGRAM, find Pitch Bend Up (0..12) and Pitch Bend Down (0..24), write the program (User's Guide printed p.54). MIDI: CC 85 / NRPN 75 (up 0-12), CC 86 / NRPN 76 (down 0-24). Default not stated."
+    },
+    "respondsTo": {
+      "cc7Volume": true,
+      "cc1ModWheel": true,
+      "programChange": true,
+      "velocity": true,
+      "cc64Sustain": true
+    },
+    "respondsToNotes": "CC 7 is in the CC table as 'Master Volume' (needs Param Receive = CC); the 'Received Controller Messages' list omits it, but 'MIDI Control On' says the synth responds to volume. Program change selects programs 1-16 of the selected bank; needs 'MIDI Program Receive' On. Damper CC 64: any non-zero value is on.",
+    "controls": [
+      {
+        "id": "osc1_octave",
+        "label": "OCTAVE",
+        "section": "OSC 1",
+        "cc": 8,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 8,
+          "max": 4
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "5 positions (0-4) over 5 octaves; footage per value not printed."
+      },
+      {
+        "id": "osc1_pitch",
+        "label": "PITCH",
+        "section": "OSC 1",
+        "cc": 9,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 9,
+          "max": 1400
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "+/-7 semitones; center detented. MIDI name 'Osc1 Fine Freq'. NRPN 0-1400, CC 0-127."
+      },
+      {
+        "id": "osc1_shape",
+        "label": "SHAPE",
+        "section": "OSC 1",
+        "cc": 10,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 10,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": "Continuous sine > saw > pulse."
+      },
+      {
+        "id": "osc2_octave",
+        "label": "OCTAVE",
+        "section": "OSC 2",
+        "cc": 13,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 13,
+          "max": 4
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "osc2_pitch",
+        "label": "PITCH",
+        "section": "OSC 2",
+        "cc": 14,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 14,
+          "max": 1400
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": ""
+      },
+      {
+        "id": "osc2_shape",
+        "label": "SHAPE",
+        "section": "OSC 2",
+        "cc": 15,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 15,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": ""
+      },
+      {
+        "id": "osc_sync",
+        "label": "SYNC",
+        "section": "OSC 1",
+        "cc": 39,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 6,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 0,
+            "meaning": "off"
+          },
+          {
+            "from": 1,
+            "to": 1,
+            "meaning": "on"
+          }
+        ],
+        "role": "other",
+        "notes": "Guide calls it 'Sync 2-1'."
+      },
+      {
+        "id": "mix_osc1",
+        "label": "OSC 1",
+        "section": "MIXER",
+        "cc": 40,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 36,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": ""
+      },
+      {
+        "id": "mix_sub",
+        "label": "SUB OSC 1",
+        "section": "MIXER",
+        "cc": 42,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 38,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": "Printed 'SUB OSC 1' in the guide's mixer figure."
+      },
+      {
+        "id": "mix_osc2",
+        "label": "OSC 2",
+        "section": "MIXER",
+        "cc": 41,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 37,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": ""
+      },
+      {
+        "id": "mix_noise",
+        "label": "NOISE",
+        "section": "MIXER",
+        "cc": 43,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 39,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "noise",
+        "notes": "Bipolar in feel: counter-clockwise from 0 = pink noise, clockwise = white (p.20). How that maps to 0-127 is not stated."
+      },
+      {
+        "id": "fm",
+        "label": "FM 2-1",
+        "section": "MIXER",
+        "cc": 44,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 11,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 0,
+            "meaning": "off"
+          },
+          {
+            "from": 1,
+            "to": 1,
+            "meaning": "on"
+          }
+        ],
+        "role": "other",
+        "notes": "Osc 2 level knob sets FM amount when on."
+      },
+      {
+        "id": "cutoff",
+        "label": "CUTOFF",
+        "section": "FILTER",
+        "cc": 33,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 29,
+          "max": 1023
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": "NRPN 29 range 0-1023. The table also lists NRPN 30 'FilterFreqMSB, n/a' - ignore it."
+      },
+      {
+        "id": "resonance",
+        "label": "RESONANCE",
+        "section": "FILTER",
+        "cc": 34,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 31,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": ""
+      },
+      {
+        "id": "drive",
+        "label": "DRIVE",
+        "section": "FILTER",
+        "cc": 35,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 32,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "drive",
+        "notes": ""
+      },
+      {
+        "id": "filter_key",
+        "label": "Key>LPF Freq",
+        "section": "FILTER",
+        "cc": 36,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 33,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Program-menu parameter, not a panel knob."
+      },
+      {
+        "id": "vintage",
+        "label": "VINTAGE",
+        "section": "VINTAGE",
+        "cc": 37,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 34,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Per-voice variation amount."
+      },
+      {
+        "id": "overdrive",
+        "label": "OVERDRIVE",
+        "section": "OVERDRIVE",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 35,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "drive",
+        "notes": "NRPN 35 'OverdriveAmt'. The CC table has CC 67 'Distortion 0-127', which is probably this control, but the document does not say so; left null."
+      },
+      {
+        "id": "env1_attack",
+        "label": "ATTACK",
+        "section": "ENV 1",
+        "cc": 46,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 42,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_attack",
+        "notes": "Env 1 goes to the filter by default; ENV ROUTING (CC 69 / NRPN 55, 0-2) can change that."
+      },
+      {
+        "id": "env1_decay",
+        "label": "DECAY",
+        "section": "ENV 1",
+        "cc": 47,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 43,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_decay",
+        "notes": ""
+      },
+      {
+        "id": "env1_sustain",
+        "label": "SUSTAIN",
+        "section": "ENV 1",
+        "cc": 48,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 44,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_sustain",
+        "notes": ""
+      },
+      {
+        "id": "env1_release",
+        "label": "RELEASE",
+        "section": "ENV 1",
+        "cc": 49,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 45,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_release",
+        "notes": ""
+      },
+      {
+        "id": "env1_amount",
+        "label": "AMOUNT",
+        "section": "ENV 1",
+        "cc": 50,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 46,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": "Bipolar; NRPN 0-255."
+      },
+      {
+        "id": "env1_vel",
+        "label": "VELOCITY",
+        "section": "ENV 1",
+        "cc": 51,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 47,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "env1_delay",
+        "label": "Env 1 Delay",
+        "section": "ENV 1",
+        "cc": 45,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 41,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Program-menu parameter."
+      },
+      {
+        "id": "env2_attack",
+        "label": "ATTACK",
+        "section": "ENV 2",
+        "cc": 53,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 49,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "Env 2 goes to the amp by default (routing options: Amp, Filter+Amp, Filter+Gate)."
+      },
+      {
+        "id": "env2_decay",
+        "label": "DECAY",
+        "section": "ENV 2",
+        "cc": 54,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 50,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": ""
+      },
+      {
+        "id": "env2_sustain",
+        "label": "SUSTAIN",
+        "section": "ENV 2",
+        "cc": 55,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 51,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": ""
+      },
+      {
+        "id": "env2_release",
+        "label": "RELEASE",
+        "section": "ENV 2",
+        "cc": 56,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 52,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_release",
+        "notes": ""
+      },
+      {
+        "id": "env2_amount",
+        "label": "AMOUNT",
+        "section": "ENV 2",
+        "cc": 57,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 53,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "NRPN 0-255."
+      },
+      {
+        "id": "env2_vel",
+        "label": "VELOCITY",
+        "section": "ENV 2",
+        "cc": 58,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 54,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "lfo1_freq",
+        "label": "FREQUENCY",
+        "section": "LFO 1: GLOBAL",
+        "cc": 75,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 61,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": "Label from the guide's parameter list; panel print may be abbreviated."
+      },
+      {
+        "id": "lfo1_amount",
+        "label": "AMOUNT",
+        "section": "LFO 1: GLOBAL",
+        "cc": 76,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 62,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "NRPN 0-255."
+      },
+      {
+        "id": "lfo1_shape",
+        "label": "SHAPE",
+        "section": "LFO 1: GLOBAL",
+        "cc": 77,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 63,
+          "max": 4
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "Triangle, Sawtooth, Reverse Sawtooth, Square, S&H (order of values not printed)."
+      },
+      {
+        "id": "lfo2_freq",
+        "label": "FREQUENCY",
+        "section": "LFO 2: PER VOICE",
+        "cc": 80,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 68,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": ""
+      },
+      {
+        "id": "lfo2_amount",
+        "label": "AMOUNT",
+        "section": "LFO 2: PER VOICE",
+        "cc": 81,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 69,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": ""
+      },
+      {
+        "id": "glide_on",
+        "label": "GLIDE",
+        "section": "GLIDE",
+        "cc": 68,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 4,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "portamento",
+        "notes": ""
+      },
+      {
+        "id": "glide_rate",
+        "label": "GLIDE RATE",
+        "section": "GLIDE",
+        "cc": 65,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 2,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": "The guide mentions a 'glide rate knob' but the MIDI tables only list per-oscillator rates: Osc1 Glide Rate CC 65 / NRPN 2 and Osc2 Glide Rate CC 66 / NRPN 3. Send both to match the panel knob."
+      },
+      {
+        "id": "fx_on",
+        "label": "ON/OFF",
+        "section": "EFFECT",
+        "cc": 16,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 16,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "fx_type",
+        "label": "TYPE",
+        "section": "EFFECT",
+        "cc": 17,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 17,
+          "max": 8
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": "MIDI doc v1.2 says 0-8, but the guide lists 11 effects and OS 2.0 adds Lo-Fi; range may be larger on current firmware. Value-to-type order not printed."
+      },
+      {
+        "id": "fx_time",
+        "label": "TIME",
+        "section": "EFFECT",
+        "cc": 19,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 19,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_time",
+        "notes": "Delay time for the delay types; rate/frequency/gain for others (table p.40)."
+      },
+      {
+        "id": "fx_mix",
+        "label": "DEPTH/MIX",
+        "section": "EFFECT",
+        "cc": 18,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 18,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_mix",
+        "notes": "Mix for delays; depth or output level for others."
+      },
+      {
+        "id": "fx_feedback",
+        "label": "FBACK/MISC",
+        "section": "EFFECT",
+        "cc": 20,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 20,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "delay_feedback",
+        "notes": "Feedback for delays; other per-type meanings (p.40)."
+      },
+      {
+        "id": "rev_on",
+        "label": "ON/OFF",
+        "section": "REVERB",
+        "cc": 23,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 23,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "rev_mix",
+        "label": "MIX",
+        "section": "REVERB",
+        "cc": 24,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 24,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "reverb_mix",
+        "notes": ""
+      },
+      {
+        "id": "rev_size",
+        "label": "SIZE",
+        "section": "REVERB",
+        "cc": 25,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 25,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "MIDI name 'Reverb Size'. The guide's how-to mentions a 'damping' knob; how that relates to Size is not stated."
+      },
+      {
+        "id": "rev_predelay",
+        "label": "PRE-DELAY",
+        "section": "REVERB",
+        "cc": 26,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 26,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "rev_decay",
+        "label": "DECAY",
+        "section": "REVERB",
+        "cc": 27,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 27,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "rev_tone",
+        "label": "TONE",
+        "section": "REVERB",
+        "cc": 28,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 28,
+          "max": 127
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "master_volume",
+        "label": "VOLUME",
+        "section": "OUTPUT",
+        "cc": 7,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "volume",
+        "notes": "CC 7 'Master Volume'. Program volume: CC 12 'Voice Volume' / NRPN 1 'Program Volume'."
+      }
+    ],
+    "setup": [
+      "Press GLOBAL. Use the select and value knobs.",
+      "14. MIDI Channel: set to the app's channel (or All).",
+      "19. MIDI Param Receive: NRPN (full resolution) or CC. The synth listens to only one of these at a time.",
+      "20. MIDI Control On: On (needed for mod wheel, pedal, volume).",
+      "25. MIDI Program Receive: On if the app sends program changes.",
+      "NRPN messages: CC 99 = param MSB, CC 98 = param LSB, CC 6 = value MSB, CC 38 = value LSB."
+    ],
+    "notes": "OS 2.0 adds LFO slew, envelope repeat and Lo-Fi effect; their NRPN numbers are not in the v1.2 MIDI document.",
+    "sources": [
+      {
+        "url": "https://sequential.com/wp-content/uploads/2021/09/Take-5-MIDI-Implementation-1.2.pdf",
+        "what": "Take 5 MIDI Implementation v1.2: received messages p.2, CC table p.4-6, NRPN tables p.10-13"
+      },
+      {
+        "url": "https://sequential.com/wp-content/uploads/2022/06/Take-5-Users-Guide-1.1.pdf",
+        "what": "Take 5 User's Guide v1.1: globals p.12-14, panel sections p.17-43, glide p.52, pitch bend p.54"
+      },
+      {
+        "url": "https://sequential.com/wp-content/uploads/2023/04/Take-5-OS-2.0-Addendum_v2.pdf",
+        "what": "Take 5 OS 2.0 Addendum (new features not covered by the MIDI doc)"
+      }
+    ],
+    "confidence": "high for numbers (manufacturer tables); medium for some panel labels, which come from the guide's text rather than a panel photo."
+  },
+  {
+    "id": "deepmind-12",
+    "name": "DeepMind 12",
+    "maker": "Behringer",
+    "kind": "hardware",
+    "popularity": "Behringer's 12-voice analog poly with 4 FX engines, sold at a low price for its voice count. Source: DeepMind 12 User Manual cover.",
+    "voices": 12,
+    "noteRange": null,
+    "noteRangeNote": "MIDI chart says 'Note numbers C0-C8' without saying which octave-numbering convention, so a MIDI number range is not given.",
+    "defaultChannel": null,
+    "defaultChannelNote": "Manual describes RX-CHANNEL 1-16 but does not state the default.",
+    "bendRangeSemitones": {
+      "default": 2,
+      "settable": true,
+      "how": "Per program: POLY EDIT page 2, P.BEND RANGE+ and P.BEND RANGE- (0..24, default 2) (manual p.67). NRPN 36 (up) and 37 (down), 0-24."
+    },
+    "respondsTo": {
+      "cc7Volume": true,
+      "cc1ModWheel": true,
+      "programChange": true,
+      "velocity": true,
+      "cc64Sustain": true
+    },
+    "respondsToNotes": "CC chart marks CC 7 'Channel Volume' as recognized; it does not say this moves the panel VOLUME knob. Program change needs PROG-CHANGE set to RX or RX-TX.",
+    "controls": [
+      {
+        "id": "lfo1_rate",
+        "label": "RATE",
+        "section": "LFO 1",
+        "cc": 16,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 0,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": ""
+      },
+      {
+        "id": "lfo1_delay",
+        "label": "DELAY TIME",
+        "section": "LFO 1",
+        "cc": 17,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 1,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "lfo2_rate",
+        "label": "RATE",
+        "section": "LFO 2",
+        "cc": 18,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 7,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_rate",
+        "notes": ""
+      },
+      {
+        "id": "lfo2_delay",
+        "label": "DELAY TIME",
+        "section": "LFO 2",
+        "cc": 19,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 8,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "osc1_pitch_mod",
+        "label": "PITCH MOD",
+        "section": "OSC 1",
+        "cc": 20,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 21,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "Pitch mod depth; source chosen in OSC edit (NRPN 22)."
+      },
+      {
+        "id": "osc1_pwm",
+        "label": "PWM",
+        "section": "OSC 1",
+        "cc": 21,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 25,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": ""
+      },
+      {
+        "id": "osc1_square",
+        "label": "SQUAREWAVE",
+        "section": "OSC 1",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 18,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 0,
+            "meaning": "off"
+          },
+          {
+            "from": 1,
+            "to": 1,
+            "meaning": "on"
+          }
+        ],
+        "role": "other",
+        "notes": "No CC."
+      },
+      {
+        "id": "osc1_saw",
+        "label": "SAWTOOTH",
+        "section": "OSC 1",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 19,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 0,
+            "meaning": "off"
+          },
+          {
+            "from": 1,
+            "to": 1,
+            "meaning": "on"
+          }
+        ],
+        "role": "other",
+        "notes": "No CC."
+      },
+      {
+        "id": "osc2_pitch_mod",
+        "label": "PITCH MOD",
+        "section": "OSC 2",
+        "cc": 23,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 29,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": ""
+      },
+      {
+        "id": "osc2_tone_mod",
+        "label": "TONE MOD",
+        "section": "OSC 2",
+        "cc": 24,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 28,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_shape",
+        "notes": ""
+      },
+      {
+        "id": "osc2_pitch",
+        "label": "PITCH",
+        "section": "OSC 2",
+        "cc": 25,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 27,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": "Base pitch of osc 2."
+      },
+      {
+        "id": "osc2_level",
+        "label": "LEVEL",
+        "section": "OSC 2",
+        "cc": 26,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 26,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_mix",
+        "notes": ""
+      },
+      {
+        "id": "noise",
+        "label": "NOISE LEVEL",
+        "section": "OSC",
+        "cc": 27,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 33,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "noise",
+        "notes": ""
+      },
+      {
+        "id": "unison_detune",
+        "label": "UNISON DETUNE",
+        "section": "POLY",
+        "cc": 28,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 87,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "osc_detune",
+        "notes": ""
+      },
+      {
+        "id": "cutoff",
+        "label": "FREQ",
+        "section": "VCF",
+        "cc": 29,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 39,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "cutoff",
+        "notes": ""
+      },
+      {
+        "id": "resonance",
+        "label": "RES",
+        "section": "VCF",
+        "cc": 30,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 41,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "resonance",
+        "notes": ""
+      },
+      {
+        "id": "vcf_env",
+        "label": "ENV",
+        "section": "VCF",
+        "cc": 31,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 42,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_env_amount",
+        "notes": ""
+      },
+      {
+        "id": "vcf_lfo",
+        "label": "LFO",
+        "section": "VCF",
+        "cc": 33,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 45,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "LFO depth to cutoff; which LFO is NRPN 46."
+      },
+      {
+        "id": "vcf_kybd",
+        "label": "KYBD",
+        "section": "VCF",
+        "cc": 34,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 49,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "vcf_2pole",
+        "label": "2-POLE",
+        "section": "VCF",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 51,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 0,
+            "meaning": "4 pole"
+          },
+          {
+            "from": 1,
+            "to": 1,
+            "meaning": "2 pole"
+          }
+        ],
+        "role": "other",
+        "notes": "No CC."
+      },
+      {
+        "id": "vcf_invert",
+        "label": "INVERT",
+        "section": "VCF",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 50,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 0,
+            "meaning": "negative"
+          },
+          {
+            "from": 1,
+            "to": 1,
+            "meaning": "positive"
+          }
+        ],
+        "role": "other",
+        "notes": "NRPN name 'VCF Envelope Polarity'. No CC."
+      },
+      {
+        "id": "hpf",
+        "label": "FREQ",
+        "section": "HPF",
+        "cc": 35,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 40,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "hpf_boost",
+        "label": "BOOST",
+        "section": "HPF",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 52,
+          "max": 1
+        },
+        "kind": "switch",
+        "steps": [
+          {
+            "from": 0,
+            "to": 0,
+            "meaning": "off"
+          },
+          {
+            "from": 1,
+            "to": 1,
+            "meaning": "on"
+          }
+        ],
+        "role": "other",
+        "notes": "NRPN name 'VCF Bass Boost'. No CC."
+      },
+      {
+        "id": "vca_level",
+        "label": "LEVEL",
+        "section": "VCA",
+        "cc": 36,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 80,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "volume",
+        "notes": ""
+      },
+      {
+        "id": "vca_attack",
+        "label": "A",
+        "section": "ENVELOPE (VCA)",
+        "cc": 37,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 53,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_attack",
+        "notes": "The A/D/S/R faders are shared; the VCA/VCF/MOD buttons pick which envelope they edit. Each envelope stage has its own CC/NRPN."
+      },
+      {
+        "id": "vca_decay",
+        "label": "D",
+        "section": "ENVELOPE (VCA)",
+        "cc": 39,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 54,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_decay",
+        "notes": ""
+      },
+      {
+        "id": "vca_sustain",
+        "label": "S",
+        "section": "ENVELOPE (VCA)",
+        "cc": 40,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 55,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_sustain",
+        "notes": ""
+      },
+      {
+        "id": "vca_release",
+        "label": "R",
+        "section": "ENVELOPE (VCA)",
+        "cc": 41,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 56,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "amp_release",
+        "notes": ""
+      },
+      {
+        "id": "vcf_attack",
+        "label": "A",
+        "section": "ENVELOPE (VCF)",
+        "cc": 42,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 62,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_attack",
+        "notes": ""
+      },
+      {
+        "id": "vcf_decay",
+        "label": "D",
+        "section": "ENVELOPE (VCF)",
+        "cc": 43,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 63,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_decay",
+        "notes": ""
+      },
+      {
+        "id": "vcf_sustain",
+        "label": "S",
+        "section": "ENVELOPE (VCF)",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 64,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_sustain",
+        "notes": "CC left null: the chart prints CC 44 as 'VCA Envelope Sustain', a duplicate of CC 40. It is very likely a misprint for VCF Envelope Sustain (it sits between VCF Decay 43 and VCF Release 45) but the document does not say so. Test CC 44 on hardware before using it. NRPN 64 is unambiguous."
+      },
+      {
+        "id": "vcf_release",
+        "label": "R",
+        "section": "ENVELOPE (VCF)",
+        "cc": 45,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 65,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "filter_release",
+        "notes": ""
+      },
+      {
+        "id": "mod_attack",
+        "label": "A",
+        "section": "ENVELOPE (MOD)",
+        "cc": 46,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 71,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "mod_decay",
+        "label": "D",
+        "section": "ENVELOPE (MOD)",
+        "cc": 47,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 72,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "mod_sustain",
+        "label": "S",
+        "section": "ENVELOPE (MOD)",
+        "cc": 48,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 73,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "mod_release",
+        "label": "R",
+        "section": "ENVELOPE (MOD)",
+        "cc": 49,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 74,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": ""
+      },
+      {
+        "id": "vca_env_depth",
+        "label": "VCA Envelope Depth",
+        "section": "VCA (edit page)",
+        "cc": null,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 81,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "other",
+        "notes": "Edit-menu parameter. No CC."
+      },
+      {
+        "id": "portamento",
+        "label": "PORTAMENTO",
+        "section": "PORTAMENTO",
+        "cc": 5,
+        "ccLsb": null,
+        "nrpn": {
+          "param": 34,
+          "max": 255
+        },
+        "kind": "continuous",
+        "steps": null,
+        "role": "portamento",
+        "notes": "CC 5 is listed as 'Portamento Time'."
+      },
+      {
+        "id": "volume",
+        "label": "VOLUME",
+        "section": "OUTPUT",
+        "cc": 7,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "volume",
+        "notes": "CC 7 'Channel Volume' is recognized; the manual does not say it is the same as the panel VOLUME knob."
+      }
+    ],
+    "effectsNote": "Effects are 4 slots with 12 parameters each whose meaning depends on the effect type, so there is no fixed delay-time or reverb-mix number. CCs: slot 1 params 1-12 = CC 62, 63, 65-74; slot 2 params 1-12 = CC 75-86; slot 3 params 1-9 = CC 87-95 and 10-12 = CC 102-104; slot 4 params have no CC. Slot types CC 105-108; slot gains CC 109-112; FX mode CC 114. NRPN: FX 1-4 type 166/179/192/205 (0-33), FX 1 params 167-178, FX 2 180-191, FX 3 193-204, FX 4 206-217 (0-255).",
+    "setup": [
+      "Press GLOBAL, open CONNECTIVITY.",
+      "For 5-pin MIDI: open MIDI SETTINGS, set RX-CHANNEL to the app's channel.",
+      "For USB: open USB SETTINGS, set RX-CHANNEL to the app's channel.",
+      "Set PROG-CHANGE to RX or RX-TX if the app sends program changes.",
+      "No receive mode switch is needed: the manual says CC and NRPN are always received. MIDI-CTRL / USB-CTRL only change what is transmitted.",
+      "NRPN messages: CC 99 = param MSB, CC 98 = param LSB, CC 6 = value MSB, CC 38 = value LSB. The synth tracks the selected NRPN separately for USB, Wi-Fi and 5-pin MIDI."
+    ],
+    "notes": "The CC chart is dated 'Version 1.0, 01 September 2016'. Later firmware may differ; not checked. Chart also has a duplicate 'VCA Envelope Sustain Curve' at CC 52 and 56 (curves, not used here).",
+    "sources": [
+      {
+        "url": "https://cdn.mediavalet.com/aunsw/musictribe/KJUP-BHQGkielBBZ8fHd4g/79MOXF5SeU60FWtIsrIh8A/Original/M_BE_0722-AAA_DeepMind-12_WW.pdf",
+        "what": "Official Music Tribe CDN copy of the DeepMind 12 User Manual. Returned HTTP 500 when fetched on 2026-10-11."
+      },
+      {
+        "url": "https://gzhls.at/blob/ldb/f/2/b/d/2b1c616c2c54c8fa0a3b653d4cdafe5a32ff.pdf",
+        "what": "Mirror of the same official manual (135 pages, used for this profile): p.7-9 controls, p.24-25 connectivity, p.113-116 MIDI implementation and CC chart, p.117-120 NRPN table and global commands"
+      }
+    ],
+    "confidence": "medium-high: numbers come from Behringer's own chart (read from a mirror because the official link was down); one CC (44) is misprinted and left null; chart is from launch firmware."
+  },
+  {
+    "id": "model-d",
+    "name": "Model D",
+    "maker": "Behringer",
+    "kind": "hardware",
+    "popularity": "Low-cost analog clone of the Minimoog Model D in Eurorack format with MIDI and USB. Source: Model D User Manual cover.",
+    "voices": 1,
+    "noteRange": null,
+    "noteRangeNote": "Not stated. 'MIDI Note Zero Volts' SysEx setting (default 36) sets which MIDI note gives 0 V pitch CV.",
+    "defaultChannel": null,
+    "defaultChannelNote": "Set by the four rear-panel MIDI CHANNEL DIP switches (or SysEx 0x0A/00, default 0 = channel 1 when switches are disabled).",
+    "bendRangeSemitones": {
+      "default": 12,
+      "settable": true,
+      "how": "SysEx only: F0 00 20 32 00 <device id> 0A 03 00 <0..12> F7 (Command Table p.30, default 12). Send with a SysEx tool over USB."
+    },
+    "respondsTo": {
+      "cc7Volume": false,
+      "cc1ModWheel": true,
+      "programChange": false,
+      "velocity": false,
+      "cc64Sustain": false
+    },
+    "respondsToNotes": "The manual names no CC numbers at all. It says the MOD DEPTH can also be set with the modulation wheel of a MIDI keyboard. No presets (so no program change), no velocity routing, no sustain or volume CC mentioned.",
+    "controls": [
+      {
+        "id": "mod_wheel",
+        "label": "MOD DEPTH (via MIDI mod wheel)",
+        "section": "CONTROLLERS",
+        "cc": 1,
+        "ccLsb": null,
+        "nrpn": null,
+        "kind": "continuous",
+        "steps": null,
+        "role": "lfo_depth",
+        "notes": "The manual (p.8 and p.13) says the mod wheel of a MIDI keyboard adjusts modulation depth. It does not print the CC number; CC 1 is the MIDI standard's mod wheel controller. Response curve is set by SysEx 0x0A/0B (Soft default, Med, Hard). The physical MOD DEPTH knob does not move."
+      }
+    ],
+    "uncontrollable": "Every panel knob (oscillators, mixer, filter cutoff/emphasis/contour, envelopes, glide, LFO rate, volume) is analog and has no CC or NRPN. Only notes, pitch bend and mod wheel are received, plus SysEx for global settings.",
+    "setup": [
+      "Set the rear-panel MIDI CHANNEL DIP switches to the app's channel (table on the rear-panel page of the manual).",
+      "Optional: to change bend range, mod wheel curve, key priority or transpose, send the SysEx strings in the Command Table (p.30) from a SysEx tool over USB."
+    ],
+    "notes": "Effectively no knob can be moved over MIDI. Rules for this synth can only play notes, bend pitch and use the mod wheel.",
+    "sources": [
+      {
+        "url": "https://media.djmania.net/manuales/pdf/Manual_Behringer_Model_D.pdf",
+        "what": "Mirror of the Behringer MODEL D User Manual: p.8 controllers section (mod wheel), p.11 rear panel MIDI channel switches, p.13 special modes, p.30 SysEx command table"
+      },
+      {
+        "url": "https://www.soundonsound.com/reviews/behringer-model-d",
+        "what": "Sound On Sound review: confirms no CC control, a few SysEx settings, responds to MIDI modulation (independent review, not manufacturer)"
+      }
+    ],
+    "confidence": "medium: manufacturer manual read from a mirror (no official URL reachable); conclusion of 'no CCs' agrees with the SOS review."
+  }
+]
